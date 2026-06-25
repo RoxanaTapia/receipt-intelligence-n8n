@@ -1,5 +1,8 @@
 # When /ship-issue adds the in-progress label, move the project card to In Progress.
 # GitHub Project built-in workflows do not support label triggers; this Action is the bridge.
+#
+# Required repo secret: PROJECTS_TOKEN — fine-grained PAT with Projects (Read and write)
+# for the repo owner, or classic PAT with `project` + `repo` scopes.
 name: Sync project status on in-progress label
 
 on:
@@ -23,7 +26,7 @@ jobs:
       - name: Set project Status to In Progress
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PROJECTS_TOKEN }}
           script: |
             const issueNodeId = context.payload.issue.node_id;
             const projectId = process.env.PROJECT_ID;

@@ -41,6 +41,8 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 
 When `/ship-issue` adds the `in-progress` label to an issue, the workflow in `.github/workflows/project-sync-in-progress.yml` automatically sets the linked Project card's **Status** to **In Progress**. This bridges Cursor's orchestrator step with the GitHub Project board without manual board updates.
 
+**One-time setup:** Add a repository secret named `PROJECTS_TOKEN` — a fine-grained PAT with **Projects: Read and write** for the repo owner (or a classic PAT with `project` and `repo` scopes). GitHub Actions' built-in `GITHUB_TOKEN` cannot access Projects v2.
+
 ## Slash Commands
 
 | Command         | Purpose                                      | Status  |
