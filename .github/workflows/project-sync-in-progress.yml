@@ -1,0 +1,97 @@
+# When /ship-issue adds the in-progress label, move the project card to In Progress.
+# GitHub Project built-in workflows do not support label triggers; this Action is the bridge.
+#
+# Required repo secret: PROJECTS_TOKEN — fine-grained PAT with Projects (Read and write)
+# for the repo owner, or classic PAT with `project` + `repo` scopes.
+name: Sync project status on in-progress label
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: read
+  contents: read
+
+env:
+  PROJECT_ID: PVT_kwHOAIMCJM4Bbp6h
+  STATUS_FIELD_ID: PVTSSF_lAHOAIMCJM4Bbp6hzhWY9QE
+  IN_PROGRESS_OPTION_ID: 47fc9ee4
+
+jobs:
+  set-in-progress:
+    if: github.event.label.name == 'in-progress'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set project Status to In Progress
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PROJECTS_TOKEN }}
+          script: |
+            const issueNodeId = context.payload.issue.node_id;
+            const projectId = process.env.PROJECT_ID;
+            const statusFieldId = process.env.STATUS_FIELD_ID;
+            const inProgressOptionId = process.env.IN_PROGRESS_OPTION_ID;
+
+            async function getProjectItemId() {
+              const result = await github.graphql(
+                `query($issueId: ID!) {
+                  node(id: $issueId) {
+                    ... on Issue {
+                      projectItems(first: 20) {
+                        nodes {
+                          id
+                          project { id }
+                        }
+                      }
+                    }
+                  }
+                }`,
+                { issueId: issueNodeId }
+              );
+
+              const items = result.node?.projectItems?.nodes ?? [];
+              return items.find((item) => item.project?.id === projectId)?.id;
+            }
+
+            let itemId = await getProjectItemId();
+
+            if (!itemId) {
+              const added = await github.graphql(
+                `mutation($projectId: ID!, $contentId: ID!) {
+                  addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+                    item { id }
+                  }
+                }`,
+                { projectId, contentId: issueNodeId }
+              );
+              itemId = added.addProjectV2ItemById?.item?.id;
+            }
+
+            if (!itemId) {
+              core.setFailed('Could not find or add project item for this issue.');
+              return;
+            }
+
+            await github.graphql(
+              `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: $projectId
+                    itemId: $itemId
+                    fieldId: $fieldId
+                    value: { singleSelectOptionId: $optionId }
+                  }
+                ) {
+                  projectV2Item { id }
+                }
+              }`,
+              {
+                projectId,
+                itemId,
+                fieldId: statusFieldId,
+                optionId: inProgressOptionId,
+              }
+            );
+
+            core.info('Project Status set to In Progress.');
