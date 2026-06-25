@@ -31,17 +31,13 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 
 ## Workflow
 
-1. Create or pick a GitHub issue and move it to **In Progress**.
+1. Create or pick a GitHub issue on the Project board.
 2. Open a new Agent chat and use `/ship-issue #NN`.
 3. Follow the rules in `.cursor/rules/elegant-minimal-python.mdc` and this file.
 4. The `verifier` runs before a PR is created.
 5. Human reviews and approves before pushing or merging.
 
-## GitHub Project Automation
-
-When `/ship-issue` adds the `in-progress` label to an issue, the workflow in `.github/workflows/project-sync-in-progress.yml` automatically sets the linked Project card's **Status** to **In Progress**. This bridges Cursor's orchestrator step with the GitHub Project board without manual board updates.
-
-**One-time setup:** Add a repository secret named `PROJECTS_TOKEN` — a fine-grained PAT with **Projects: Read and write** for the repo owner (or a classic PAT with `project` and `repo` scopes). GitHub Actions' built-in `GITHUB_TOKEN` cannot access Projects v2.
+Project **Status** is handled by GitHub's built-in Project automations (e.g. PR linked → In Progress, PR merged → Done). No custom Actions or repo secrets are required.
 
 ## Slash Commands
 
