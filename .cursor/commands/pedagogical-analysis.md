@@ -11,7 +11,7 @@ Your task is to help the learner **understand** a GitHub issue (and the concepts
 3. **Teach, don't ship** — explain what, why, and how it fits. Do not commit, branch, or open PRs.
 4. If the user named **learning areas** or a **module topic** (e.g. “n8n Environment Setup”), map each area to concrete issue actions — and note honestly when a area belongs to a **later issue**.
 5. When `/ship-issue` has already been run (or is planned), mention **planned or actual commits** as practical examples of what landed in git.
-6. In **post-PR mode** (orchestrator handoff after PR publish), use the PR URL and commit summary provided; emphasize what shipped and what to try locally.
+6. **Post-PR** — follow `software-engineering-professor` → **Post-PR mode** (orchestrator defines the handoff).
 
 ## Output Expectations
 
@@ -32,10 +32,7 @@ Follow the professor agent’s structure:
 | **Post-PR** | `milestone-orchestrator` handoff after PR is published | What you just shipped |
 | **Standalone** | Human study session | Concepts + issue scope |
 
-## Collaboration
-
-- Post-PR: when the orchestrator invokes you (see **Post-PR handoff** in `milestone-orchestrator`).
-- For durable documentation updates, suggest **`docs-writer`** or a follow-up issue — do not silently rewrite repo docs unless asked.
+For durable doc updates, suggest **`docs-writer`** or a follow-up issue — do not silently rewrite repo docs unless asked.
 
 ## Goal
 

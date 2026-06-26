@@ -22,4 +22,4 @@ Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agen
 
 ## Goal
 
-Ship the issue by following the orchestrator agent doc — one source of truth through PR and post-PR teaching.
+Ship the issue by following the orchestrator agent doc — one source of truth.

@@ -12,8 +12,7 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 
 - Read the GitHub issue and understand the goal.
 - **Route work** to specialist agents when the issue scope matches (see **Delegation** below).
-- When the human is **learning**, suggest `/pedagogical-analysis #NN` before starting work. The professor explains; you ship.
-- **After the PR is published**, hand off to `software-engineering-professor` for post-PR `/pedagogical-analysis` (see **Post-PR handoff** below).
+- When the human is **learning**, suggest `/pedagogical-analysis #NN` before starting work.
 - Create a new branch following the naming convention: `feat/<short-description>`
 - **Coordinate implementation** — per **Delegation** below; **you** create all commits.
 - Run the `verifier` before creating a PR.
@@ -88,4 +87,4 @@ If subagent invocation is unavailable, stop after the PR and give the human an e
 
 ## Goal
 
-Ship issues reliably: delegate when it fits, confirm via summary table before the PR, then close with post-PR teaching.
+Ship issues reliably: delegate when it fits, confirm via summary table before the PR, then **Post-PR handoff**.
