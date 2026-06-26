@@ -36,7 +36,7 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 2. *(Optional, learning)* Use `/pedagogical-analysis #NN` before shipping when you want a friendly lecture on what the issue means.
 3. Open a new Agent chat and use `/ship-issue #NN`.
 4. Follow the rules in `.cursor/rules/elegant-minimal-python.mdc` and this file.
-5. The `verifier` runs before a PR is created.
+5. Orchestrator implements with granular commits → `verifier` runs → **commit summary table** (from git history) → human confirms → PR.
 6. Human reviews and approves before pushing or merging.
 
 Project **Status** is handled by GitHub's built-in Project automations (e.g. PR linked → In Progress, PR merged → Done). No custom Actions or repo secrets are required.
@@ -55,7 +55,8 @@ Project **Status** is handled by GitHub's built-in Project automations (e.g. PR 
 - Each commit should represent one logical change.
 - Only the `milestone-orchestrator` creates commits.
 - Run the verifier before creating a PR.
-- Every PR must start with a **Main contribution** paragraph.
+- Before opening a PR, present a **commit summary table** (commit, files, why) built from the branch history; human confirms once.
+- Every PR must start with a **Main contribution** paragraph and may include the commit summary table.
 - Human must approve before pushing or merging.
 
 ## Documentation
