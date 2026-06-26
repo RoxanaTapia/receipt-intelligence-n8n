@@ -33,11 +33,9 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 ## Workflow
 
 1. Create or pick a GitHub issue on the Project board.
-2. *(Optional, learning)* Use `/pedagogical-analysis #NN` before shipping when you want a friendly lecture on what the issue means.
-3. Open a new Agent chat and use `/ship-issue #NN`.
-4. Follow the rules in `.cursor/rules/elegant-minimal-python.mdc` and this file.
-5. Orchestrator **coordinates** (delegates to specialists when needed) → granular commits → `verifier` runs → **commit summary table** → human confirms → PR.
-6. Human reviews and approves before pushing or merging.
+2. *(Optional)* `/pedagogical-analysis #NN` before shipping.
+3. `/ship-issue #NN` — follow `.cursor/agents/milestone-orchestrator.md` (phases, delegation, commit summary before PR).
+4. Human approves push and merge.
 
 Project **Status** is handled by GitHub's built-in Project automations (e.g. PR linked → In Progress, PR merged → Done). No custom Actions or repo secrets are required.
 
@@ -51,13 +49,9 @@ Project **Status** is handled by GitHub's built-in Project automations (e.g. PR 
 
 ## Commit & PR Policy
 
-- Aim for **granular, reviewable commits** (ideally 1–4 per issue).
-- Each commit should represent one logical change.
-- Only the `milestone-orchestrator` creates commits; it may delegate drafts to `docs-writer`, `n8n-engineer`, or others first.
-- Run the verifier before creating a PR.
-- Before opening a PR, present a **commit summary table** (commit, files, why) built from the branch history; human confirms once.
-- Every PR must start with a **Main contribution** paragraph and may include the commit summary table.
-- Human must approve before pushing or merging.
+- Granular commits (ideally 1–4 per issue); delegation and phases → `milestone-orchestrator`.
+- Commit summary table from branch history; human confirms once before PR.
+- Verifier before PR; **Main contribution** in PR body; human approves push/merge.
 
 ## Documentation
 

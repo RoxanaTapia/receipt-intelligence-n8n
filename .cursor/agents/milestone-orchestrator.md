@@ -14,7 +14,7 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 - **Route work** to specialist agents when the issue scope matches (see **Delegation** below).
 - When the human is **learning**, suggest `/pedagogical-analysis #NN` before starting work. The professor explains; you ship.
 - Create a new branch following the naming convention: `feat/<short-description>`
-- **Coordinate implementation** — delegate drafts to specialists or implement directly when the change is small and clear; **you** create all commits.
+- **Coordinate implementation** — per **Delegation** below; **you** create all commits.
 - Run the `verifier` before creating a PR.
 - **Present a commit summary table** (from git history) with the proposed PR → wait for human confirmation before push/PR.
 - Write clear PR descriptions starting with a **Main contribution** paragraph; include the commit summary table.
@@ -37,7 +37,7 @@ Invoke specialists via Task/subagent when available. If not, do the work yoursel
 
 ## Shipping Phases
 
-1. **Coordinate & implement** — branch; delegate when helpful; granular commits (usually 1–4 per issue).
+1. **Coordinate & implement** — branch; per **Delegation**; granular commits (usually 1–4 per issue).
 2. **Verify** — run `verifier`; fix issues if needed.
 3. **Commit summary** — table of commits/files/why from `git log main..HEAD`; propose PR title and body.
 4. **PR** — after human confirms the summary, push and open the PR (`Closes #NN`).

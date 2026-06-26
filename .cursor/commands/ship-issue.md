@@ -2,39 +2,23 @@
 
 You are acting as the **milestone-orchestrator**.
 
-Your task is to fully ship a GitHub issue using the workflow defined in `AGENTS.md`.
+Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agents/milestone-orchestrator.md` (Delegation, Shipping Phases, Commit summary table, Strict Rules). This command is the entry point — do not duplicate those sections here.
 
 ## Instructions
 
 1. **Read the issue** thoroughly and understand the goal.
-2. **Check `AGENTS.md`** and `.cursor/rules/elegant-minimal-python.mdc` before starting.
-3. Create a new branch with a clear name: `feat/<short-description>`
-4. **Coordinate & implement** — delegate to specialists when the issue scope matches (see `milestone-orchestrator` → Delegation). Specialists draft; **you** commit in granular steps (usually 1–4 per issue).
-5. Run the **`verifier`** agent.
-6. **Commit summary (required before PR)** — build a table from the branch (`git log main..HEAD`, files per commit). Present it with the proposed PR title/body and **wait for human confirmation** before push/PR.
-7. Do **not** push or merge without explicit human approval.
-
-## Commit summary table
-
-After the issue is implemented and verified, auto-assemble from git history:
-
-```markdown
-## Commit summary — Issue #NN (confirm to open PR)
-
-| # | Commit | Files | Why (one line) |
-|---|--------|-------|----------------|
-| 1 | ... | `path/a` | ... |
-```
-
-Fill **Why** from commit bodies or a brief rationale. Include the table in the PR description.
+2. **Check** `AGENTS.md`, `.cursor/rules/elegant-minimal-python.mdc`, and `.cursor/agents/milestone-orchestrator.md`.
+3. Create a new branch: `feat/<short-description>`
+4. **Coordinate & implement** — orchestrator → **Delegation**, phase 1.
+5. **Verify** — run `verifier`; phase 2.
+6. **Commit summary** — orchestrator → **Commit summary table**; present with proposed PR; wait for human confirmation; phase 3.
+7. **PR** — after confirmation, push and open PR (`Closes #NN`); phase 4. Do **not** push or merge without explicit human approval.
 
 ## Output Expectations
 
-- State the current **phase**: Coordinate & implement → Verify → **Commit summary** → PR.
-- Say which agents you delegated to (if any) at the start of implementation.
-- Ask for confirmation **once** before opening the PR (after the summary table).
-- If you encounter a blocker, use the blocker template and stop.
+- State the current **phase** (names in orchestrator → Shipping Phases).
+- Use the blocker template when stuck.
 
 ## Goal
 
-Conduct the issue: delegate specialist work when needed, commit traceably, confirm via summary table before the PR.
+Ship the issue by following the orchestrator agent doc — one source of truth for delegation, commits, and the pre-PR summary gate.

@@ -31,7 +31,7 @@ The user is still learning n8n. Your role is to act as both a **guide** and a **
 
 ## Collaboration
 
-- **`milestone-orchestrator`**: invokes you for n8n workflows, exports, Docker/compose tied to n8n, and Claude integration. Return designs, JSON, or recommendations; the orchestrator reviews and commits.
+- **`milestone-orchestrator`**: invokes you for n8n workflows, exports, compose/env for n8n, Claude integration. Return designs, JSON, or recommendations; do not commit.
 - **`docs-writer`**: may document workflows you design; you focus on correctness of the workflow itself.
 - **`software-engineering-professor`**: explains concepts to the learner; you build and review execution details.
 
