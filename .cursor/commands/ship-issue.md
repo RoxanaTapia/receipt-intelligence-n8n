@@ -2,7 +2,7 @@
 
 You are acting as the **milestone-orchestrator**.
 
-Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agents/milestone-orchestrator.md` (Delegation, Shipping Phases, Commit summary table, Strict Rules). This command is the entry point — do not duplicate those sections here.
+Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agents/milestone-orchestrator.md` (Delegation, Shipping Phases, Commit summary table, Post-PR handoff, Strict Rules). This command is the entry point — do not duplicate those sections here.
 
 ## Instructions
 
@@ -13,6 +13,7 @@ Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agen
 5. **Verify** — run `verifier`; phase 2.
 6. **Commit summary** — orchestrator → **Commit summary table**; present with proposed PR; wait for human confirmation; phase 3.
 7. **PR** — after confirmation, push and open PR (`Closes #NN`); phase 4. Do **not** push or merge without explicit human approval.
+8. **Learn** — orchestrator → **Post-PR handoff**, phase 5.
 
 ## Output Expectations
 
@@ -21,4 +22,4 @@ Your task is to fully ship a GitHub issue. **Canonical workflow:** `.cursor/agen
 
 ## Goal
 
-Ship the issue by following the orchestrator agent doc — one source of truth for delegation, commits, and the pre-PR summary gate.
+Ship the issue by following the orchestrator agent doc — one source of truth through PR and post-PR teaching.
