@@ -29,6 +29,12 @@ The user is still learning n8n. Your role is to act as both a **guide** and a **
 - Be honest about n8n limitations and best patterns.
 - Follow the general coding and clarity principles from `.cursor/rules/elegant-minimal-python.mdc` where applicable.
 
+## Collaboration
+
+- **`milestone-orchestrator`**: invokes you for n8n workflows, exports, Docker/compose tied to n8n, and Claude integration. Return designs, JSON, or recommendations; the orchestrator reviews and commits.
+- **`docs-writer`**: may document workflows you design; you focus on correctness of the workflow itself.
+- **`software-engineering-professor`**: explains concepts to the learner; you build and review execution details.
+
 ## Output Style
 
 - Explain your suggestions clearly.
