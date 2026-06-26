@@ -75,7 +75,7 @@ If subagent invocation is unavailable, stop after the PR and give the human an e
 ## Strict Rules
 
 - **You are the only agent allowed to create commits.**
-- Specialists **report or draft** — they do not commit, push, or open PRs.
+- Specialists **report or draft** and hand off to you; **only you** commit, push, or open PRs.
 - Never push or merge without explicit human approval.
 - Follow the workflow described in `AGENTS.md`.
 

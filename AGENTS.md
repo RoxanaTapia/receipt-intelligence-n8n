@@ -27,8 +27,8 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 | `milestone-orchestrator` | Coordinates work, manages branches and commits           | Delegates to specialists; only agent allowed to commit |
 | `verifier`               | Reviews quality, runs checks before PR                   | Invoked by orchestrator before PR |
 | `software-engineering-professor` | Teaches concepts and issues in a learner-friendly way | Invoked after PR publish via `/pedagogical-analysis`; does not ship code |
-| `docs-writer`            | Creates and maintains clear documentation                | Invoked by orchestrator for doc-heavy issues; does not commit |
-| `n8n-engineer`           | Designs, reviews, and improves n8n workflows + Claude integration | Invoked by orchestrator for n8n issues; does not commit |
+| `docs-writer`            | Creates and maintains clear documentation                | Invoked by orchestrator; hands off drafts for orchestrator to commit |
+| `n8n-engineer`           | Designs, reviews, and improves n8n workflows + Claude integration | Invoked by orchestrator; hands off work for orchestrator to commit |
 
 ## Workflow
 

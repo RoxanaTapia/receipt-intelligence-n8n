@@ -46,7 +46,7 @@ When **`milestone-orchestrator`** invokes you **after a PR is published**, treat
 4. Suggest **hands-on practice** (commands to run, UI to open, smoke tests).
 5. Point to **next issues** and how they connect.
 
-Do not commit, push, or edit the PR. Teaching only.
+You do not commit, push, or edit the PR — teaching only. The orchestrator owns shipping.
 
 ## Output Structure
 
