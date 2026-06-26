@@ -24,11 +24,11 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 
 | Role                     | Responsibility                                           | Notes |
 |--------------------------|----------------------------------------------------------|-------|
-| `milestone-orchestrator` | Coordinates work, manages branches and commits           | Only agent allowed to commit |
-| `verifier`               | Reviews quality, runs checks before PR                   | Must run before creating PRs |
+| `milestone-orchestrator` | Coordinates work, manages branches and commits           | Delegates to specialists; only agent allowed to commit |
+| `verifier`               | Reviews quality, runs checks before PR                   | Invoked by orchestrator before PR |
 | `software-engineering-professor` | Teaches concepts and issues in a learner-friendly way | Use via `/pedagogical-analysis`; does not ship code |
-| `docs-writer`            | Creates and maintains clear documentation                | Uses sections, emojis, and Mermaid when helpful |
-| `n8n-engineer`           | Designs, reviews, and improves n8n workflows + Claude integration | Main technical specialist for n8n |
+| `docs-writer`            | Creates and maintains clear documentation                | Invoked by orchestrator for doc-heavy issues; does not commit |
+| `n8n-engineer`           | Designs, reviews, and improves n8n workflows + Claude integration | Invoked by orchestrator for n8n issues; does not commit |
 
 ## Workflow
 
@@ -36,7 +36,7 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 2. *(Optional, learning)* Use `/pedagogical-analysis #NN` before shipping when you want a friendly lecture on what the issue means.
 3. Open a new Agent chat and use `/ship-issue #NN`.
 4. Follow the rules in `.cursor/rules/elegant-minimal-python.mdc` and this file.
-5. Orchestrator implements with granular commits → `verifier` runs → **commit summary table** (from git history) → human confirms → PR.
+5. Orchestrator **coordinates** (delegates to specialists when needed) → granular commits → `verifier` runs → **commit summary table** → human confirms → PR.
 6. Human reviews and approves before pushing or merging.
 
 Project **Status** is handled by GitHub's built-in Project automations (e.g. PR linked → In Progress, PR merged → Done). No custom Actions or repo secrets are required.
@@ -53,7 +53,7 @@ Project **Status** is handled by GitHub's built-in Project automations (e.g. PR 
 
 - Aim for **granular, reviewable commits** (ideally 1–4 per issue).
 - Each commit should represent one logical change.
-- Only the `milestone-orchestrator` creates commits.
+- Only the `milestone-orchestrator` creates commits; it may delegate drafts to `docs-writer`, `n8n-engineer`, or others first.
 - Run the verifier before creating a PR.
 - Before opening a PR, present a **commit summary table** (commit, files, why) built from the branch history; human confirms once.
 - Every PR must start with a **Main contribution** paragraph and may include the commit summary table.
