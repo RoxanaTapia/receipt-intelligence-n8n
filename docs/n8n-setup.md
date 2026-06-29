@@ -56,7 +56,7 @@ Data persists in the `n8n_data` Docker volume across restarts.
 | `N8N_PORT` | Port exposed on your machine | `5678` |
 | `N8N_PROTOCOL` | `http` or `https` | `http` |
 | `WEBHOOK_URL` | Base URL for webhook triggers | `http://localhost:5678/` |
-| `GENERIC_TIMEZONE` | Timezone for schedules and dates | `America/New_York` |
+| `GENERIC_TIMEZONE` | Timezone for schedules and dates | `Europe/Berlin` |
 | `N8N_BASIC_AUTH_ACTIVE` | Require login before using the UI | `true` |
 | `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
 | `N8N_BASIC_AUTH_PASSWORD` | Basic auth password (**required**) | — |
