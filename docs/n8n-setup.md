@@ -70,9 +70,27 @@ See `.env.example` for a copy-paste template.
 - **Change the default password** before first run.
 - Workflows and credentials are stored in the `n8n_data` volume, not in git.
 
-## Next step: first test workflow
+## Workflows in git
 
-Once n8n is running, follow [issue #4](https://github.com/RoxanaTapia/receipt-intelligence-n8n/issues/4) to create and export a simple "hello world" workflow. That confirms the full loop: Docker → UI → run workflow → export JSON to the repo.
+Workflow JSON files live in [`workflows/`](../workflows/). They are the version-controlled source of truth; your running n8n instance stores its own copy in the `n8n_data` Docker volume.
+
+### Import a workflow
+
+1. Open [http://localhost:5678](http://localhost:5678) and log in.
+2. Go to **Workflows** (left sidebar) → **Add workflow** → **Import from file** (or use the **⋯** menu → **Import from file**).
+3. Select a JSON file from `workflows/` — start with [`hello-world.json`](../workflows/hello-world.json).
+4. Click **Execute workflow** and confirm the output in the **Set Test Payload** node:
+
+   ```json
+   {
+     "message": "Hello from Receipt Intelligence!",
+     "project": "receipt-intelligence-n8n"
+   }
+   ```
+
+### Export a workflow
+
+After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Save the JSON under `workflows/` and commit it so the team can import the same version.
 
 ## Troubleshooting
 
