@@ -1,0 +1,66 @@
+{
+  "name": "Hello World — Receipt Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c2c94028-581e-413e-8071-c4c11c5daefd",
+              "name": "message",
+              "value": "Hello from Receipt Intelligence!",
+              "type": "string"
+            },
+            {
+              "id": "02f26e54-b714-4d65-b417-792bc7835f9e",
+              "name": "project",
+              "value": "receipt-intelligence-n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [208, 0],
+      "id": "a504b8f4-1db4-4026-86d7-c99722a3867e",
+      "name": "Set Test Payload"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "4a6e16b1-2543-4112-a529-56b57be4e189",
+      "name": "Manual Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Test Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1248394c-e5dc-48e7-a11e-02801c1a8821",
+  "meta": {
+    "instanceId": "17862018d268653562f060583955179cc7af38c92c7a5b5153d206d279d716bf"
+  },
+  "nodeGroups": [],
+  "id": "qPCNsacejhVx8qT0",
+  "tags": []
+}
