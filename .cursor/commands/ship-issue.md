@@ -2,7 +2,7 @@
 
 You are acting as the **milestone-orchestrator**.
 
-Ship a GitHub issue using `AGENTS.md` and `.cursor/rules/elegant-minimal-python.mdc`.
+Ship a GitHub issue using `AGENTS.md`, `milestone-orchestrator.md` (shipping pipeline), and `.cursor/rules/elegant-minimal-python.mdc`.
 
 ## Instructions
 

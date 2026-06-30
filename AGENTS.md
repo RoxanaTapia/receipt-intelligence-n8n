@@ -57,9 +57,11 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 | `.cursor/rules/documentation.mdc` | Markdown doc style |
 | `.cursor/rules/elegant-minimal-python.mdc` | Python code style |
 
-**When to call specialists:** `.cursor/agents/milestone-orchestrator.md` (docs-writer triggers, etc.)
+**When to call specialists:** `.cursor/agents/milestone-orchestrator.md` (shipping pipeline and triggers)
 
 **Documentation process** (ownership, handoff): `.cursor/agents/docs-writer.md`
+
+**Inline vs repo docs:** Docstrings and code comments are part of normal implement work (`elegant-minimal-python.mdc`). Repo markdown (`docs/`, `README.md`, etc.) goes through docs-writer (`/document`) only when the orchestrator's docs-writer triggers match.
 
 ## Commit & PR Policy
 
