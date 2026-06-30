@@ -68,6 +68,16 @@ When pausing, emit this template:
 
 Common human checkpoints in this project: run workflow in local n8n UI, export workflow JSON, set secrets in `.env`, approve PR before push.
 
+## Documentation handoff
+
+Before running the **verifier**, confirm documentation for this issue is complete:
+
+1. **Primary deliverables** — docs created or updated by this issue are committed (e.g. setup guides, standards docs, workflow notes).
+2. **Cross-links** — only add links when this issue owns the target file. If a link belongs in a capstone doc owned by another issue (e.g. README in #2), do **not** edit that file; ensure the owning issue notes the dependency instead.
+3. **No scattered TODOs** — avoid PR comments like "README link in #2"; ownership lives in issue bodies per `AGENTS.md`.
+
+Report what was documented and any deferred cross-links (with the owning issue number) in the PR description.
+
 ## Goal
 
 Your job is to ship issues **reliably and cleanly**, while keeping the git history easy to understand.

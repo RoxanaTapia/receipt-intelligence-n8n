@@ -63,6 +63,15 @@ Project **Status** is handled by GitHub's built-in Project automations (e.g. PR 
 - Keep `AGENTS.md` reasonably up to date when we add important agents or commands.
 - Update documentation when workflows or important decisions change.
 
+### Documentation ownership (per issue)
+
+Each issue owns documentation for **what it ships**. Cross-cutting docs belong to designated capstone issues — do not update them from other PRs.
+
+- **Primary deliverable docs** (e.g. `docs/n8n-setup.md`, `docs/n8n-claude-standards.md`) are committed in the issue that creates them.
+- **Capstone docs** (e.g. root `README.md` in #2) are updated only by the issue that owns them.
+- **Cross-links** to docs owned by another issue: note the owning issue on GitHub — do not add README or capstone edits from non-owner PRs.
+- The orchestrator runs a **documentation handoff** step before the verifier on every `/ship-issue` (see `milestone-orchestrator.md`).
+
 ## Notes for Cursor
 
 When starting a new agent chat, read this file to understand the current agents, commands, and workflow.

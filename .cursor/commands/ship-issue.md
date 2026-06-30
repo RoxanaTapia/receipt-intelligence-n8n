@@ -15,11 +15,12 @@ Your task is to fully ship a GitHub issue using the workflow defined in `AGENTS.
    - Use the `verifier` agent before creating a PR.
    - Only you (the orchestrator) are allowed to commit.
    - Do **not** commit workflow JSON or close verification-dependent work until the human confirms local checks when the issue requires it.
-6. Before creating the PR, make sure:
+6. Run the **documentation handoff** (see `milestone-orchestrator.md`): commit primary deliverable docs for this issue; defer cross-links to capstone issues that own the target file; note deferred links in the PR body with the owning issue number.
+7. Before creating the PR, make sure:
    - All changes are clean and follow the coding standards.
    - The PR description starts with a **Main contribution** paragraph.
    - The PR closes the issue (`Closes #NN`).
-7. Do **not** push or merge without explicit human approval.
+8. Do **not** push or merge without explicit human approval.
 
 ## Output Expectations
 
