@@ -12,6 +12,7 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 
 - Read the GitHub issue and understand the goal.
 - Plan the work and decide which agents (if any) should be involved.
+- Involve **`claude-prompt-engineer`** when the issue involves drafting or reviewing Claude prompts in n8n.
 - Create a new branch following the naming convention: `feat/<short-description>`
 - Coordinate changes while following the rules in `AGENTS.md` and `.cursor/rules/elegant-minimal-python.mdc`
 - Make **granular, logical commits** (usually 1–4 per issue)

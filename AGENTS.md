@@ -29,6 +29,7 @@ Main technologies: **n8n** (core) + **Claude** + **FastAPI** (supporting backend
 | `software-engineering-professor` | Teaches concepts and issues in a learner-friendly way | Use via `/pedagogical-analysis`; does not ship code |
 | `docs-writer`            | Creates and maintains clear documentation                | Uses sections, emojis, and Mermaid when helpful |
 | `n8n-engineer`           | Designs, reviews, and improves n8n workflows + Claude integration | Main technical specialist for n8n |
+| `claude-prompt-engineer` | Drafts and reviews Claude prompts for n8n workflows      | Follows `docs/n8n-claude-standards.md` |
 
 ## Workflow
 
