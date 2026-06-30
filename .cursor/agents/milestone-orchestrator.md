@@ -23,9 +23,22 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 
 | Agent | When to involve |
 |-------|-----------------|
-| `docs-writer` | Doc triggers in `.cursor/agents/docs-writer.md` — run `/document` |
+| `docs-writer` | Issue creates or updates documentation — run `/document` (see triggers below) |
 | `claude-prompt-engineer` | Issue involves drafting or reviewing Claude prompts in n8n |
 | `verifier` | Always before PR — run `/verify` |
+
+### Docs-writer triggers
+
+Run **`/document`** when **any** of:
+
+- The issue creates or updates files under `docs/`
+- The issue creates or updates `README.md`, `AGENTS.md`, or `.cursor/agents/*.md`
+- Acceptance criteria mention documentation, setup guides, or standards
+
+**Skip `/document`** when:
+
+- The issue has no documentation deliverable — note in the PR: "docs-writer skipped — no doc deliverables"
+- Only a trivial one-line factual fix in existing docs (orchestrator may skip with brief note)
 
 ## Strict Rules
 
@@ -78,7 +91,7 @@ Common human checkpoints in this project: run workflow in local n8n UI, export w
 
 ## Documentation (before `/verify`)
 
-When doc triggers in `.cursor/agents/docs-writer.md` match, run **`/document`**, apply suggested edits, and commit (orchestrator only).
+When **docs-writer triggers** above match, run **`/document`**, apply suggested edits, and commit (orchestrator only).
 
 If triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
 
