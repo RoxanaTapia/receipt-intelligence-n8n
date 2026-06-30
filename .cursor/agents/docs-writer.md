@@ -25,19 +25,6 @@ Each issue owns documentation for **what it ships**.
 | **Cross-links** | If a link belongs in a capstone doc owned by another issue, do **not** edit that file — note the dependency in the owning issue body. |
 | **No scattered TODOs** | Do not rely on PR comments like "README link later"; ownership lives in issue bodies. |
 
-## When to invoke docs-writer
-
-**Run when any of:**
-
-- The issue creates or updates files under `docs/`
-- The issue creates or updates `README.md`, `AGENTS.md`, or `.cursor/agents/*.md`
-- Acceptance criteria mention documentation, setup guides, or standards
-
-**Skip when:**
-
-- The issue has no documentation deliverable (note "docs-writer skipped: no doc deliverables" in the PR)
-- Only a trivial one-line factual fix in existing docs (orchestrator may skip with brief note)
-
 ## Handoff checklist
 
 Before docs are ready for PR:
@@ -54,7 +41,7 @@ Before docs are ready for PR:
 
 ## Collaboration
 
-- **`milestone-orchestrator`**: ships issues; invokes you via `/document` when triggers above match
+- **`milestone-orchestrator`**: ships issues; invokes you via `/document` when its docs-writer triggers match
 - **`verifier`**: runs after you on `/ship-issue`; quality gate for the whole PR
 - **`claude-prompt-engineer`**: product prompts in `docs/n8n-claude-standards.md` — not repo doc style
 
