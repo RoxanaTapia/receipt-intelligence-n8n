@@ -25,8 +25,8 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 | Role | Responsibility | Notes |
 |------|----------------|-------|
 | `milestone-orchestrator` | Coordinates shipping, branches, commits | Only agent allowed to commit |
-| `docs-writer` | Documentation draft and review | Invoked via `/document`; rules in `document.md` |
-| `verifier` | Quality checks before PR | Invoked via `/verify` |
+| `docs-writer` | Documentation draft and review | `/document`; process in agent, style in `documentation.mdc` |
+| `verifier` | Quality checks before PR | `/verify`; code style in `elegant-minimal-python.mdc` |
 | `software-engineering-professor` | Teaches issues and concepts | `/pedagogical-analysis`; does not ship |
 | `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes |
 | `claude-prompt-engineer` | Claude prompts in n8n | Follows `docs/n8n-claude-standards.md` |
@@ -46,11 +46,18 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 | Command | Purpose |
 |---------|---------|
 | `/ship-issue` | Ship one GitHub issue end-to-end |
-| `/document` | Documentation ownership, handoff, style, and review |
+| `/document` | Run docs-writer review (ownership, handoff, style) |
 | `/verify` | Quality verification before PR |
 | `/pedagogical-analysis` | Teach an issue (learner mode) |
 
-**Documentation rules:** `.cursor/commands/document.md` (single source of truth).
+## Rules
+
+| Rule | Scope |
+|------|-------|
+| `.cursor/rules/documentation.mdc` | Markdown doc style |
+| `.cursor/rules/elegant-minimal-python.mdc` | Python code style |
+
+**Documentation process** (ownership, handoff, triggers): `.cursor/agents/docs-writer.md`
 
 ## Commit & PR Policy
 
@@ -62,4 +69,4 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 
 ## Notes for Cursor
 
-Read this file at the start of a new agent chat. For documentation work, read `.cursor/commands/document.md`.
+Read this file at the start of a new agent chat. For documentation work, read `docs-writer.md` and `documentation.mdc`.

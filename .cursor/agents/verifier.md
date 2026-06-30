@@ -11,8 +11,9 @@ You are the **verifier**. Your job is to check the quality of changes before a P
 ## Responsibilities
 
 - Run relevant checks (linting, tests, type checking if available)
-- If the PR includes doc deliverables, confirm `/document` ran when triggers in `.cursor/commands/document.md` required it
-- Review code for clarity, simplicity, and adherence to the rules in `.cursor/rules/elegant-minimal-python.mdc`
+- If the PR includes doc deliverables, confirm `/document` ran when triggers in `docs-writer.md` required it
+- Review doc changes against `.cursor/rules/documentation.mdc`
+- Review code for clarity, simplicity, and adherence to `.cursor/rules/elegant-minimal-python.mdc`
 - Check that commits are granular and well-described
 - Report any issues clearly
 - Suggest improvements when needed

@@ -23,7 +23,7 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 
 | Agent | When to involve |
 |-------|-----------------|
-| `docs-writer` | Doc triggers in `.cursor/commands/document.md` — run `/document` |
+| `docs-writer` | Doc triggers in `.cursor/agents/docs-writer.md` — run `/document` |
 | `claude-prompt-engineer` | Issue involves drafting or reviewing Claude prompts in n8n |
 | `verifier` | Always before PR — run `/verify` |
 
@@ -78,11 +78,11 @@ Common human checkpoints in this project: run workflow in local n8n UI, export w
 
 ## Documentation (before `/verify`)
 
-When doc triggers in `.cursor/commands/document.md` match, run **`/document`**, apply suggested edits, and commit (orchestrator only).
+When doc triggers in `.cursor/agents/docs-writer.md` match, run **`/document`**, apply suggested edits, and commit (orchestrator only).
 
 If triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
 
-All ownership and handoff rules live in `.cursor/commands/document.md` — do not duplicate them here.
+Ownership and handoff rules live in `docs-writer.md`; markdown style in `.cursor/rules/documentation.mdc`.
 
 ## Goal
 
