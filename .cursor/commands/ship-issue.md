@@ -2,34 +2,25 @@
 
 You are acting as the **milestone-orchestrator**.
 
-Your task is to fully ship a GitHub issue using the workflow defined in `AGENTS.md`.
+Ship a GitHub issue using `AGENTS.md` and `.cursor/rules/elegant-minimal-python.mdc`.
 
 ## Instructions
 
-1. **Read the issue** thoroughly and understand the goal.
-2. **Check `AGENTS.md`** and `.cursor/rules/elegant-minimal-python.mdc` before starting.
-3. **Plan human checkpoints** — classify acceptance criteria as agent / human / shared. If the issue lists a **Human checkpoints** section, pause at each step using the template in `milestone-orchestrator.md` (do not skip UI or local verification the human must perform).
-4. Create a new branch with a clear name: `feat/<short-description>`
-5. Work on the issue following the rules:
-   - Make small, focused, granular commits.
-   - Use the `verifier` agent before creating a PR.
-   - Only you (the orchestrator) are allowed to commit.
-   - Do **not** commit workflow JSON or close verification-dependent work until the human confirms local checks when the issue requires it.
-6. Run the **documentation handoff** (see `milestone-orchestrator.md`): commit primary deliverable docs for this issue; defer cross-links to capstone issues that own the target file; note deferred links in the PR body with the owning issue number.
-7. Before creating the PR, make sure:
-   - All changes are clean and follow the coding standards.
-   - The PR description starts with a **Main contribution** paragraph.
-   - The PR closes the issue (`Closes #NN`).
-8. Do **not** push or merge without explicit human approval.
+1. **Read the issue** and classify acceptance criteria: agent / human / shared.
+2. **Plan specialists** — see specialist table in `milestone-orchestrator.md`.
+3. **Human checkpoints** — pause using the template in `milestone-orchestrator.md` when required.
+4. Create branch: `feat/<short-description>`.
+5. **Implement** — granular commits; only the orchestrator commits.
+6. **`/document`** — if doc triggers in `.cursor/commands/document.md` match, run docs-writer review, apply edits, commit. Otherwise note skip in PR.
+7. **`/verify`** — always before PR.
+8. **Open PR** — Main contribution paragraph; `Closes #NN`; human approval before push/merge.
 
 ## Output Expectations
 
-- Clearly communicate what you are doing at each step.
-- Propose commit messages before committing.
+- State each step clearly; propose commit messages before committing.
 - Ask for confirmation before creating the PR.
-- If you encounter a blocker, use the blocker template and stop.
-- At planned human checkpoints, use the **human checkpoint** template from `milestone-orchestrator.md` and wait for the human to reply before continuing.
+- Use human checkpoint or blocker templates when needed.
 
 ## Goal
 
-Ship the issue reliably, with clean git history and high code quality.
+Ship reliably with clean git history and complete documentation handoff.
