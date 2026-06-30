@@ -19,17 +19,34 @@ You are the **milestone-orchestrator**. You are the main coordinator for shippin
 - Stop and report blockers when necessary using the blocker template
 - Pause at **human checkpoints** when the issue requires action only the human can perform (e.g. n8n UI, local verification, secrets)
 
+## Shipping pipeline
+
+During `/ship-issue`, follow this order in **one session** (you remain the orchestrator; gated steps use commands to switch role):
+
+1. **Read issue** — classify acceptance criteria: agent / human / shared.
+2. **Plan specialists** — use the table below; consult agents during implement, gate before PR.
+3. **Branch** — `feat/<short-description>`.
+4. **Implement** — commit granular changes. Consult `n8n-engineer` / `claude-prompt-engineer` as needed. Write inline docstrings and code comments per `elegant-minimal-python.mdc` (not docs-writer).
+5. **Human checkpoints** — pause when the issue requires them; resume when the human confirms.
+6. **Invoke docs-writer** — if docs-writer triggers match, follow `.cursor/commands/document.md` (act as docs-writer), apply edits, commit. Otherwise note in the PR: "docs-writer skipped — no doc deliverables."
+7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR.
+8. **Open PR** — Main contribution; `Closes #NN`; wait for human approval before push/merge.
+
+**How gated steps work:** following `/document` or `/verify` means you adopt that agent's playbook in this chat, then return to orchestrator duties (commits, PR). You do not spawn a separate process unless explicitly using a subagent.
+
 ## Specialist agents
 
-| Agent | When to involve |
-|-------|-----------------|
-| `docs-writer` | Issue creates or updates documentation — run `/document` (see triggers below) |
-| `claude-prompt-engineer` | Issue involves drafting or reviewing Claude prompts in n8n |
-| `verifier` | Always before PR — run `/verify` |
+| Agent | When to involve | How |
+|-------|-----------------|-----|
+| `n8n-engineer` | Workflow design or review; changes under `workflows/`; n8n UI export/import | **Consult** during implement — read `n8n-engineer.md` |
+| `claude-prompt-engineer` | Drafting or reviewing Claude prompts in n8n | **Consult** during implement — read `claude-prompt-engineer.md` |
+| `docs-writer` | Issue creates or updates markdown documentation (see triggers below) | **Gate** — follow `/document` before `/verify` |
+| `verifier` | Every issue | **Gate** — follow `/verify` before PR |
+| `software-engineering-professor` | Learning before building | **Outside** `/ship-issue` — user runs `/pedagogical-analysis` |
 
 ### Docs-writer triggers
 
-Run **`/document`** when **any** of:
+Follow **`/document`** when **any** of:
 
 - The issue creates or updates files under `docs/`
 - The issue creates or updates `README.md`, `AGENTS.md`, or `.cursor/agents/*.md`
@@ -39,6 +56,27 @@ Run **`/document`** when **any** of:
 
 - The issue has no documentation deliverable — note in the PR: "docs-writer skipped — no doc deliverables"
 - Only a trivial one-line factual fix in existing docs (orchestrator may skip with brief note)
+
+### n8n-engineer triggers
+
+**Consult** `n8n-engineer` during implement when **any** of:
+
+- The issue designs, reviews, or exports n8n workflows
+- The issue changes files under `workflows/`
+- The issue lists human checkpoints for n8n UI verification
+
+### claude-prompt-engineer triggers
+
+**Consult** `claude-prompt-engineer` during implement when **any** of:
+
+- The issue involves drafting or reviewing Claude prompts in n8n
+- The issue changes prompt text or AI node configuration
+- The issue references `docs/n8n-claude-standards.md`
+
+## Inline vs repo documentation
+
+- **Inline** (docstrings, brief code comments): part of every agent's implement work — follow `elegant-minimal-python.mdc`. Does not invoke docs-writer.
+- **Repo markdown** (`docs/`, `README.md`, etc.): docs-writer via `/document` when triggers above match.
 
 ## Strict Rules
 
@@ -89,13 +127,13 @@ When pausing, emit this template:
 
 Common human checkpoints in this project: run workflow in local n8n UI, export workflow JSON, set secrets in `.env`, approve PR before push.
 
-## Documentation (before `/verify`)
+## Invoke docs-writer via `/document`
 
-When **docs-writer triggers** above match, run **`/document`**, apply suggested edits, and commit (orchestrator only).
+When **docs-writer triggers** match, follow `.cursor/commands/document.md` — that activates docs-writer behavior in this session. Apply suggested edits and commit (orchestrator only).
 
 If triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
 
-Ownership and handoff rules live in `docs-writer.md`; markdown style in `.cursor/rules/documentation.mdc`.
+Ownership and handoff rules: `docs-writer.md`. Markdown style: `.cursor/rules/documentation.mdc`.
 
 ## Goal
 
