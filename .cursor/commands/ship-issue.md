@@ -11,7 +11,7 @@ Ship a GitHub issue using `AGENTS.md` and `.cursor/rules/elegant-minimal-python.
 3. **Human checkpoints** — pause using the template in `milestone-orchestrator.md` when required.
 4. Create branch: `feat/<short-description>`.
 5. **Implement** — granular commits; only the orchestrator commits.
-6. **`/document`** — if doc triggers in `.cursor/commands/document.md` match, run docs-writer review, apply edits, commit. Otherwise note skip in PR.
+6. **`/document`** — if doc triggers in `.cursor/agents/docs-writer.md` match, run docs-writer review, apply edits, commit. Otherwise note skip in PR.
 7. **`/verify`** — always before PR.
 8. **Open PR** — Main contribution paragraph; `Closes #NN`; human approval before push/merge.
 
