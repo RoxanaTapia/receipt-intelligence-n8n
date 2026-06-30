@@ -1,0 +1,29 @@
+---
+description: Markdown documentation style for docs/, README, and agent docs
+globs: docs/**/*.md, README.md, AGENTS.md, .cursor/agents/**/*.md
+alwaysApply: false
+---
+
+# Documentation Style
+
+Apply when writing or editing markdown documentation in this repository.
+
+## Structure
+
+- Clear sections and headings; bullets, lists, and tables when they help
+- Concise but complete; easy for humans and future agents to read
+
+## Tone
+
+- Professional, warm, approachable
+- **Meaningful emojis** in moderation (✅ 🚀 📌 ⚠️) — support scanning, not decoration
+
+## Diagrams
+
+- Use **Mermaid** for processes, architecture, or workflows when it genuinely helps
+- Skip diagrams for simple content
+
+## Links and paths
+
+- Use relative links within the repo
+- Do not duplicate long setup steps that live in dedicated docs — link instead
