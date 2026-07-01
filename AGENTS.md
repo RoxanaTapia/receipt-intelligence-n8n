@@ -26,7 +26,7 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 |------|----------------|-------|
 | `milestone-orchestrator` | Coordinates shipping, branches, commits | Only agent allowed to commit; decides when to call specialists |
 | `docs-writer` | Documentation draft and review | `/document`; ownership/handoff in agent, style in `documentation.mdc` |
-| `verifier` | Quality checks before PR | `/verify`; code style in `elegant-minimal-python.mdc` |
+| `verifier` | Quality checks and acceptance criteria before PR | `/verify`; blocks PR if criteria ❌ missing |
 | `software-engineering-professor` | Teaches issues and concepts | `/pedagogical-analysis`; does not ship |
 | `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes |
 | `claude-prompt-engineer` | Claude prompts in n8n | Follows `docs/n8n-claude-standards.md` |
@@ -36,8 +36,9 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 1. Pick a GitHub issue on the Project board.
 2. *(Optional)* `/pedagogical-analysis #NN` — learn before building.
 3. `/ship-issue #NN` — orchestrator implements with specialist support.
-4. Inside shipping: run **`/document`** only if the issue creates or updates documentation (orchestrator decides per triggers in `milestone-orchestrator.md`); otherwise skip and note in the PR → always run **`/verify`** → PR.
-5. Human reviews and approves before push or merge.
+4. Inside shipping: run **`/document`** only if the issue creates or updates documentation (orchestrator decides per triggers in `milestone-orchestrator.md`); otherwise skip and note in the PR → always run **`/verify`** (maps acceptance criteria) → PR with test plan from the same criteria.
+5. Human reviews PR test plan and approves before push or merge.
+6. After merge: **`/ship-complete #NN`** — tick acceptance criteria checkboxes on the issue.
 
 Project **Status** uses GitHub Project automations (PR linked → In Progress; merged → Done).
 
@@ -47,7 +48,8 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 |---------|---------|
 | `/ship-issue` | Ship one GitHub issue end-to-end |
 | `/document` | Run docs-writer review (ownership, handoff, style) |
-| `/verify` | Quality verification before PR |
+| `/verify` | Quality verification and acceptance criteria coverage before PR |
+| `/ship-complete` | After merge — tick issue acceptance criteria checkboxes |
 | `/pedagogical-analysis` | Teach an issue (learner mode) |
 
 ## Rules

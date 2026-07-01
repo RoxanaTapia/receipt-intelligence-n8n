@@ -12,8 +12,9 @@ Ship a GitHub issue using `AGENTS.md`, `milestone-orchestrator.md` (shipping pip
 4. Create branch: `feat/<short-description>`.
 5. **Implement** — granular commits; only the orchestrator commits.
 6. **`/document`** — run docs-writer review only if docs-writer triggers in `milestone-orchestrator.md` match (issue creates or updates documentation); apply edits, commit. Otherwise note "docs-writer skipped — no doc deliverables" in the PR.
-7. **`/verify`** — always before PR.
-8. **Open PR** — Main contribution paragraph; `Closes #NN`; human approval before push/merge.
+7. **`/verify`** — always before PR; maps every acceptance criterion (block if any ❌ missing).
+8. **Open PR** — Main contribution paragraph; `Closes #NN`; test plan copied from issue acceptance criteria; human approval before push/merge.
+9. **After merge** — human runs or requests **`/ship-complete #NN`** to tick issue checkboxes.
 
 ## Output Expectations
 
