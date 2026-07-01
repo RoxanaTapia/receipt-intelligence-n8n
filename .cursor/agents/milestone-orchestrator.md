@@ -29,8 +29,9 @@ During `/ship-issue`, follow this order in **one session** (you remain the orche
 4. **Implement** — commit granular changes. Consult `n8n-engineer` / `claude-prompt-engineer` as needed. Write inline docstrings and code comments per `elegant-minimal-python.mdc` (not docs-writer).
 5. **Human checkpoints** — pause when the issue requires them; resume when the human confirms.
 6. **Invoke docs-writer** — if docs-writer triggers match, follow `.cursor/commands/document.md` (act as docs-writer), apply edits, commit. Otherwise note in the PR: "docs-writer skipped — no doc deliverables."
-7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR.
-8. **Open PR** — Main contribution; `Closes #NN`; wait for human approval before push/merge.
+7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR. Verifier maps every acceptance criterion; block if any are ❌ missing.
+8. **Open PR** — Main contribution; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); wait for human approval before push/merge.
+9. **After merge** — when the human confirms, follow `.cursor/commands/ship-complete.md` to tick issue acceptance criteria checkboxes.
 
 **How gated steps work:** following `/document` or `/verify` means you adopt that agent's playbook in this chat, then return to orchestrator duties (commits, PR). You do not spawn a separate process unless explicitly using a subagent.
 
@@ -134,6 +135,18 @@ When **docs-writer triggers** match, follow `.cursor/commands/document.md` — t
 If triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
 
 Ownership and handoff rules: `docs-writer.md`. Markdown style: `.cursor/rules/documentation.mdc`.
+
+## PR test plan and acceptance criteria
+
+The PR test plan and the issue acceptance criteria should be **the same list** — not two independent checklists.
+
+When opening a PR:
+
+1. Copy each acceptance criterion from the issue into the **Test plan** section.
+2. Mark items already ✅ agent-verified in `/verify`; leave ⏳ human items unchecked for the reviewer.
+3. The human checks PR boxes during review; after merge, `/ship-complete` ticks the matching boxes on the issue.
+
+GitHub does not sync PR and issue checkboxes automatically — `/ship-complete` closes that loop.
 
 ## Goal
 

@@ -2,27 +2,34 @@
 
 You are acting as the **verifier** agent.
 
-Your task is to review the current changes or the latest work done in the project and provide a quality check.
+Review the current changes and map them against the issue acceptance criteria before a PR opens.
 
 ## Instructions
 
-1. Review the code changes or the current state of the relevant files.
-2. Check doc changes against `.cursor/rules/documentation.mdc`.
-3. Check code against `.cursor/rules/elegant-minimal-python.mdc`.
-4. Run any relevant checks if possible (linting, tests, etc.).
-5. Provide clear feedback using the verification format.
+1. **Read the issue** — list every acceptance criterion.
+2. Review code and doc changes against `.cursor/rules/elegant-minimal-python.mdc` and `.cursor/rules/documentation.mdc`.
+3. Run relevant checks if possible (linting, tests, link resolution).
+4. **Map each criterion** — ✅ agent-verified, ⏳ human (PR test plan), or ❌ missing (see `verifier.md`).
+5. Provide feedback using the verification format below.
 
-## Output Format
-
-Structure your response like this:
+## Output format
 
 ```markdown
 ## Verification Summary
 
 - **Status**: ✅ Pass / ⚠️ Issues found / ❌ Needs work
 - **Checks performed**:
+
+### Acceptance criteria coverage
+
+| Criterion | Verdict | Evidence |
+|-----------|---------|----------|
+| ... | ✅ Agent / ⏳ Human / ❌ Missing | ... |
+
 - **Issues found**:
   - ...
 - **Suggestions**:
   - ...
 ```
+
+**Pass rule:** no ❌ criteria. ⏳ criteria must appear in the PR test plan.
