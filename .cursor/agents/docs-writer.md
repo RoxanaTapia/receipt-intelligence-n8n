@@ -33,6 +33,7 @@ Before docs are ready for PR:
 - [ ] Cross-links added only when this issue owns the target file
 - [ ] Deferred capstone links noted in PR description with owning issue number
 - [ ] Style from `.cursor/rules/documentation.mdc` applied
+- [ ] **Real paths only** — linked relative paths resolve to files that exist; repo structure sections match the tree today (no placeholder paths, empty directories, or `TBD` / "coming soon" unless an owning issue explicitly defers them)
 
 ## Rules
 
