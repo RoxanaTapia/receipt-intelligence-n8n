@@ -27,3 +27,4 @@ Apply when writing or editing markdown documentation in this repository.
 
 - Use relative links within the repo
 - Do not duplicate long setup steps that live in dedicated docs — link instead
+- Document **real paths** that exist today; do not list placeholder directories or aspirational structure unless clearly marked as future work with an owning issue
