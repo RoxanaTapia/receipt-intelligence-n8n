@@ -3,6 +3,9 @@
 .env.local
 .env.*.local
 
+# Local-only receipt PDFs (never commit real receipts)
+samples/receipts/private/
+
 # macOS
 .DS_Store
 
