@@ -68,8 +68,14 @@ Real receipts stay in `samples/receipts/private/` on your machine — never comm
 Module 2 workflows read PDFs from this directory during local development:
 
 1. Start n8n — see [docs/n8n-setup.md](../docs/n8n-setup.md)
-2. Run the PDF ingest workflow (issue #25) with a file from `samples/receipts/`
-3. Downstream steps extract text (#25), structure with Claude (#26), validate (#27), and persist (#28)
+2. Copy a sample into the n8n container (required for Docker — n8n only reads `/home/node/.n8n-files`):
+
+   ```bash
+   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
+   ```
+
+3. Import and run [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — full steps in [docs/n8n-setup.md](../docs/n8n-setup.md#run-the-pdf-ingest-workflow)
+4. Downstream steps structure with Claude (#26), validate (#27), and persist (#28)
 
 Production intake (email, upload API, etc.) is out of scope for Module 2; these fixtures simulate that input for reproducible demos.
 

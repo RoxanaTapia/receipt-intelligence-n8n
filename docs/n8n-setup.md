@@ -92,6 +92,24 @@ Workflow JSON files live in [`workflows/`](../workflows/). They are the version-
 
 After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Save the JSON under `workflows/` and commit it so the team can import the same version.
 
+### Run the PDF ingest workflow
+
+[`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) reads a sample PDF and outputs raw text (no Claude step).
+
+1. Import the workflow (see **Import a workflow** above).
+2. Copy a sample PDF into n8n’s allowed files directory (Docker only reads under `/home/node/.n8n-files`):
+
+   ```bash
+   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
+   ```
+
+   Run from the repo root. Replace the container name if yours differs (`docker compose ps`).
+
+3. Open the workflow → **Execute workflow**.
+4. Check **Extract from File — PDF to Text** for raw receipt text in the output.
+
+To try another sample, copy it the same way and update the path in **Read Binary File — Sample Receipt**, or re-export the workflow with a new path.
+
 ## Troubleshooting
 
 | Problem | What to try |
@@ -100,3 +118,4 @@ After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Sa
 | `N8N_BASIC_AUTH_PASSWORD` error on start | Create `.env` from `.env.example` and set a password |
 | Container exits immediately | Run `docker compose logs n8n` and check for env or port conflicts |
 | Fresh start (wipe workflows) | `docker compose down -v` (**deletes** the `n8n_data` volume) |
+| Read Binary File: "Access to the file is not allowed" | n8n only allows paths under `/home/node/.n8n-files`. Copy the PDF there with `docker cp` (see **Run the PDF ingest workflow**) |
