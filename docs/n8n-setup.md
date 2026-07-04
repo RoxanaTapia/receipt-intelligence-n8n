@@ -60,6 +60,7 @@ Data persists in the `n8n_data` Docker volume across restarts.
 | `N8N_BASIC_AUTH_ACTIVE` | Require login before using the UI | `true` |
 | `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
 | `N8N_BASIC_AUTH_PASSWORD` | Basic auth password (**required**) | — |
+| `ANTHROPIC_API_KEY` | Anthropic API key for Claude nodes (optional until #26) | — |
 
 See `.env.example` for a copy-paste template.
 
