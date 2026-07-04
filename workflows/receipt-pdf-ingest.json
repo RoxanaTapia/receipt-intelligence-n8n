@@ -1,0 +1,81 @@
+{
+  "name": "Receipt — Ingest PDF",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e43c0c98-9c6a-4d11-b7f8-555288fddef4",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/03-small.pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6f6b1523-60a4-4d4b-8841-5caef0e2eae1",
+      "name": "Read Binary File — Sample Receipt"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "33cca2da-141a-4532-865a-ade31516dcce",
+      "name": "Extract from File — PDF to Text"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Binary File — Sample Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Binary File — Sample Receipt": {
+      "main": [
+        [
+          {
+            "node": "Extract from File — PDF to Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "573f97fc-2b44-4fe3-8bba-33a7dfa6da31",
+  "meta": {
+    "instanceId": "17862018d268653562f060583955179cc7af38c92c7a5b5153d206d279d716bf"
+  },
+  "nodeGroups": [],
+  "id": "nlkJzQiatzF4519n",
+  "tags": []
+}
