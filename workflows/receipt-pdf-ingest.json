@@ -39,6 +39,53 @@
       ],
       "id": "33cca2da-141a-4532-865a-ade31516dcce",
       "name": "Extract from File — PDF to Text"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-6"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=## System\nYou are a receipt data extractor for the Receipt Intelligence System.\nReturn one JSON object only — no markdown fences, no explanation.\nAll numbers must be JSON numbers (not strings). Use EUR.\nEvery line_item must include description, quantity, and price.\n\n## Task\nFrom the receipt text below, extract:\n- merchant: store name (string)\n- date: transaction date as YYYY-MM-DD\n- total: final amount paid (number)\n- line_items: purchased products only\n\nRules for line_items:\n- description: product name ONLY — never include prices, quantities, or \"N Stk x price\" text\n- quantity: count or weight as number (use 1 when a single unit is sold)\n- price: line total for that product row (number)\n\nGerman supermarket rules:\n- A line like \"2 Stk x 0,89\" or \"3 Stk x 1,99\" is a quantity breakdown for the product on the line ABOVE it — do NOT create a separate line_item for it. Instead, set that product's quantity and price from the combined rows.\n- Never use generic names like \"Artikel\" — always use the actual product name from the receipt.\n- PFAND (deposit) is a real line_item with description \"PFAND\".\n- Lines like \"kg x price/kg\" are one item: description = product name, quantity = weight in kg, price = line total.\n- Exclude: subtotals, tax, payment method, change, loyalty/bonus lines, store address.\n\n## Receipt text\n{{ $json.text }}\n\n## Output format\nReturn exactly this shape and nothing else:\n{\n  \"merchant\": \"Muster Supermarkt\",\n  \"date\": \"2024-03-15\",\n  \"total\": 12.34,\n  \"line_items\": [\n    { \"description\": \"Tomaten\", \"quantity\": 0.5, \"price\": 1.99 }\n  ]\n}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 2048
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "f7d5c8b2-5493-4f4a-9202-253b3b4dadc5",
+      "name": "Claude — Extract Receipt",
+      "credentials": {
+        "anthropicApi": {
+          "id": "1ly0gyOA8jc5WLtJ",
+          "name": "Anthropic — Receipt Intelligence"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\nreturn [{ json: JSON.parse(raw.trim()) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        0
+      ],
+      "id": "dcef2e76-cf8a-455e-930b-4b94c84e9ede",
+      "name": "Code — Parse Receipt JSON"
     }
   ],
   "pinData": {},
@@ -64,6 +111,28 @@
           }
         ]
       ]
+    },
+    "Extract from File — PDF to Text": {
+      "main": [
+        [
+          {
+            "node": "Claude — Extract Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude — Extract Receipt": {
+      "main": [
+        [
+          {
+            "node": "Code — Parse Receipt JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -71,8 +140,9 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "573f97fc-2b44-4fe3-8bba-33a7dfa6da31",
+  "versionId": "bb434040-95dd-41b4-9ffc-5d79d86cd652",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "17862018d268653562f060583955179cc7af38c92c7a5b5153d206d279d716bf"
   },
   "nodeGroups": [],
