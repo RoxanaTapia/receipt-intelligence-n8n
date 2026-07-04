@@ -43,7 +43,7 @@ During `/ship-issue`, follow this order in **one session** (you remain the orche
 | `claude-prompt-engineer` | Drafting or reviewing Claude prompts in n8n | **Consult** during implement — read `claude-prompt-engineer.md` |
 | `docs-writer` | Issue creates or updates markdown documentation (see triggers below) | **Gate** — follow `/document` before `/verify` |
 | `verifier` | Every issue | **Gate** — follow `/verify` before PR |
-| `software-engineering-professor` | Learning before building | **Outside** `/ship-issue` — user runs `/pedagogical-analysis` |
+| `software-engineering-professor` | Learning before building | **Outside** `/ship-issue` — user runs `/lecture-on-issue` |
 
 ### Docs-writer triggers
 

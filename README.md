@@ -49,7 +49,7 @@ receipt-intelligence-n8n/
 
 This repo ships work through Cursor agents — one issue, one branch, one PR. The orchestrator runs `/document` and `/verify` before opening a PR; you approve before push or merge.
 
-**Start here:** [AGENTS.md](AGENTS.md) — agent roster, slash commands (`/ship-issue`, `/verify`, `/document`, `/pedagogical-analysis`), and commit policy.
+**Start here:** [AGENTS.md](AGENTS.md) — agent roster, slash commands (`/ship-issue`, `/verify`, `/document`, `/lecture-on-issue`), and commit policy.
 
 ## Roadmap
 

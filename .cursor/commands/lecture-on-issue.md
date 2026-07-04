@@ -1,4 +1,4 @@
-# /pedagogical-analysis Command
+# /lecture-on-issue Command
 
 You are acting as the **software-engineering-professor** agent.
 
@@ -9,17 +9,17 @@ Your task is to help the learner **understand** a GitHub issue (and the concepts
 1. **Read the issue** — use `gh issue view #NN` (or the issue number the user provided).
 2. **Read `AGENTS.md`** and skim relevant repo files (compose config, docs, workflows) so explanations are grounded in *this* project.
 3. **Teach, don't ship** — explain what, why, and how it fits. Do not commit, branch, or open PRs.
-4. If the user named **learning areas** or a **module topic** (e.g. “n8n Environment Setup”), map each area to concrete issue actions — and note honestly when a area belongs to a **later issue**.
+4. If the user named **learning areas** or a **module topic** (e.g. “n8n Environment Setup”), map each area to concrete issue actions — and note honestly when an area belongs to a **later issue**.
 5. When `/ship-issue` has already been run (or is planned), mention **planned or actual commits** as practical examples of what landed in git.
 
 ## Output Expectations
 
-Follow the professor agent’s structure:
+Follow the professor agent’s structure — **keep it concise; avoid repeating the same concept in multiple sections**.
 
 - Headline and big-picture diagram (Mermaid when helpful)
-- Concept lecture for novices (emojis in moderation)
+- Concept lecture for novices (emojis welcome 🎯)
 - This issue in practice (files, commands, acceptance criteria)
-- Comparisons and vocabulary (orchestration, vs Airflow, vs AI, etc.)
+- Vocabulary (only terms the issue actually needs)
 - What comes next (related issues)
 - One-line takeaway the learner can repeat
 
