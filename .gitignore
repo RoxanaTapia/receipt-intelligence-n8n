@@ -6,6 +6,12 @@
 # Local-only receipt PDFs (never commit real receipts)
 samples/receipts/private/
 
+# Receipt JSON outputs (runtime files local-only; showcase committed)
+data/receipts/*.json
+!data/receipts/example.json
+data/receipts/private/*
+!data/receipts/private/.gitkeep
+
 # macOS
 .DS_Store
 
