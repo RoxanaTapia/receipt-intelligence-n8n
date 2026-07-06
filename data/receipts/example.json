@@ -1,22 +1,22 @@
 {
-  "date": "2024-03-15",
+  "date": "2026-05-19",
   "line_items": [
     {
-      "description": "Brot",
-      "quantity": 1,
-      "price": 2.49
-    },
-    {
-      "description": "Milch",
-      "quantity": 1,
-      "price": 1.19
+      "description": "APFELSAFT",
+      "quantity": 2,
+      "price": 1.78
     },
     {
       "description": "PFAND",
+      "quantity": 2,
+      "price": 0.3
+    },
+    {
+      "description": "SW PUTE EI",
       "quantity": 1,
-      "price": 0.25
+      "price": 1.99
     }
   ],
-  "merchant": "Muster Supermarkt",
-  "total": 3.93
+  "merchant": "REWE",
+  "total": 5.66
 }
