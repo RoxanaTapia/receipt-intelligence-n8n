@@ -76,7 +76,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\nreturn [{ json: JSON.parse(raw.trim()) }];"
+        "jsCode": "const raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse' } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse' } }];\n  }\n  return [{ json: { parseOk: true, data } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse' } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -86,6 +86,163 @@
       ],
       "id": "dcef2e76-cf8a-455e-930b-4b94c84e9ede",
       "name": "Code — Parse Receipt JSON"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+              "leftValue": "={{ $json.parseOk }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+      "name": "IF — Parse OK"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Receipt schema (required): merchant (string), date (YYYY-MM-DD), total (number), line_items (non-empty array)\nconst data = $input.first().json.data;\nconst errors = [];\n\nfunction normalizeDate(value) {\n  if (typeof value !== 'string' || !value.trim()) {\n    errors.push('date is required');\n    return null;\n  }\n  const trimmed = value.trim();\n  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(trimmed)) {\n    return trimmed;\n  }\n  const match = trimmed.match(/^(\\d{1,2})[./](\\d{1,2})[./](\\d{4})$/);\n  if (match) {\n    const [, day, month, year] = match;\n    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;\n  }\n  errors.push(`date could not be normalized: ${trimmed}`);\n  return null;\n}\n\nfunction normalizeTotal(value) {\n  if (typeof value === 'number' && !Number.isNaN(value)) {\n    return value;\n  }\n  if (typeof value === 'string' && value.trim()) {\n    const parsed = parseFloat(value.trim().replace(',', '.'));\n    if (!Number.isNaN(parsed)) {\n      return parsed;\n    }\n  }\n  errors.push('total must be a number');\n  return null;\n}\n\nfunction normalizeLineItems(value) {\n  if (!Array.isArray(value) || value.length === 0) {\n    errors.push('line_items must be a non-empty array');\n    return [];\n  }\n  return value;\n}\n\nlet merchant = data.merchant;\nif (typeof merchant !== 'string' || !merchant.trim()) {\n  errors.push('merchant is required');\n  merchant = null;\n} else {\n  merchant = merchant.trim();\n}\n\nconst date = normalizeDate(data.date);\nconst total = normalizeTotal(data.total);\nconst lineItems = normalizeLineItems(data.line_items);\n\nif (errors.length > 0) {\n  return [{ json: { valid: false, errors, stage: 'validation' } }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    receipt: {\n      merchant,\n      date,\n      total,\n      line_items: lineItems,\n    },\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        -96
+      ],
+      "id": "c2d3e4f5-a6b7-8901-cdef-123456789012",
+      "name": "Code — Validate & Normalize Receipt"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d3e4f5a6-b7c8-9012-def0-234567890123",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        -96
+      ],
+      "id": "e4f5a6b7-c8d9-0123-ef01-345678901234",
+      "name": "IF — Valid Receipt"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f5a6b7c8-d9e0-1234-f012-456789012345",
+              "name": "merchant",
+              "value": "={{ $json.receipt.merchant }}",
+              "type": "string"
+            },
+            {
+              "id": "a6b7c8d9-e0f1-2345-0123-567890123456",
+              "name": "date",
+              "value": "={{ $json.receipt.date }}",
+              "type": "string"
+            },
+            {
+              "id": "b7c8d9e0-f1a2-3456-1234-678901234567",
+              "name": "total",
+              "value": "={{ $json.receipt.total }}",
+              "type": "number"
+            },
+            {
+              "id": "c8d9e0f1-a2b3-4567-2345-789012345678",
+              "name": "line_items",
+              "value": "={{ $json.receipt.line_items }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1728,
+        -192
+      ],
+      "id": "d9e0f1a2-b3c4-5678-3456-890123456789",
+      "name": "Set — Normalized Receipt"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0f1a2b3-c4d5-6789-4567-901234567890",
+              "name": "valid",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "f1a2b3c4-d5e6-7890-5678-012345678901",
+              "name": "errors",
+              "value": "={{ $json.errors }}",
+              "type": "array"
+            },
+            {
+              "id": "a2b3c4d5-e6f7-8901-6789-123456789012",
+              "name": "stage",
+              "value": "={{ $json.stage }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        160
+      ],
+      "id": "b3c4d5e6-f7a8-9012-7890-234567890123",
+      "name": "Set — Validation Error"
     }
   ],
   "pinData": {},
@@ -128,6 +285,64 @@
         [
           {
             "node": "Code — Parse Receipt JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Parse Receipt JSON": {
+      "main": [
+        [
+          {
+            "node": "IF — Parse OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — Parse OK": {
+      "main": [
+        [
+          {
+            "node": "Code — Validate & Normalize Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Validate & Normalize Receipt": {
+      "main": [
+        [
+          {
+            "node": "IF — Valid Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — Valid Receipt": {
+      "main": [
+        [
+          {
+            "node": "Set — Normalized Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — Validation Error",
             "type": "main",
             "index": 0
           }
