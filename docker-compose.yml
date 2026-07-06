@@ -16,6 +16,7 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
     volumes:
       - n8n_data:/home/node/.n8n
+      - ./data/receipts:/home/node/.n8n-files/receipts
 
 volumes:
   n8n_data:
