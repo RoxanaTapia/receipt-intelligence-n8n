@@ -1,0 +1,22 @@
+{
+  "date": "2024-03-15",
+  "line_items": [
+    {
+      "description": "Brot",
+      "quantity": 1,
+      "price": 2.49
+    },
+    {
+      "description": "Milch",
+      "quantity": 1,
+      "price": 1.19
+    },
+    {
+      "description": "PFAND",
+      "quantity": 1,
+      "price": 0.25
+    }
+  ],
+  "merchant": "Muster Supermarkt",
+  "total": 3.93
+}
