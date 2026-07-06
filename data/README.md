@@ -54,6 +54,8 @@ n8n runs in Docker. The workflow writes to the **container** path; a bind mount 
 Configured in [`docker-compose.yml`](../docker-compose.yml):
 
 ```yaml
+environment:
+  NODE_FUNCTION_ALLOW_BUILTIN: crypto   # SHA-256 content hash in Code node
 volumes:
   - n8n_data:/home/node/.n8n                        # named volume — n8n app data
   - ./data/receipts:/home/node/.n8n-files/receipts  # bind mount — receipt JSON
