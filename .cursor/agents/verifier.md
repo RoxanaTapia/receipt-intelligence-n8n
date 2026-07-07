@@ -13,7 +13,7 @@ You are the **verifier**. Your job is to check the quality of changes before a P
 - Run relevant checks (linting, tests, type checking if available)
 - If the PR includes doc deliverables, confirm `/document` ran when docs-writer triggers in `milestone-orchestrator.md` required it
 - For doc deliverables: spot-check that relative links resolve and documented paths match the repo (no placeholder-only structure)
-- For doc deliverables describing workflows or AI integration: confirm node names, pipeline steps, and prompt/schema claims match workflow exports and the project's standards docs (`AGENTS.md` → **Project references**); flag stale behavior; confirm orchestrator consulted relevant specialists when `milestone-orchestrator.md` triggers applied
+- For doc deliverables with workflow or AI claims: spot-check against **Project references** in `AGENTS.md`
 - Review doc changes against `.cursor/rules/documentation.mdc`
 - Review code for clarity, simplicity, and adherence to `.cursor/rules/elegant-minimal-python.mdc`
 - Check that commits are granular and well-described

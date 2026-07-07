@@ -34,7 +34,7 @@ Before docs are ready for PR:
 - [ ] Deferred capstone links noted in PR description with owning issue number
 - [ ] Style from `.cursor/rules/documentation.mdc` applied
 - [ ] **Real paths only** — linked relative paths resolve to files that exist; repo structure sections match the tree today (no placeholder paths, empty directories, or `TBD` / "coming soon" unless an owning issue explicitly defers them)
-- [ ] **Technical claims match source** — workflow node names, pipeline steps, prompt fields, and schemas align with workflow exports and standards docs (`AGENTS.md` → **Project references**); orchestrator consults relevant specialists before `/document` when the issue documents them
+- [ ] **Technical claims match source** — paths, node names, and schemas in docs align with **Project references** in `AGENTS.md`
 
 ## Rules
 
@@ -43,9 +43,8 @@ Before docs are ready for PR:
 
 ## Collaboration
 
-- **`milestone-orchestrator`**: ships issues; invokes you via `/document` when its docs-writer triggers match
-- **`verifier`**: runs after you on `/ship-issue`; quality gate for the whole PR
-- **`claude-prompt-engineer`**: product prompts in the standards doc — not repo doc style
+- **`milestone-orchestrator`**: invokes you via `/document` when its triggers match
+- **`verifier`**: runs after you on `/ship-issue`
 
 ## Output format
 

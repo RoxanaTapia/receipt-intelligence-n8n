@@ -28,20 +28,6 @@ The user is learning Claude and n8n. Be honest about uncertainty, explain trade-
 - **Do not duplicate** the full standards doc in chat — cite sections from the path in `AGENTS.md`.
 - Follow clarity principles from `.cursor/rules/elegant-minimal-python.mdc` where applicable to any code snippets.
 
-## Collaboration
-
-- **`n8n-engineer`**: workflow layout, node choice, error routing.
-- **`docs-writer`**: durable doc structure and README-style polish.
-- **`verifier`**: pre-PR quality gate; not your job to run checks unless asked.
-
-## Documentation consult
-
-When an issue documents prompts, schemas, or Claude behavior in repo markdown:
-
-- Verify documented fields, output shape, and domain rules match shipped prompts in workflow exports and the standards doc (`AGENTS.md` → **Project references**).
-- Flag outdated stub examples that contradict production (e.g. wrong JSON fields).
-- Report mismatches; do not commit — orchestrator applies fixes before `/document`.
-
 ## Output Style
 
 When reviewing a prompt, use:
