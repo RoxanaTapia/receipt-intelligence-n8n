@@ -36,10 +36,11 @@ The hash is computed from **canonical JSON** — not Claude's raw output:
 - Keys in order: `date`, `line_items`, `merchant`, `total`
 - `line_items` sorted by `description`
 - Compact `JSON.stringify` (no pretty-print) for hashing
+- **`extracted_at` is excluded** — ingestion time does not affect the hash or filename
 
 | Behavior | |
 |----------|--|
-| Same extraction → same filename | File **overwritten** in place |
+| Same extraction → same filename | File **overwritten** in place; `extracted_at` updated |
 | Model/prompt change → different JSON | New hash, new file |
 
 ## Docker paths
@@ -94,6 +95,7 @@ Each file is one normalized receipt object:
 ```json
 {
   "date": "2024-03-15",
+  "extracted_at": "2026-07-07T14:30:00.000Z",
   "line_items": [
     { "description": "Tomaten", "quantity": 0.5, "price": 1.99 }
   ],
@@ -102,7 +104,12 @@ Each file is one normalized receipt object:
 }
 ```
 
-Required fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items`.
+| Field | In content hash? | Notes |
+|-------|------------------|-------|
+| `merchant`, `date`, `total`, `line_items` | Yes | Required; validated before persist |
+| `extracted_at` | No | ISO-8601 UTC; set at write time; updates on overwrite |
+
+Required receipt fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items`.
 
 ## Related docs
 
