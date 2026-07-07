@@ -61,6 +61,17 @@ Upstream expression: `{{ $json.text }}` from **Extract from File — PDF to Text
 
 Full pipeline: [pdf-extraction.md](pdf-extraction.md).
 
+## Line item categorization (Module 3)
+
+Module 3 adds a **`category`** field to each `line_items[]` entry using Claude semantic judgment on normalized receipt JSON.
+
+| Topic | Doc |
+|-------|-----|
+| Category taxonomy and output schema | [categorization-schema.md](categorization-schema.md) |
+| Parse → validate after categorization | Same pattern as Module 2 — validator checks allowed categories (#42) |
+
+Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`. Production categorization prompt and workflow node: issues #40–#41.
+
 ## Node naming conventions
 
 | Node type | Pattern | Example |
@@ -81,5 +92,6 @@ Reference workflows:
 ## Related docs
 
 - [PDF extraction pipeline](pdf-extraction.md)
+- [Categorization schema](categorization-schema.md)
 - [n8n Docker setup](n8n-setup.md)
 - [Agent workflow](../AGENTS.md) — includes `claude-prompt-engineer` for prompt drafting and review
