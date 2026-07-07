@@ -36,11 +36,33 @@ The hash is computed from **canonical JSON** — not Claude's raw output:
 - Keys in order: `date`, `line_items`, `merchant`, `total`
 - `line_items` sorted by `description`
 - Compact `JSON.stringify` (no pretty-print) for hashing
+- **`extracted_at` is excluded** — ingestion time does not affect the hash or filename
 
 | Behavior | |
 |----------|--|
-| Same extraction → same filename | File **overwritten** in place |
-| Model/prompt change → different JSON | New hash, new file |
+| Identical extracted data → same hash | File **overwritten** in place; `extracted_at` updated |
+| Any change in extracted data | New hash → **new file** (previous file remains) |
+
+### Re-runs and multiple files
+
+The filename date is the **receipt transaction date**, not the run time. The middle segment is a **merchant slug**; the suffix is a **content hash** of `date`, `line_items`, `merchant`, and `total`. Both slug and hash change when Claude returns different extracted data.
+
+`extracted_at` is stored **inside** the JSON only — it never appears in the filename and is excluded from the hash.
+
+**Common cause of “two shapes” for one PDF:** merchant name variance. Same receipt, same line items, but Claude returns `"REWE"` on one run and `"REWE Markt"` on another:
+
+| Run | `merchant` | Filename |
+|-----|------------|----------|
+| 1 | `REWE` | `2026-05-19_rewe_b664411c.json` |
+| 2 | `REWE Markt` | `2026-05-19_rewe-markt_44e1e0a1.json` |
+
+Different merchant → different slug **and** different hash → two files, not an overwrite. Line-item variance causes the same pattern.
+
+| Question | How to answer it |
+|----------|------------------|
+| Which file is from my latest run? | Check `extracted_at` inside the file, or `ls -lt data/receipts/*.json` |
+| Why two filename shapes for one receipt? | Usually unstable `merchant` (or other field) from Claude — not `extracted_at` |
+| Can I clean up old runs? | Delete stale hash-named files locally (gitignored). Retention is Module 3. |
 
 ## Docker paths
 
@@ -94,6 +116,7 @@ Each file is one normalized receipt object:
 ```json
 {
   "date": "2024-03-15",
+  "extracted_at": "2026-07-07T14:30:00.000Z",
   "line_items": [
     { "description": "Tomaten", "quantity": 0.5, "price": 1.99 }
   ],
@@ -102,7 +125,12 @@ Each file is one normalized receipt object:
 }
 ```
 
-Required fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items`.
+| Field | In content hash? | Notes |
+|-------|------------------|-------|
+| `merchant`, `date`, `total`, `line_items` | Yes | Required; validated before persist |
+| `extracted_at` | No | ISO-8601 UTC; set at write time; updates on overwrite |
+
+Required receipt fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items`.
 
 ## Related docs
 
