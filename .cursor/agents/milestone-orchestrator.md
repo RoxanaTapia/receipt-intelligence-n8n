@@ -28,7 +28,7 @@ During `/ship-issue`, follow this order in **one session** (you remain the orche
 3. **Branch** — `feat/<short-description>`.
 4. **Implement** — commit granular changes. Consult `n8n-engineer` / `claude-prompt-engineer` as needed. Write inline docstrings and code comments per `elegant-minimal-python.mdc` (not docs-writer).
 5. **Human checkpoints** — pause when the issue requires them; resume when the human confirms.
-6. **Invoke docs-writer** — if docs-writer triggers match, follow `.cursor/commands/document.md` (act as docs-writer), apply edits, commit. Otherwise note in the PR: "docs-writer skipped — no doc deliverables."
+6. **Invoke docs-writer** — if docs-writer triggers match, consult `n8n-engineer` / `claude-prompt-engineer` first when their triggers also match; then follow `.cursor/commands/document.md` (act as docs-writer), apply edits, commit. Otherwise note in the PR: "docs-writer skipped — no doc deliverables."
 7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR. Verifier maps every acceptance criterion; block if any are ❌ missing.
 8. **Open PR** — Main contribution; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); wait for human approval before push/merge.
 9. **After merge** — when the human confirms, follow `.cursor/commands/ship-complete.md` to tick issue acceptance criteria checkboxes.
@@ -64,6 +64,7 @@ Follow **`/document`** when **any** of:
 
 - The issue designs, reviews, or exports n8n workflows
 - The issue changes files under `workflows/`
+- The issue **documents** workflows, pipeline steps, or node behavior in repo markdown
 - The issue lists human checkpoints for n8n UI verification
 
 ### claude-prompt-engineer triggers
@@ -72,7 +73,8 @@ Follow **`/document`** when **any** of:
 
 - The issue involves drafting or reviewing Claude prompts in n8n
 - The issue changes prompt text or AI node configuration
-- The issue references `docs/n8n-claude-standards.md`
+- The issue references or updates `docs/n8n-claude-standards.md`
+- The issue **documents** prompts, schemas, or Claude behavior in repo markdown
 
 ## Inline vs repo documentation
 

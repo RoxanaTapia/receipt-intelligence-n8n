@@ -65,6 +65,18 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 
 **Inline vs repo docs:** Docstrings and code comments are part of normal implement work (`elegant-minimal-python.mdc`). Repo markdown (`docs/`, `README.md`, etc.) goes through docs-writer (`/document`) only when the orchestrator's docs-writer triggers match.
 
+## Documentation accuracy
+
+Repo docs must match the codebase today — not aspirational or stale behavior.
+
+| Step | Who | Checks |
+|------|-----|--------|
+| Draft / review | `docs-writer` | Style, ownership, real paths, link, don't duplicate |
+| Technical claims | `n8n-engineer`, `claude-prompt-engineer` | **Consult** when docs describe workflows, nodes, prompts, or schemas — match `workflows/` and shipped prompts |
+| Pre-PR gate | `verifier` | Links resolve; doc claims match repo; specialist consult recorded when triggers applied |
+
+Orchestrator invokes specialist consult **before** `/document` on doc issues that describe n8n or Claude behavior (see `milestone-orchestrator.md`).
+
 ## Commit & PR Policy
 
 - Granular, reviewable commits (ideally 1–4 per issue)

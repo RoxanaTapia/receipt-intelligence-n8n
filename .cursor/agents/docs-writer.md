@@ -34,6 +34,7 @@ Before docs are ready for PR:
 - [ ] Deferred capstone links noted in PR description with owning issue number
 - [ ] Style from `.cursor/rules/documentation.mdc` applied
 - [ ] **Real paths only** — linked relative paths resolve to files that exist; repo structure sections match the tree today (no placeholder paths, empty directories, or `TBD` / "coming soon" unless an owning issue explicitly defers them)
+- [ ] **Technical claims match source** — workflow node names, pipeline steps, prompt fields, and schemas align with `workflows/` and the standards doc (orchestrator consults `n8n-engineer` / `claude-prompt-engineer` before `/document` when the issue documents them)
 
 ## Rules
 

@@ -34,6 +34,14 @@ The user is learning Claude and n8n. Be honest about uncertainty, explain trade-
 - **`docs-writer`**: durable doc structure and README-style polish.
 - **`verifier`**: pre-PR quality gate; not your job to run checks unless asked.
 
+## Documentation consult
+
+When an issue documents prompts, schemas, or Claude behavior in repo markdown:
+
+- Verify documented fields, output shape, and domain rules match the shipped prompt in `workflows/` and `docs/n8n-claude-standards.md`.
+- Flag stub or Module 1-era examples that contradict production (e.g. wrong JSON fields).
+- Report mismatches; do not commit — orchestrator applies fixes before `/document`.
+
 ## Output Style
 
 When reviewing a prompt, use:
