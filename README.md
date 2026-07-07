@@ -12,9 +12,13 @@ receipt-intelligence-n8n/
 ├── .env.example              # Environment variable template
 ├── docs/
 │   ├── n8n-setup.md          # Local Docker setup
-│   └── n8n-claude-standards.md
+│   ├── n8n-claude-standards.md
+│   └── pdf-extraction.md     # Module 2 pipeline guide
+├── samples/receipts/         # Anonymized PDF fixtures
+├── data/receipts/            # Validated JSON output
 └── workflows/
-    └── hello-world.json      # First exported test workflow
+    ├── hello-world.json
+    └── receipt-pdf-ingest.json
 ```
 
 ## Prerequisites
@@ -37,13 +41,14 @@ receipt-intelligence-n8n/
 | **Local development** | [docs/n8n-setup.md](docs/n8n-setup.md) |
 | **Production / cloud** | Not documented yet — a future milestone will add a dedicated deployment guide |
 
-## Module 1 deliverables
+## Module deliverables
 
-| Resource | Description |
-|----------|-------------|
-| [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup and verification |
-| [workflows/](workflows/) | Version-controlled n8n workflow exports |
-| [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
+| Module | Resource | Description |
+|--------|----------|-------------|
+| 1 | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup and verification |
+| 1 | [workflows/](workflows/) | Version-controlled n8n workflow exports |
+| 1 | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
+| 2 | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
 
 ## Agent workflow
 
@@ -58,7 +63,7 @@ High-level modules for the Receipt Intelligence System:
 | Module | Focus |
 |--------|-------|
 | **1 — Foundations** | Agent workflow, Docker n8n, first workflow, Claude standards, README ✅ |
-| **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n |
+| **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation |
 | **4 — FastAPI backend** | Supporting APIs where n8n alone is not enough |
 | **5 — Query interface** | Natural-language spending and budget questions |
