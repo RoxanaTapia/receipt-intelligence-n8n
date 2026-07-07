@@ -40,8 +40,22 @@ The hash is computed from **canonical JSON** — not Claude's raw output:
 
 | Behavior | |
 |----------|--|
-| Same extraction → same filename | File **overwritten** in place; `extracted_at` updated |
-| Model/prompt change → different JSON | New hash, new file |
+| Identical extracted data → same hash | File **overwritten** in place; `extracted_at` updated |
+| Any change in extracted data | New hash → **new file** (previous file remains) |
+
+### Re-runs and multiple files
+
+The filename date is the **receipt transaction date**, not the run time. The hash suffix identifies **which extraction result** was persisted.
+
+In local runs, Claude output often varies slightly between executions (wording, line order, rounding). That changes the canonical JSON → **a new hash → a new file** — even for the same PDF. This is expected in Module 2; dedup by overwrite only happens when the extracted data is byte-for-byte identical after normalization.
+
+| Question | How to answer it |
+|----------|------------------|
+| Which file is from my latest run? | Open the file and check `extracted_at`, or sort by mtime: `ls -lt data/receipts/*.json` |
+| Why do I have several files for one receipt? | Different content hashes from varying extractions; only the hash differs in the filename |
+| Can I clean up old runs? | Delete stale hash-named files locally (gitignored). Run history / retention is Module 3. |
+
+`extracted_at` records when each file was written; it does **not** appear in the filename or content hash.
 
 ## Docker paths
 
