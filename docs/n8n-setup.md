@@ -60,7 +60,7 @@ Data persists in the `n8n_data` Docker volume across restarts.
 | `N8N_BASIC_AUTH_ACTIVE` | Require login before using the UI | `true` |
 | `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
 | `N8N_BASIC_AUTH_PASSWORD` | Basic auth password (**required**) | — |
-| `ANTHROPIC_API_KEY` | Anthropic API key for Claude nodes (optional until #26) | — |
+| `ANTHROPIC_API_KEY` | Anthropic API key for Claude nodes | — |
 
 See `.env.example` for a copy-paste template.
 
@@ -95,10 +95,11 @@ After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Sa
 
 ### Run the PDF ingest workflow
 
-[`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) reads a sample PDF and outputs raw text (no Claude step).
+[`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) runs the full Module 2 pipeline: PDF → Claude extraction → validation → JSON on disk. See [pdf-extraction.md](pdf-extraction.md) for the node walkthrough.
 
-1. Import the workflow (see **Import a workflow** above).
-2. Copy a sample PDF into n8n’s allowed files directory (Docker only reads under `/home/node/.n8n-files`):
+1. Set `ANTHROPIC_API_KEY` in `.env` and restart n8n if you have not already.
+2. Import the workflow (see **Import a workflow** above).
+3. Copy a sample PDF into n8n’s allowed files directory (Docker only reads under `/home/node/.n8n-files`):
 
    ```bash
    docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
@@ -106,8 +107,8 @@ After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Sa
 
    Run from the repo root. Replace the container name if yours differs (`docker compose ps`).
 
-3. Open the workflow → **Execute workflow**.
-4. Check **Extract from File — PDF to Text** for raw receipt text in the output.
+4. Open the workflow → **Execute workflow**.
+5. Confirm a hash-named JSON file appears in `data/receipts/` on your host (see [data/README.md](../data/README.md)).
 
 To try another sample, copy it the same way and update the path in **Read Binary File — Sample Receipt**, or re-export the workflow with a new path.
 

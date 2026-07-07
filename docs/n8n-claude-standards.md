@@ -1,15 +1,13 @@
 # n8n + Claude Standards
 
-Initial guidelines for using Claude inside n8n workflows in the Receipt Intelligence System.
-
-> **Module 1 foundation** — this doc will grow in Module 2 and 3 as we add real receipt processing, error handling, and evaluation patterns.
+Guidelines for using Claude inside n8n workflows in the Receipt Intelligence System.
 
 ## When to use Claude vs. deterministic nodes
 
 | Use **deterministic nodes** (Set, IF, Code, HTTP Request) | Use **Claude** (AI / HTTP node) |
 |-----------------------------------------------------------|----------------------------------|
 | Fixed formats, regex, date parsing | Messy or unstructured text (e.g. receipt OCR) |
-| Math, filtering, routing by known rules | Semantic judgment (e.g. spending category) |
+| Math, filtering, routing by known rules | Semantic judgment (e.g. line-item interpretation) |
 | Calling APIs with stable schemas | Natural language or reasoning over text |
 | You need fully reproducible output | Fuzzy matching is acceptable with guardrails |
 
@@ -20,62 +18,67 @@ Initial guidelines for using Claude inside n8n workflows in the Receipt Intellig
 Every Claude prompt in this project should include three layers. Keep each layer short and explicit.
 
 1. **System context** — role and domain rules.
-   - Who is Claude in this workflow? What constraints apply?
-   - Example: *"You are a receipt parser for a personal finance app. Categories: Groceries, Dining, Transport, Other."*
+2. **Task** — what to extract or decide from the input.
+3. **Output format** — exact JSON shape for the next n8n node (no markdown fences).
 
-2. **Task** — what to do with this input.
-   - Example: *"Extract merchant, date, total, and category from the receipt text below."*
+## Parse → validate pattern (Module 2)
 
-3. **Output format** — how the answer must look for the next n8n node.
-   - Example: *"Return valid JSON only, no markdown fences."*
+After every Claude extraction node, use two deterministic Code nodes:
 
-Module 2 will add few-shot examples, retry prompts, and schema validation patterns.
+| Step | Flag | Checks |
+|------|------|--------|
+| **Parse** | `parseOk` | Non-empty response; valid JSON object |
+| **Validate** | `valid` | Required fields; type normalization (dates, numbers) |
+
+Route failures to a **`Set — Validation Error`** node with `valid: false`, `errors`, and `stage` (`"parse"` or `"validation"`). Retry loops are Module 6 — document and route errors; do not silently drop bad output.
+
+See [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) for the reference implementation.
+
+## Domain rules vs few-shot examples
+
+Module 2 uses **domain rules in the prompt** (German supermarket patterns) rather than classic few-shot examples:
+
+- `2 Stk x 0,89` — quantity breakdown for the product line above
+- **PFAND** — deposit as its own line item
+- Weighted produce — `kg x price/kg` as one item with weight as quantity
+- Exclude subtotals, tax, payment, loyalty lines
+
+Few-shot example blocks and retry prompts are deferred to Module 3+ / Module 6.
+
+## Receipt extraction prompt
+
+Production prompt lives in **`Claude — Extract Receipt`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). Summary:
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `merchant` | string | Store name |
+| `date` | string | `YYYY-MM-DD` |
+| `total` | number | Final amount paid (EUR) |
+| `line_items` | array | Each item: `description`, `quantity`, `price` |
+
+Upstream expression: `{{ $json.text }}` from **Extract from File — PDF to Text**.
+
+Full pipeline: [pdf-extraction.md](pdf-extraction.md).
 
 ## Node naming conventions
-
-Clear names make visual workflows readable. Use a prefix that shows the node's role.
 
 | Node type | Pattern | Example |
 |-----------|---------|---------|
 | Claude / AI | `Claude — <action>` | `Claude — Extract Receipt` |
-| Deterministic transform | `Set — <purpose>` | `Set — Normalize Date` |
-| Branching | `IF — <condition>` | `IF — Has PDF Binary` |
-| Trigger | `<type> Trigger` or descriptive name | `Manual Trigger`, `Webhook — PDF Upload` |
+| Deterministic transform | `Set — <purpose>` | `Set — Normalized Receipt` |
+| Code | `Code — <purpose>` | `Code — Parse Receipt JSON` |
+| Branching | `IF — <condition>` | `IF — Parse OK` |
+| Trigger | `<type> Trigger` or descriptive name | `Manual Trigger` |
 
-**Workflow names:** scope by purpose, e.g. `Receipt — Ingest PDF`, not `Workflow 3`.
+**Workflow names:** scope by purpose, e.g. `Receipt — Ingest PDF`.
 
-See [`workflows/hello-world.json`](../workflows/hello-world.json) for a deterministic-only example (no Claude nodes yet).
+Reference workflows:
 
-## Example prompt template (stub)
-
-Stub for future receipt extraction. Replace `{{ $json.receipt_text }}` with the expression your n8n node uses for upstream data.
-
-```text
-## System
-You are a receipt data extractor for the Receipt Intelligence System.
-Return structured JSON only. Use EUR as default currency unless stated otherwise.
-
-## Task
-From the receipt text below, extract:
-- merchant (string)
-- date (ISO 8601, YYYY-MM-DD)
-- total (number)
-- category (one of: Groceries, Dining, Transport, Other)
-
-## Receipt text
-{{ $json.receipt_text }}
-
-## Output format
-Respond with JSON only, no markdown:
-{
-  "merchant": "...",
-  "date": "YYYY-MM-DD",
-  "total": 0.00,
-  "category": "..."
-}
-```
+- [`hello-world.json`](../workflows/hello-world.json) — deterministic-only smoke test
+- [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — Module 2 PDF pipeline with Claude
 
 ## Related docs
 
+- [PDF extraction pipeline](pdf-extraction.md)
 - [n8n Docker setup](n8n-setup.md)
-- [Agent workflow](../AGENTS.md) — includes the `claude-prompt-engineer` agent for prompt drafting and review
+- [Agent workflow](../AGENTS.md) — includes `claude-prompt-engineer` for prompt drafting and review
