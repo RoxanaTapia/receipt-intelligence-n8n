@@ -8,6 +8,17 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 
 **Stack:** n8n (core) · Claude · FastAPI (supporting backend)
 
+## Project references
+
+Agents use generic language; this table maps terms to **this repo**. Other projects: update here only — keep `.cursor/agents/` unchanged.
+
+| Term | Path |
+|------|------|
+| Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
+| Workflow exports | [`workflows/`](workflows/) |
+| Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
+| PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
+
 ## Current Focus
 
 - Module 1: Foundations & Environment Setup
@@ -28,8 +39,8 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 | `docs-writer` | Documentation draft and review | `/document`; ownership/handoff in agent, style in `documentation.mdc` |
 | `verifier` | Quality checks and acceptance criteria before PR | `/verify`; blocks PR if criteria ❌ missing |
 | `software-engineering-professor` | Teaches issues and concepts | `/lecture-on-issue`; does not ship |
-| `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes |
-| `claude-prompt-engineer` | Claude prompts in n8n | Follows `docs/n8n-claude-standards.md` |
+| `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes; see **Project references** |
+| `claude-prompt-engineer` | Claude prompts in n8n | Prompt standards doc in **Project references** |
 
 ## Workflow
 
@@ -63,7 +74,9 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 
 **Documentation process** (ownership, handoff): `.cursor/agents/docs-writer.md`
 
-**Inline vs repo docs:** Docstrings and code comments are part of normal implement work (`elegant-minimal-python.mdc`). Repo markdown (`docs/`, `README.md`, etc.) goes through docs-writer (`/document`) only when the orchestrator's docs-writer triggers match.
+**Inline vs repo docs:** Docstrings and code comments are part of normal implement work (`elegant-minimal-python.mdc`). Repo markdown goes through docs-writer (`/document`) when the orchestrator's triggers match.
+
+**Documentation accuracy:** When doc issues describe workflows or AI behavior, the orchestrator consults specialists before `/document` — see `milestone-orchestrator.md`.
 
 ## Commit & PR Policy
 

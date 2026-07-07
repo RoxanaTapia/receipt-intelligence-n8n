@@ -28,9 +28,9 @@ During `/ship-issue`, follow this order in **one session** (you remain the orche
 3. **Branch** — `feat/<short-description>`.
 4. **Implement** — commit granular changes. Consult `n8n-engineer` / `claude-prompt-engineer` as needed. Write inline docstrings and code comments per `elegant-minimal-python.mdc` (not docs-writer).
 5. **Human checkpoints** — pause when the issue requires them; resume when the human confirms.
-6. **Invoke docs-writer** — if docs-writer triggers match, follow `.cursor/commands/document.md` (act as docs-writer), apply edits, commit. Otherwise note in the PR: "docs-writer skipped — no doc deliverables."
+6. **`/document`** — if docs-writer triggers match, follow **Documentation accuracy** (below), then act as docs-writer. If not, note skip in PR.
 7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR. Verifier maps every acceptance criterion; block if any are ❌ missing.
-8. **Open PR** — Main contribution; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); wait for human approval before push/merge.
+8. **Open PR** — Main contribution; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); note specialists consulted; wait for human approval before push/merge.
 9. **After merge** — when the human confirms, follow `.cursor/commands/ship-complete.md` to tick issue acceptance criteria checkboxes.
 
 **How gated steps work:** following `/document` or `/verify` means you adopt that agent's playbook in this chat, then return to orchestrator duties (commits, PR). You do not spawn a separate process unless explicitly using a subagent.
@@ -60,19 +60,32 @@ Follow **`/document`** when **any** of:
 
 ### n8n-engineer triggers
 
-**Consult** `n8n-engineer` during implement when **any** of:
+**Consult** `n8n-engineer` when **any** of:
 
 - The issue designs, reviews, or exports n8n workflows
 - The issue changes files under `workflows/`
-- The issue lists human checkpoints for n8n UI verification
+- The issue lists human checkpoints for workflow UI verification
 
 ### claude-prompt-engineer triggers
 
-**Consult** `claude-prompt-engineer` during implement when **any** of:
+**Consult** `claude-prompt-engineer` when **any** of:
 
 - The issue involves drafting or reviewing Claude prompts in n8n
 - The issue changes prompt text or AI node configuration
-- The issue references `docs/n8n-claude-standards.md`
+- The issue updates prompt or workflow standards docs under `docs/`
+
+### Documentation accuracy (orchestrator)
+
+When **docs-writer triggers** match and new/updated markdown describes workflows or AI behavior:
+
+1. Consult `n8n-engineer` if the docs mention nodes, pipelines, branches, or workflow paths.
+2. Consult `claude-prompt-engineer` if the docs mention prompts, schemas, or output shapes.
+3. Apply reported fixes, then run **`/document`** (docs-writer).
+4. Record which specialists were consulted in the PR description.
+
+If docs-writer triggers match but docs are style/ownership only (no workflow or AI claims), skip specialist consult and run **`/document`** directly.
+
+If docs-writer triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
 
 ## Inline vs repo documentation
 
@@ -126,13 +139,11 @@ When pausing, emit this template:
 **I will then:** <next steps — commits, /document if needed, /verify, PR proposal>
 ```
 
-Common human checkpoints in this project: run workflow in local n8n UI, export workflow JSON, set secrets in `.env`, approve PR before push.
+Common human checkpoints: run workflow in local UI, export workflow JSON, set secrets in environment config, approve PR before push.
 
 ## Invoke docs-writer via `/document`
 
-When **docs-writer triggers** match, follow `.cursor/commands/document.md` — that activates docs-writer behavior in this session. Apply suggested edits and commit (orchestrator only).
-
-If triggers do not match, note in the PR: "docs-writer skipped — no doc deliverables."
+When **docs-writer triggers** match, follow the **Documentation accuracy** steps above, then `.cursor/commands/document.md`. Apply suggested edits and commit (orchestrator only).
 
 Ownership and handoff rules: `docs-writer.md`. Markdown style: `.cursor/rules/documentation.mdc`.
 

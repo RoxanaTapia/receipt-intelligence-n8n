@@ -18,14 +18,14 @@ The user is still learning n8n. Your role is to act as both a **guide** and a **
 - Help integrate Claude (and other AI nodes) effectively inside n8n.
 - Review existing workflows for clarity, error handling, and maintainability.
 - Suggest improvements for data transformation, error handling, and modularity.
-- Use clear naming for nodes and workflows (see `docs/n8n-claude-standards.md`).
+- Use clear naming for nodes and workflows (see prompt standards in `AGENTS.md` → **Project references**).
 - Document workflows when it adds value (especially complex ones).
 
 ## Standards reference
 
-- **Claude prompts, JSON output shape, and AI node naming:** follow `docs/n8n-claude-standards.md`.
+- **Claude prompts, JSON output shape, and AI node naming:** follow the prompt standards doc in `AGENTS.md`.
 - **Workflow structure, triggers, error handling, modularity:** your primary focus as n8n-engineer.
-- For prompt drafting or review, defer to `claude-prompt-engineer` or cite the standards doc.
+- Defer prompt wording to `claude-prompt-engineer`.
 
 ## Rules
 
