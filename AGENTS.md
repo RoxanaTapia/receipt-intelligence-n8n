@@ -8,6 +8,17 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 
 **Stack:** n8n (core) · Claude · FastAPI (supporting backend)
 
+## Project references
+
+Agents use generic language; this table maps terms to **this repo**. Other projects: update here only — keep `.cursor/agents/` unchanged.
+
+| Term | Path |
+|------|------|
+| Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
+| Workflow exports | [`workflows/`](workflows/) |
+| Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
+| PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
+
 ## Current Focus
 
 - Module 1: Foundations & Environment Setup
@@ -28,8 +39,8 @@ Build a clean, production-style system that processes PDF receipts, extracts and
 | `docs-writer` | Documentation draft and review | `/document`; ownership/handoff in agent, style in `documentation.mdc` |
 | `verifier` | Quality checks and acceptance criteria before PR | `/verify`; blocks PR if criteria ❌ missing |
 | `software-engineering-professor` | Teaches issues and concepts | `/lecture-on-issue`; does not ship |
-| `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes |
-| `claude-prompt-engineer` | Claude prompts in n8n | Follows `docs/n8n-claude-standards.md` |
+| `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes; see **Project references** |
+| `claude-prompt-engineer` | Claude prompts in n8n | Prompt standards doc in **Project references** |
 
 ## Workflow
 
@@ -72,7 +83,7 @@ Repo docs must match the codebase today — not aspirational or stale behavior.
 | Step | Who | Checks |
 |------|-----|--------|
 | Draft / review | `docs-writer` | Style, ownership, real paths, link, don't duplicate |
-| Technical claims | `n8n-engineer`, `claude-prompt-engineer` | **Consult** when docs describe workflows, nodes, prompts, or schemas — match `workflows/` and shipped prompts |
+| Technical claims | `n8n-engineer`, `claude-prompt-engineer` | **Consult** when docs describe workflows, nodes, prompts, or schemas — match **Project references** and shipped code |
 | Pre-PR gate | `verifier` | Links resolve; doc claims match repo; specialist consult recorded when triggers applied |
 
 Orchestrator invokes specialist consult **before** `/document` on doc issues that describe n8n or Claude behavior (see `milestone-orchestrator.md`).

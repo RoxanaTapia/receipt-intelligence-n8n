@@ -20,7 +20,7 @@ Each issue owns documentation for **what it ships**.
 
 | Doc type | Rule |
 |----------|------|
-| **Primary deliverables** | Created or updated in the issue that ships the feature (e.g. `docs/n8n-setup.md`, `docs/n8n-claude-standards.md`). |
+| **Primary deliverables** | Created or updated in the issue that ships the feature (e.g. `docs/<topic>.md`). |
 | **Capstone docs** | Entry-point files (e.g. root `README.md`) updated **only** by the issue that owns them. |
 | **Cross-links** | If a link belongs in a capstone doc owned by another issue, do **not** edit that file — note the dependency in the owning issue body. |
 | **No scattered TODOs** | Do not rely on PR comments like "README link later"; ownership lives in issue bodies. |
@@ -34,7 +34,7 @@ Before docs are ready for PR:
 - [ ] Deferred capstone links noted in PR description with owning issue number
 - [ ] Style from `.cursor/rules/documentation.mdc` applied
 - [ ] **Real paths only** — linked relative paths resolve to files that exist; repo structure sections match the tree today (no placeholder paths, empty directories, or `TBD` / "coming soon" unless an owning issue explicitly defers them)
-- [ ] **Technical claims match source** — workflow node names, pipeline steps, prompt fields, and schemas align with `workflows/` and the standards doc (orchestrator consults `n8n-engineer` / `claude-prompt-engineer` before `/document` when the issue documents them)
+- [ ] **Technical claims match source** — workflow node names, pipeline steps, prompt fields, and schemas align with workflow exports and standards docs (`AGENTS.md` → **Project references**); orchestrator consults relevant specialists before `/document` when the issue documents them
 
 ## Rules
 
@@ -45,7 +45,7 @@ Before docs are ready for PR:
 
 - **`milestone-orchestrator`**: ships issues; invokes you via `/document` when its docs-writer triggers match
 - **`verifier`**: runs after you on `/ship-issue`; quality gate for the whole PR
-- **`claude-prompt-engineer`**: product prompts in `docs/n8n-claude-standards.md` — not repo doc style
+- **`claude-prompt-engineer`**: product prompts in the standards doc — not repo doc style
 
 ## Output format
 
