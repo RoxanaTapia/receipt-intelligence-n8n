@@ -29,7 +29,7 @@ Manual Trigger
 | Branch | `IF — Parse OK` | Route on `parseOk === true` |
 | Validate | `Code — Validate & Normalize Receipt` | Schema check + normalization; set `valid` |
 | Branch | `IF — Valid Receipt` | Route on `valid === true` |
-| Persist | `Set — Normalized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash → disk |
+| Persist | `Set — Normalized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + `extracted_at` → disk |
 
 ## Error path
 
@@ -47,8 +47,9 @@ Required fields after validation:
 
 ```json
 {
-  "merchant": "Muster Supermarkt",
   "date": "2024-03-15",
+  "extracted_at": "2026-07-07T14:30:00.000Z",
+  "merchant": "Muster Supermarkt",
   "total": 12.34,
   "line_items": [
     { "description": "Tomaten", "quantity": 0.5, "price": 1.99 }
@@ -56,14 +57,19 @@ Required fields after validation:
 }
 ```
 
-Prompt design, domain rules, and the parse → validate pattern: [n8n-claude-standards.md](n8n-claude-standards.md).
+| Field | In filename hash? | Notes |
+|-------|-------------------|-------|
+| `merchant`, `date`, `total`, `line_items` | Yes | Required; validated before persist |
+| `extracted_at` | No | ISO-8601 UTC; set at write time (#36) |
+
+Filename pattern, re-runs, and merchant variance: [`data/README.md`](../data/README.md).
 
 ## Samples and output
 
 | Topic | Doc |
 |-------|-----|
 | Sample PDFs, privacy, `docker cp` | [`samples/README.md`](../samples/README.md) |
-| File naming, content hash, Docker paths, git policy | [`data/README.md`](../data/README.md) |
+| File naming, content hash, `extracted_at`, re-run behavior | [`data/README.md`](../data/README.md) |
 
 Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the container).
 

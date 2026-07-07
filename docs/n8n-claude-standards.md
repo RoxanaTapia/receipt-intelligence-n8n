@@ -42,6 +42,7 @@ Module 2 uses **domain rules in the prompt** (German supermarket patterns) rathe
 - **PFAND** — deposit as its own line item
 - Weighted produce — `kg x price/kg` as one item with weight as quantity
 - Exclude subtotals, tax, payment, loyalty lines
+- **Merchant** — primary store brand only (e.g. `REWE`, not `REWE Markt`) for consistent filenames
 
 Few-shot example blocks and retry prompts are deferred to Module 3+ / Module 6.
 
@@ -51,7 +52,7 @@ Production prompt lives in **`Claude — Extract Receipt`** inside [`receipt-pdf
 
 | Field | Type | Notes |
 |-------|------|-------|
-| `merchant` | string | Store name |
+| `merchant` | string | Primary store brand — short consistent form |
 | `date` | string | `YYYY-MM-DD` |
 | `total` | number | Final amount paid (EUR) |
 | `line_items` | array | Each item: `description`, `quantity`, `price` |
