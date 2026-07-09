@@ -6,10 +6,10 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        -1728,
+        192
       ],
-      "id": "e43c0c98-9c6a-4d11-b7f8-555288fddef4",
+      "id": "7924fc1c-dcdc-44c1-ba94-5319558969d8",
       "name": "Manual Trigger"
     },
     {
@@ -20,10 +20,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        208,
-        0
+        -1520,
+        192
       ],
-      "id": "6f6b1523-60a4-4d4b-8841-5caef0e2eae1",
+      "id": "6a2384fe-5eea-4603-a12d-d588f7c4063c",
       "name": "Read Binary File — Sample Receipt"
     },
     {
@@ -34,10 +34,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        416,
-        0
+        -1312,
+        192
       ],
-      "id": "33cca2da-141a-4532-865a-ade31516dcce",
+      "id": "36876b80-49f5-48d3-a019-308f6e90619d",
       "name": "Extract from File — PDF to Text"
     },
     {
@@ -62,10 +62,10 @@
       "type": "@n8n/n8n-nodes-langchain.anthropic",
       "typeVersion": 1,
       "position": [
-        592,
-        0
+        -1136,
+        192
       ],
-      "id": "f7d5c8b2-5493-4f4a-9202-253b3b4dadc5",
+      "id": "aaf76150-db46-4817-bd99-3d8d40bb3aa8",
       "name": "Claude — Extract Receipt",
       "credentials": {
         "anthropicApi": {
@@ -81,10 +81,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        896,
-        0
+        -832,
+        192
       ],
-      "id": "dcef2e76-cf8a-455e-930b-4b94c84e9ede",
+      "id": "18f978c7-7fdc-47dd-aafb-ff60d79cbfb6",
       "name": "Code — Parse Receipt JSON"
     },
     {
@@ -115,10 +115,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1104,
-        0
+        -624,
+        192
       ],
-      "id": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+      "id": "ae10002b-0b77-4f33-8bf0-6fa3477ea4fb",
       "name": "IF — Parse OK"
     },
     {
@@ -128,10 +128,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1312,
-        -96
+        -416,
+        96
       ],
-      "id": "c2d3e4f5-a6b7-8901-cdef-123456789012",
+      "id": "0d5d200b-2d92-4306-b6c4-858591956512",
       "name": "Code — Validate & Normalize Receipt"
     },
     {
@@ -162,10 +162,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1520,
-        -96
+        -208,
+        96
       ],
-      "id": "e4f5a6b7-c8d9-0123-ef01-345678901234",
+      "id": "d77c5f0f-faef-42eb-ab10-da8071c068a7",
       "name": "IF — Valid Receipt"
     },
     {
@@ -203,10 +203,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1728,
-        -192
+        0,
+        0
       ],
-      "id": "d9e0f1a2-b3c4-5678-3456-890123456789",
+      "id": "4dfece6d-3cbb-47a6-9b0b-f9739e5d3681",
       "name": "Set — Normalized Receipt"
     },
     {
@@ -216,10 +216,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1936,
-        -192
+        624,
+        0
       ],
-      "id": "a1a2a3a4-b5b6-7890-cdef-123456789abc",
+      "id": "38821d1b-447b-4735-b3a7-5cacef123ebe",
       "name": "Code — Build Receipt File"
     },
     {
@@ -232,10 +232,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        2144,
-        -192
+        928,
+        0
       ],
-      "id": "b2b3b4b5-c6c7-8901-def0-234567890abc",
+      "id": "affc32cd-c3ed-4eb8-a3db-d5dd04242c48",
       "name": "Write File — Persist Receipt JSON"
     },
     {
@@ -267,11 +267,43 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1520,
-        160
+        -208,
+        352
       ],
-      "id": "b3c4d5e6-f7a8-9012-7890-234567890123",
+      "id": "8b6e2360-a741-4caa-a897-d92fe10046a0",
       "name": "Set — Validation Error"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-6"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=## System\nYou are a receipt line-item categorizer for the Receipt Intelligence System.\nReturn one JSON object only — no markdown fences, no explanation.\n\n## Task\nAdd a `category` field to each line_items[] entry in the receipt below.\nDo not change description, quantity, or price.\n\nAllowed categories (exactly one per item, lowercase):\n- food — groceries for meals or ingredients\n- snacks — packaged treats between meals\n- drinks — beverages\n- household — non-food household and personal-care items\n- other — PFAND, unclear items, non-product lines\n\nEdge cases: PFAND → other; ambiguous abbreviations → best-fit (prefer food for meat/dairy/egg).\n\n## Receipt JSON\n{{ JSON.stringify({ merchant: $json.merchant, date: $json.date, total: $json.total, line_items: $json.line_items }) }}\n\n## Output format\nReturn the full receipt JSON with category on each line item:\n{\n  \"merchant\": \"REWE\",\n  \"date\": \"2026-05-19\",\n  \"total\": 5.66,\n  \"line_items\": [\n    { \"description\": \"APFELSAFT\", \"quantity\": 2, \"price\": 1.78, \"category\": \"drinks\" }\n  ]\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "b48e6e7b-3137-43b1-adf1-84978c1262ed",
+      "name": "Claude — Categorize Line Items",
+      "credentials": {
+        "anthropicApi": {
+          "id": "1ly0gyOA8jc5WLtJ",
+          "name": "Anthropic — Receipt Intelligence"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -382,7 +414,7 @@
       "main": [
         [
           {
-            "node": "Code — Build Receipt File",
+            "node": "Claude — Categorize Line Items",
             "type": "main",
             "index": 0
           }
@@ -399,6 +431,11 @@
           }
         ]
       ]
+    },
+    "Claude — Categorize Line Items": {
+      "main": [
+        []
+      ]
     }
   },
   "active": false,
@@ -406,12 +443,12 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "bb434040-95dd-41b4-9ffc-5d79d86cd652",
+  "versionId": "ba5f21f0-7d05-4e0b-b8a1-e776d0f98fed",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "17862018d268653562f060583955179cc7af38c92c7a5b5153d206d279d716bf"
   },
   "nodeGroups": [],
-  "id": "nlkJzQiatzF4519n",
+  "id": "TK3SYc4IZGP4MAGQ",
   "tags": []
 }
