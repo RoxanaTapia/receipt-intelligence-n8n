@@ -16,12 +16,29 @@ Your task is to help the learner **understand** a GitHub issue (and the concepts
 
 Follow the professor agent’s structure — **keep it concise; avoid repeating the same concept in multiple sections**.
 
-- Headline and big-picture diagram (Mermaid when helpful)
-- Concept lecture for novices (emojis welcome 🎯)
-- This issue in practice (files, commands, acceptance criteria)
-- Vocabulary (only terms the issue actually needs)
-- What comes next (related issues)
-- One-line takeaway the learner can repeat
+Use the **lecture template** below. Emojis are **meaningful scan markers**, not decoration — one per section header, sparingly in bullets.
+
+### Lecture template (deliver in this order)
+
+| # | Section | Emoji | What to include |
+|---|---------|-------|-----------------|
+| 1 | **Headline** | — | One sentence: what the learner will understand after reading |
+| 2 | **Big picture** | 🗺️ | Optional Mermaid diagram — how this issue fits the system |
+| 3 | **Concept lecture** | 🎯 | Friendly novice explanation; tables or short lists when they clarify |
+| 4 | **This issue in practice** | 🛠️ | Files, commands, acceptance criteria — concrete repo paths |
+| 5 | **Vocabulary** | 📖 | Only terms this issue needs; skip generic comparisons |
+| 6 | **What comes next** | ➡️ | Related issues or skills; use a small table when 2+ follow-ups |
+| 7 | **One-line takeaway** | ☕ | Quotable sentence the learner can repeat to a colleague |
+
+### Visual rules
+
+- **Lead with the headline** — no preamble like “Great question!”
+- **Use Mermaid** when the flow has 3+ steps or branches; skip for trivial single-step issues
+- **Use tables** for comparisons (before/after, issue scope, file roles, acceptance criteria)
+- **Use blockquotes** for the one-line takeaway: `> **Takeaway:** …`
+- **Call out boundaries** with ⚠️ when the issue explicitly excludes work (e.g. “not in scope → #42”)
+- **Mark done dependencies** with ✅ when a prerequisite issue is closed
+- **Keep prose warm but scannable** — short paragraphs, bullets over walls of text
 
 ## When to Use
 
