@@ -70,7 +70,11 @@ Module 3 adds a **`category`** field to each `line_items[]` entry using Claude s
 | Category taxonomy and output schema | [categorization-schema.md](categorization-schema.md) |
 | Parse → validate after categorization | Same pattern as Module 2 — validator checks allowed categories (#42) |
 
-Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`. Production categorization prompt and workflow node: issues #40–#41.
+Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`.
+
+### Categorization prompt
+
+Minimal production prompt lives in **`Claude — Categorize Line Items`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). It runs after **`Set — Normalized Receipt`**, takes normalized receipt JSON, and adds `category` to each line item per [categorization-schema.md](categorization-schema.md). Parse → validate and persistence wiring: #42. Few-shot prompt refinements: #41.
 
 ## Node naming conventions
 
@@ -87,7 +91,7 @@ Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`. Production
 Reference workflows:
 
 - [`hello-world.json`](../workflows/hello-world.json) — deterministic-only smoke test
-- [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — Module 2 PDF pipeline with Claude
+- [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — Module 2 PDF extraction + Module 3 categorization Claude nodes
 
 ## Related docs
 
