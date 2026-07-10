@@ -13,7 +13,9 @@ receipt-intelligence-n8n/
 ├── docs/
 │   ├── n8n-setup.md          # Local Docker setup
 │   ├── n8n-claude-standards.md
-│   └── pdf-extraction.md     # Module 2 pipeline guide
+│   ├── pdf-extraction.md     # Module 2 pipeline guide
+│   ├── categorization-schema.md
+│   └── categorization-prompts.md
 ├── samples/receipts/         # Anonymized PDF fixtures
 ├── data/receipts/            # Validated JSON output
 └── workflows/
@@ -49,6 +51,8 @@ receipt-intelligence-n8n/
 | 1 | [workflows/](workflows/) | Version-controlled n8n workflow exports |
 | 1 | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
 | 2 | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
+| 3 | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
+| 3 | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
 
 ## Agent workflow
 

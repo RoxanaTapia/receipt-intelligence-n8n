@@ -116,10 +116,11 @@ When distilling this contract into a Claude prompt, include at minimum:
 - Instruction to add `category` to each existing line item without changing `description`, `quantity`, or `price`
 - Output format: full receipt JSON, no markdown fences
 
-Few-shot examples for ambiguous German labels are documented in #41, not here.
+Few-shot examples for ambiguous German labels: [categorization-prompts.md](categorization-prompts.md).
 
 ## Related docs
 
 - [PDF extraction pipeline](pdf-extraction.md) — Module 2 input schema
 - [n8n + Claude standards](n8n-claude-standards.md) — prompt structure and parse → validate pattern
+- [Categorization prompts](categorization-prompts.md) — production prompt and few-shot examples
 - [Agent workflow](../AGENTS.md)
