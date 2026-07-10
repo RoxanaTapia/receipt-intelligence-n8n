@@ -44,7 +44,7 @@ Module 2 uses **domain rules in the prompt** (German supermarket patterns) rathe
 - Exclude subtotals, tax, payment, loyalty lines
 - **Merchant** — primary store brand only (e.g. `REWE`, not `REWE Markt`) for consistent filenames
 
-Few-shot example blocks and retry prompts are deferred to Module 3+ / Module 6.
+Module 3 categorization uses **few-shot examples** for ambiguous product labels — see [categorization-prompts.md](categorization-prompts.md). Retry prompts are Module 6.
 
 ## Receipt extraction prompt
 
@@ -68,13 +68,14 @@ Module 3 adds a **`category`** field to each `line_items[]` entry using Claude s
 | Topic | Doc |
 |-------|-----|
 | Category taxonomy and output schema | [categorization-schema.md](categorization-schema.md) |
+| Production prompt and few-shot examples | [categorization-prompts.md](categorization-prompts.md) |
 | Parse → validate after categorization | Same pattern as Module 2 — validator checks allowed categories (#42) |
 
 Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`.
 
 ### Categorization prompt
 
-Minimal production prompt lives in **`Claude — Categorize Line Items`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). It runs after **`Set — Normalized Receipt`**, takes normalized receipt JSON, and adds `category` to each line item per [categorization-schema.md](categorization-schema.md). Parse → validate and persistence wiring: #42. Few-shot prompt refinements: #41.
+Production prompt with few-shot examples lives in **`Claude — Categorize Line Items`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). Full text and rationale: [categorization-prompts.md](categorization-prompts.md). Runs after **`Set — Normalized Receipt`**, takes normalized receipt JSON, and adds `category` to each line item per [categorization-schema.md](categorization-schema.md). Parse → validate and persistence wiring: #42.
 
 ## Node naming conventions
 
@@ -97,5 +98,6 @@ Reference workflows:
 
 - [PDF extraction pipeline](pdf-extraction.md)
 - [Categorization schema](categorization-schema.md)
+- [Categorization prompts](categorization-prompts.md)
 - [n8n Docker setup](n8n-setup.md)
 - [Agent workflow](../AGENTS.md) — includes `claude-prompt-engineer` for prompt drafting and review
