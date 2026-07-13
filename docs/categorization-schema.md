@@ -36,6 +36,7 @@ Use these rules when writing prompts (#41) and validators (#42):
 
 - **PFAND** → `other` (deposit, not food or drink)
 - **Ambiguous abbreviations** (e.g. `SW PUTE EI`) → best-fit category from description; prefer `food` for meat/dairy/egg products
+- **Seasonal SKUs without product type** (e.g. `WINTER EDITION` on REWE receipts) → often fresh salad mix (Mischsalat) → `food`; use few-shot in prompt (#41, #43)
 - **Combined receipts** — categorize each line item independently; do not invent new top-level categories
 - **Unknown product** — use `other` rather than guessing a niche category
 
@@ -123,4 +124,5 @@ Few-shot examples for ambiguous German labels: [categorization-prompts.md](categ
 - [PDF extraction pipeline](pdf-extraction.md) — Module 2 input schema
 - [n8n + Claude standards](n8n-claude-standards.md) — prompt structure and parse → validate pattern
 - [Categorization prompts](categorization-prompts.md) — production prompt and few-shot examples
+- [Categorization test matrix](categorization-test-matrix.md) — edge-case verification (#43)
 - [Agent workflow](../AGENTS.md)

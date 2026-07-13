@@ -51,6 +51,7 @@ These examples target labels that are easy to misclassify without explicit guida
 | `PFAND` | `other` | Bottle-deposit line — not food or drink |
 | `CHIPS PAPRIKA` | `snacks` | Packaged treat between meals |
 | `SPÜLMITTEL` | `household` | Cleaning product |
+| `WINTER EDITION` | `food` | REWE seasonal salad mix (Mischsalat) — fresh produce, not beverage or snack |
 
 **General rules** (also in the workflow prompt):
 
@@ -85,6 +86,7 @@ Apply the same reasoning to items in the receipt below:
 - PFAND → other (deposit line, not food or drink)
 - CHIPS PAPRIKA → snacks (packaged treat between meals)
 - SPÜLMITTEL → household (cleaning product)
+- WINTER EDITION → food (REWE seasonal salad mix / Mischsalat — fresh produce, not beverage or snack)
 
 ## Receipt JSON
 {{ JSON.stringify({ merchant: $json.merchant, date: $json.date, total: $json.total, line_items: $json.line_items }) }}
@@ -111,5 +113,6 @@ Return the full receipt JSON with category on each line item. Preserve merchant,
 ## Related docs
 
 - [Categorization schema](categorization-schema.md) — taxonomy and JSON contract
+- [Categorization test matrix](categorization-test-matrix.md) — edge-case verification (#43)
 - [n8n + Claude standards](n8n-claude-standards.md) — three-layer pattern and node naming
 - [PDF extraction pipeline](pdf-extraction.md) — Module 2 input

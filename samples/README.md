@@ -11,10 +11,12 @@ samples/
     ├── 01-food-homedeco.pdf
     ├── 02-vegetables-weighted.pdf
     ├── 03-small.pdf
-    └── 04-article-discount.pdf
+    ├── 04-article-discount.pdf
+    ├── originals/      # Gitignored — pre-anonymization sources (local only)
+    └── private/        # Gitignored — other real receipts (local only)
 ```
 
-Local-only real receipts belong in `samples/receipts/private/` (gitignored).
+Committed samples are **anonymized** copies. Their **original** source PDFs live in `receipts/originals/` on your machine only (never committed). Other ad-hoc real receipts go in `receipts/private/`.
 
 ## Sample catalog
 
@@ -62,6 +64,25 @@ Before adding a new sample, confirm:
 - [ ] Content is safe to show in a public portfolio repo
 
 Real receipts stay in `samples/receipts/private/` on your machine — never commit that folder.
+
+## Original sources (gitignored)
+
+Pre-anonymization PDFs that produced the committed fixtures belong in `samples/receipts/originals/`. Use this naming so each original maps to its public sample:
+
+```
+NN-<short-description>_original.pdf
+```
+
+| Original (local only) | Anonymized (committed) |
+|-----------------------|------------------------|
+| `01-food-homedeco_original.pdf` | `01-food-homedeco.pdf` |
+| `02-vegetables-weighted_original.pdf` | `02-vegetables-weighted.pdf` |
+| `03-small_original.pdf` | `03-small.pdf` |
+| `04-article-discount_original.pdf` | `04-article-discount.pdf` |
+
+**Why keep originals locally:** re-run real-world OCR/layout scenarios, refresh anonymized fixtures, and compare extraction drift against authentic receipts — without committing PII to git.
+
+Copy into n8n the same way as committed samples (`docker cp samples/receipts/originals/03-small_original.pdf …`).
 
 ## How samples enter the pipeline (Module 2)
 

@@ -15,14 +15,19 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 | Term | Path |
 |------|------|
 | Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
-| Workflow exports | [`workflows/`](workflows/) |
+| Categorization schema | [`docs/categorization-schema.md`](docs/categorization-schema.md) |
+| Categorization prompts | [`docs/categorization-prompts.md`](docs/categorization-prompts.md) |
+| Categorization test matrix | [`docs/categorization-test-matrix.md`](docs/categorization-test-matrix.md) |
+| Workflow exports | [`workflows/receipt-pdf-ingest.json`](workflows/receipt-pdf-ingest.json) |
 | Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
 | PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
+| Sample PDFs (anonymized) | [`samples/receipts/`](samples/receipts/) |
+| Sample originals (gitignored) | `samples/receipts/originals/` — see [`samples/README.md`](samples/README.md) |
 
 ## Current Focus
 
-- Module 1: Foundations & Environment Setup
-- Establishing a strong and enjoyable agentic workflow
+- Module 3: Line-item categorization (taxonomy, prompts, validation, edge-case test matrix)
+- Module 2 foundations: PDF ingest, extraction, validation, persistence
 
 ## Core Principles
 
