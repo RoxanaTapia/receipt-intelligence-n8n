@@ -5,6 +5,8 @@
 
 # Local-only receipt PDFs (never commit real receipts)
 samples/receipts/private/
+samples/receipts/originals/*
+!samples/receipts/originals/.gitkeep
 
 # Receipt JSON outputs (runtime files local-only; showcase committed)
 data/receipts/*.json
