@@ -211,7 +211,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const { createHash } = require('crypto');\n\nconst input = $input.first().json;\nconst receipt = {\n  merchant: input.merchant,\n  date: input.date,\n  total: input.total,\n  line_items: input.line_items,\n};\n\nfunction merchantSlug(name) {\n  return name\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^a-z0-9]+/g, '-')\n    .replace(/^-+|-+$/g, '')\n    .slice(0, 40) || 'unknown';\n}\n\nfunction canonicalReceipt(r) {\n  const lineItems = [...r.line_items].sort((a, b) =>\n    a.description.localeCompare(b.description)\n  );\n  return {\n    date: r.date,\n    line_items: lineItems,\n    merchant: r.merchant,\n    total: r.total,\n  };\n}\n\nconst canonical = canonicalReceipt(receipt);\nconst canonicalJson = JSON.stringify(canonical);\nconst contentHash = createHash('sha256').update(canonicalJson).digest('hex').slice(0, 8);\nconst slug = merchantSlug(receipt.merchant);\nconst filename = `${receipt.date}_${slug}_${contentHash}.json`;\nconst filePath = `/home/node/.n8n-files/receipts/${filename}`;\nconst extractedAt = new Date().toISOString();\nconst output = {\n  date: canonical.date,\n  extracted_at: extractedAt,\n  line_items: canonical.line_items,\n  merchant: canonical.merchant,\n  total: canonical.total,\n};\nconst fileBody = JSON.stringify(output, null, 2) + '\\n';\n\nreturn [{\n  json: {\n    ...output,\n    persistedFilename: filename,\n    persistedPath: filePath,\n    contentHash,\n  },\n  binary: {\n    data: {\n      data: Buffer.from(fileBody, 'utf8').toString('base64'),\n      mimeType: 'application/json',\n      fileName: filename,\n    },\n  },\n}];"
+        "jsCode": "const { createHash } = require('crypto');\n\nconst input = $input.first().json;\nconst receipt = {\n  merchant: input.merchant,\n  date: input.date,\n  total: input.total,\n  line_items: input.line_items,\n};\n\nfunction merchantSlug(name) {\n  return name\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^a-z0-9]+/g, '-')\n    .replace(/^-+|-+$/g, '')\n    .slice(0, 40) || 'unknown';\n}\n\nfunction canonicalReceipt(r) {\n  const lineItems = [...r.line_items]\n    .sort((a, b) => a.description.localeCompare(b.description))\n    .map((item) => ({\n      category: item.category,\n      description: item.description,\n      price: item.price,\n      quantity: item.quantity,\n    }));\n  return {\n    date: r.date,\n    line_items: lineItems,\n    merchant: r.merchant,\n    total: r.total,\n  };\n}\n\nconst canonical = canonicalReceipt(receipt);\nconst canonicalJson = JSON.stringify(canonical);\nconst contentHash = createHash('sha256').update(canonicalJson).digest('hex').slice(0, 8);\nconst slug = merchantSlug(receipt.merchant);\nconst filename = `${receipt.date}_${slug}_${contentHash}.json`;\nconst filePath = `/home/node/.n8n-files/receipts/${filename}`;\nconst now = new Date().toISOString();\nconst output = {\n  date: canonical.date,\n  extracted_at: now,\n  categorized_at: now,\n  line_items: canonical.line_items,\n  merchant: canonical.merchant,\n  total: canonical.total,\n};\nconst fileBody = JSON.stringify(output, null, 2) + '\\n';\n\nreturn [{\n  json: {\n    ...output,\n    persistedFilename: filename,\n    persistedPath: filePath,\n    contentHash,\n  },\n  binary: {\n    data: {\n      data: Buffer.from(fileBody, 'utf8').toString('base64'),\n      mimeType: 'application/json',\n      fileName: filename,\n    },\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -665,6 +665,17 @@
         [
           {
             "node": "Set — Categorization Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set — Categorized Receipt": {
+      "main": [
+        [
+          {
+            "node": "Code — Build Receipt File",
             "type": "main",
             "index": 0
           }
