@@ -1,6 +1,6 @@
 # Receipt data store
 
-Validated receipt JSON written by the [`receipt-pdf-ingest`](../workflows/receipt-pdf-ingest.json) workflow after Claude extraction and schema validation (#27).
+Categorized receipt JSON written by the [`receipt-pdf-ingest`](../workflows/receipt-pdf-ingest.json) workflow after Claude extraction, validation, categorization, and persistence (#44).
 
 ## Directory layout
 
@@ -8,7 +8,7 @@ Validated receipt JSON written by the [`receipt-pdf-ingest`](../workflows/receip
 data/
 ├── README.md                 # This file
 └── receipts/
-    ├── example.json          # Committed showcase (anonymized)
+    ├── example.json          # Committed showcase (extracted receipt JSON, no categories)
     ├── {date}_{slug}_{hash}.json   # Runtime outputs (gitignored)
     └── private/              # Real receipt JSON (gitignored)
 ```
@@ -21,7 +21,7 @@ Runtime files use a hybrid pattern:
 {YYYY-MM-DD}_{merchant_slug}_{content_hash}.json
 ```
 
-**Example:** `2024-03-15_muster-supermarkt_903b7f35.json`
+**Example:** `2024-03-15_rewe_a1b2c3d4.json`
 
 | Part | Rule |
 |------|------|
@@ -35,34 +35,34 @@ The hash is computed from **canonical JSON** — not Claude's raw output:
 
 - Keys in order: `date`, `line_items`, `merchant`, `total`
 - `line_items` sorted by `description`
+- Each line item includes `category`, `description`, `price`, `quantity` (keys in that order)
 - Compact `JSON.stringify` (no pretty-print) for hashing
-- **`extracted_at` is excluded** — ingestion time does not affect the hash or filename
+- **`extracted_at` and `categorized_at` are excluded** — write timestamps do not affect the hash or filename
 
 | Behavior | |
 |----------|--|
-| Identical extracted data → same hash | File **overwritten** in place; `extracted_at` updated |
-| Any change in extracted data | New hash → **new file** (previous file remains) |
+| Identical receipt + categories → same hash | File **overwritten** in place; `extracted_at` and `categorized_at` updated |
+| Any change in extracted data or categories | New hash → **new file** (previous file remains) |
 
 ### Re-runs and multiple files
 
-The filename date is the **receipt transaction date**, not the run time. The middle segment is a **merchant slug**; the suffix is a **content hash** of `date`, `line_items`, `merchant`, and `total`. Both slug and hash change when Claude returns different extracted data.
+The filename date is the **receipt transaction date**, not the run time. The middle segment is a **merchant slug**; the suffix is a **content hash** of `date`, `line_items` (with `category`), `merchant`, and `total`.
 
-`extracted_at` is stored **inside** the JSON only — it never appears in the filename and is excluded from the hash.
+`extracted_at` and `categorized_at` are stored **inside** the JSON only — they never appear in the filename and are excluded from the hash.
 
-**Common cause of “two shapes” for one PDF:** merchant name variance. Same receipt, same line items, but Claude returns `"REWE"` on one run and `"REWE Markt"` on another:
+**Common causes of multiple files for one PDF:**
 
-| Run | `merchant` | Filename |
-|-----|------------|----------|
-| 1 | `REWE` | `2026-05-19_rewe_b664411c.json` |
-| 2 | `REWE Markt` | `2026-05-19_rewe-markt_44e1e0a1.json` |
-
-Different merchant → different slug **and** different hash → two files, not an overwrite. Line-item variance causes the same pattern.
+| Cause | Effect |
+|-------|--------|
+| Merchant name variance (`"REWE"` vs `"REWE Markt"`) | Different slug **and** hash → two files |
+| Line-item extraction variance | Different hash → new file |
+| Category drift on re-run | Different hash → new file (category is in the hash) |
 
 | Question | How to answer it |
 |----------|------------------|
-| Which file is from my latest run? | Check `extracted_at` inside the file, or `ls -lt data/receipts/*.json` |
-| Why two filename shapes for one receipt? | Usually unstable `merchant` (or other field) from Claude — not `extracted_at` |
-| Can I clean up old runs? | Delete stale hash-named files locally (gitignored). Retention is Module 3. |
+| Which file is from my latest run? | Check `categorized_at` inside the file, or `ls -lt data/receipts/*.json` |
+| Why two files for one receipt? | Usually unstable `merchant`, line items, or categories from Claude |
+| Can I clean up old runs? | Delete stale hash-named files locally (gitignored) |
 
 ## Docker paths
 
@@ -97,28 +97,34 @@ See [n8n setup](../docs/n8n-setup.md) for Docker restart steps after compose cha
 | Path | Committed? | Purpose |
 |------|------------|---------|
 | `data/receipts/*.json` (hash-named) | No | Runtime workflow outputs |
-| [`receipts/example.json`](receipts/example.json) | **Yes** | Showcase fixture for clients |
+| [`receipts/example.json`](receipts/example.json) | **Yes** | Showcase fixture (extracted receipt JSON; no categories) |
 | `data/receipts/private/` | No | Real receipt JSON from local runs |
 
 ### Refresh the showcase
 
 1. Run the workflow on a [sample PDF](../samples/receipts/).
-2. Copy the hash-named output to `example.json`.
+2. Copy the hash-named categorized output to a local file (or update `example.json` if you want a categorized showcase).
 3. Verify the content is anonymized (no real store names, addresses, or personal data).
-4. Commit only `example.json`.
+4. Commit only intentional showcase files.
 
 The workflow never auto-overwrites `example.json`.
 
 ## JSON shape
 
-Each file is one normalized receipt object:
+Runtime files are **categorized** receipt objects:
 
 ```json
 {
   "date": "2024-03-15",
   "extracted_at": "2026-07-07T14:30:00.000Z",
+  "categorized_at": "2026-07-07T16:00:00.000Z",
   "line_items": [
-    { "description": "Tomaten", "quantity": 0.5, "price": 1.99 }
+    {
+      "description": "Tomaten",
+      "quantity": 0.5,
+      "price": 1.99,
+      "category": "food"
+    }
   ],
   "merchant": "Muster Supermarkt",
   "total": 12.34
@@ -127,12 +133,15 @@ Each file is one normalized receipt object:
 
 | Field | In content hash? | Notes |
 |-------|------------------|-------|
-| `merchant`, `date`, `total`, `line_items` | Yes | Required; validated before persist |
+| `merchant`, `date`, `total`, `line_items` (incl. `category`) | Yes | Required; validated before persist |
 | `extracted_at` | No | ISO-8601 UTC; set at write time; updates on overwrite |
+| `categorized_at` | No | ISO-8601 UTC; set at write time; updates on overwrite |
 
-Required receipt fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items`.
+Required fields match validation in the ingest workflow: `merchant`, `date`, `total`, non-empty `line_items` with `category` on every entry.
 
 ## Related docs
 
+- [Categorization pipeline](../docs/categorization.md) — categorization and persistence
+- [Categorization schema](../docs/categorization-schema.md) — taxonomy and output contract
 - [Sample PDFs](../samples/README.md) — input fixtures for the pipeline
 - [n8n setup](../docs/n8n-setup.md) — Docker, import workflow, copy PDFs into the container

@@ -1,6 +1,6 @@
 # PDF extraction pipeline
 
-Module 2 end-to-end guide: sample PDF → Claude extraction → validated JSON on disk.
+End-to-end guide: sample PDF → Claude extraction → validated receipt JSON.
 
 **Workflow:** [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) (`Receipt — Ingest PDF`)
 
@@ -16,6 +16,15 @@ Manual Trigger
   → Code — Validate & Normalize Receipt
   → IF — Valid Receipt
   → Set — Normalized Receipt
+  → … (categorization — see [categorization.md](categorization.md))
+```
+
+PDF extraction ends at **`Set — Normalized Receipt`**. The full ingest workflow continues into categorization and persistence — see [categorization.md](categorization.md).
+
+**Historical persist path** (before categorization was added):
+
+```
+Set — Normalized Receipt
   → Code — Build Receipt File
   → Write File — Persist Receipt JSON
 ```
@@ -29,11 +38,11 @@ Manual Trigger
 | Branch | `IF — Parse OK` | Route on `parseOk === true` |
 | Validate | `Code — Validate & Normalize Receipt` | Schema check + normalization; set `valid` |
 | Branch | `IF — Valid Receipt` | Route on `valid === true` |
-| Persist | `Set — Normalized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + `extracted_at` → disk |
+| Output | `Set — Normalized Receipt` | Validated extracted JSON; input to categorization |
 
 ## Error path
 
-Parse or validation failures route to **`Set — Validation Error`** (not a retry loop — Module 6 adds hardening):
+Parse or validation failures route to **`Set — Validation Error`** (not a retry loop — retry handling is planned for future hardening):
 
 | Field | Meaning |
 |-------|---------|
@@ -71,7 +80,7 @@ Filename pattern, re-runs, and merchant variance: [`data/README.md`](../data/REA
 | Sample PDFs, privacy, `docker cp` | [`samples/README.md`](../samples/README.md) |
 | File naming, content hash, `extracted_at`, re-run behavior | [`data/README.md`](../data/README.md) |
 
-Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the container).
+Runtime JSON from the full pipeline (categorized) appears on the host at `data/receipts/` — see [categorization.md](categorization.md).
 
 ## Run locally
 
@@ -83,4 +92,5 @@ Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the cont
 
 - [n8n Docker setup](n8n-setup.md)
 - [Claude standards](n8n-claude-standards.md)
+- [Categorization pipeline](categorization.md) — downstream categorization step
 - [Agent workflow](../AGENTS.md)
