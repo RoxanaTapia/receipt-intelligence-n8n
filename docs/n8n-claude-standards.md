@@ -75,7 +75,7 @@ Allowed categories: `food`, `snacks`, `drinks`, `household`, `other`.
 
 ### Categorization prompt
 
-Production prompt with few-shot examples lives in **`Claude — Categorize Line Items`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). Full text and rationale: [categorization-prompts.md](categorization-prompts.md). Runs after **`Set — Normalized Receipt`**, takes normalized receipt JSON, and adds `category` to each line item per [categorization-schema.md](categorization-schema.md). Parse → validate and persistence wiring: #42.
+Production prompt with few-shot examples lives in **`Claude — Categorize Line Items`** inside [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json). Full text and rationale: [categorization-prompts.md](categorization-prompts.md). Runs after **`Set — Normalized Receipt`**, takes normalized receipt JSON, and adds `category` to each line item per [categorization-schema.md](categorization-schema.md). Parse → validate → persist: [categorization.md](categorization.md).
 
 ## Node naming conventions
 

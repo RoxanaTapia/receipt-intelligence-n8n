@@ -14,10 +14,11 @@ receipt-intelligence-n8n/
 │   ├── n8n-setup.md          # Local Docker setup
 │   ├── n8n-claude-standards.md
 │   ├── pdf-extraction.md     # Module 2 pipeline guide
+│   ├── categorization.md     # Module 3 pipeline guide
 │   ├── categorization-schema.md
 │   └── categorization-prompts.md
 ├── samples/receipts/         # Anonymized PDF fixtures
-├── data/receipts/            # Validated JSON output
+├── data/receipts/            # Categorized JSON output
 └── workflows/
     ├── hello-world.json
     └── receipt-pdf-ingest.json
@@ -51,8 +52,10 @@ receipt-intelligence-n8n/
 | 1 | [workflows/](workflows/) | Version-controlled n8n workflow exports |
 | 1 | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
 | 2 | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
+| 3 | [docs/categorization.md](docs/categorization.md) | Categorization pipeline — validated categories on disk |
 | 3 | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
 | 3 | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
+| 3 | [docs/categorization-test-matrix.md](docs/categorization-test-matrix.md) | Edge-case categorization verification |
 
 ## Agent workflow
 
@@ -68,7 +71,7 @@ High-level modules for the Receipt Intelligence System:
 |--------|-------|
 | **1 — Foundations** | Agent workflow, Docker n8n, first workflow, Claude standards, README ✅ |
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
-| **3 — Data & categorization** | Structured storage, categories, validation |
+| **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — FastAPI backend** | Supporting APIs where n8n alone is not enough |
 | **5 — Query interface** | Natural-language spending and budget questions |
 | **6 — Hardening** | Error handling, retries, evaluation |
