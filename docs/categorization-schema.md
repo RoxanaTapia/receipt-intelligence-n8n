@@ -124,6 +124,6 @@ Few-shot examples for ambiguous German labels: [categorization-prompts.md](categ
 - [PDF extraction pipeline](pdf-extraction.md) — Module 2 input schema
 - [n8n + Claude standards](n8n-claude-standards.md) — prompt structure and parse → validate pattern
 - [Categorization prompts](categorization-prompts.md) — production prompt and few-shot examples
-- [Categorization pipeline](categorization.md) — Module 3 persist path (#44)
+- [Categorization pipeline](categorization.md) — categorization and persistence (#44)
 - [Categorization test matrix](categorization-test-matrix.md) — edge-case verification (#43)
 - [Agent workflow](../AGENTS.md)

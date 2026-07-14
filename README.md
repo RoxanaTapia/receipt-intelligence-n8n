@@ -13,8 +13,8 @@ receipt-intelligence-n8n/
 ├── docs/
 │   ├── n8n-setup.md          # Local Docker setup
 │   ├── n8n-claude-standards.md
-│   ├── pdf-extraction.md     # Module 2 pipeline guide
-│   ├── categorization.md     # Module 3 pipeline guide
+│   ├── pdf-extraction.md     # PDF extraction pipeline guide
+│   ├── categorization.md     # Categorization pipeline guide
 │   ├── categorization-schema.md
 │   └── categorization-prompts.md
 ├── samples/receipts/         # Anonymized PDF fixtures
@@ -44,18 +44,18 @@ receipt-intelligence-n8n/
 | **Local development** | [docs/n8n-setup.md](docs/n8n-setup.md) |
 | **Production / cloud** | Not documented yet — a future milestone will add a dedicated deployment guide |
 
-## Module deliverables
+## Documentation
 
-| Module | Resource | Description |
-|--------|----------|-------------|
-| 1 | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup and verification |
-| 1 | [workflows/](workflows/) | Version-controlled n8n workflow exports |
-| 1 | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
-| 2 | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
-| 3 | [docs/categorization.md](docs/categorization.md) | Categorization pipeline — validated categories on disk |
-| 3 | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
-| 3 | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
-| 3 | [docs/categorization-test-matrix.md](docs/categorization-test-matrix.md) | Edge-case categorization verification |
+| Area | Resource | Description |
+|------|----------|-------------|
+| Setup | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup and verification |
+| Workflows | [workflows/](workflows/) | Version-controlled n8n workflow exports |
+| Standards | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
+| Extraction | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
+| Categorization | [docs/categorization.md](docs/categorization.md) | Categorization pipeline — validated categories on disk |
+| Categorization | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
+| Categorization | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
+| Categorization | [docs/categorization-test-matrix.md](docs/categorization-test-matrix.md) | Edge-case categorization verification |
 
 ## Agent workflow
 

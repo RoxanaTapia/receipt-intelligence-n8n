@@ -1,6 +1,6 @@
 # Categorization pipeline
 
-Module 3 end-to-end guide: normalized receipt JSON → Claude categorization → validated categorized JSON on disk.
+End-to-end guide: normalized receipt JSON → Claude categorization → validated categorized JSON on disk.
 
 **Workflow:** [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) (`Receipt — Ingest PDF`)
 
@@ -10,7 +10,7 @@ Module 3 end-to-end guide: normalized receipt JSON → Claude categorization →
 
 ```
 Manual Trigger
-  → … (Module 2 extract + validate)
+  → … (PDF extraction + validate)
   → Set — Normalized Receipt
   → Claude — Categorize Line Items
   → Code — Parse Categorization JSON
@@ -24,7 +24,7 @@ Manual Trigger
 
 | Stage | Node | Role |
 |-------|------|------|
-| Input | `Set — Normalized Receipt` | Validated Module 2 receipt JSON |
+| Input | `Set — Normalized Receipt` | Validated extracted receipt JSON |
 | AI | `Claude — Categorize Line Items` | Add `category` to each `line_items[]` entry |
 | Parse | `Code — Parse Categorization JSON` | Parse Claude output; set `parseOk` |
 | Branch | `IF — Categorization Parse OK` | Route on `parseOk === true` |
@@ -34,7 +34,7 @@ Manual Trigger
 
 ## Error path
 
-Parse or validation failures route to **`Set — Categorization Error`** (not a retry loop — Module 6 adds hardening):
+Parse or validation failures route to **`Set — Categorization Error`** (not a retry loop — retry handling is planned for future hardening):
 
 | Field | Meaning |
 |-------|---------|
@@ -94,7 +94,7 @@ Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the cont
 
 ## Related docs
 
-- [PDF extraction pipeline](pdf-extraction.md) — Module 2 upstream
+- [PDF extraction pipeline](pdf-extraction.md) — upstream extraction step
 - [n8n Docker setup](n8n-setup.md)
 - [Claude standards](n8n-claude-standards.md)
 - [Agent workflow](../AGENTS.md)

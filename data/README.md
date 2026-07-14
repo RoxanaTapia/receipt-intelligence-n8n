@@ -8,7 +8,7 @@ Categorized receipt JSON written by the [`receipt-pdf-ingest`](../workflows/rece
 data/
 ├── README.md                 # This file
 └── receipts/
-    ├── example.json          # Committed showcase (anonymized, Module 2 shape)
+    ├── example.json          # Committed showcase (extracted receipt JSON, no categories)
     ├── {date}_{slug}_{hash}.json   # Runtime outputs (gitignored)
     └── private/              # Real receipt JSON (gitignored)
 ```
@@ -97,7 +97,7 @@ See [n8n setup](../docs/n8n-setup.md) for Docker restart steps after compose cha
 | Path | Committed? | Purpose |
 |------|------------|---------|
 | `data/receipts/*.json` (hash-named) | No | Runtime workflow outputs |
-| [`receipts/example.json`](receipts/example.json) | **Yes** | Showcase fixture (Module 2 shape; no categories) |
+| [`receipts/example.json`](receipts/example.json) | **Yes** | Showcase fixture (extracted receipt JSON; no categories) |
 | `data/receipts/private/` | No | Real receipt JSON from local runs |
 
 ### Refresh the showcase
@@ -141,7 +141,7 @@ Required fields match validation in the ingest workflow: `merchant`, `date`, `to
 
 ## Related docs
 
-- [Categorization pipeline](../docs/categorization.md) — Module 3 persist path
+- [Categorization pipeline](../docs/categorization.md) — categorization and persistence
 - [Categorization schema](../docs/categorization-schema.md) — taxonomy and output contract
 - [Sample PDFs](../samples/README.md) — input fixtures for the pipeline
 - [n8n setup](../docs/n8n-setup.md) — Docker, import workflow, copy PDFs into the container
