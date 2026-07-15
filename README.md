@@ -2,6 +2,13 @@
 
 Process PDF receipts, extract and categorize spending with Claude, and answer natural-language budget questions — orchestrated in **n8n**, with **FastAPI** as a supporting backend when custom logic is needed.
 
+## Related repositories
+
+| Repo | Role |
+|------|------|
+| **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
+| [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | Module 4 — FastAPI analytics and Q&A (open in Cursor for API `/ship-issue`) |
+
 ## Repository structure
 
 ```
@@ -72,9 +79,9 @@ High-level modules for the Receipt Intelligence System:
 | **1 — Foundations** | Agent workflow, Docker n8n, first workflow, Claude standards, README ✅ |
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
-| **4 — FastAPI backend** | Supporting APIs where n8n alone is not enough |
-| **5 — Query interface** | Natural-language spending and budget questions |
-| **6 — Hardening** | Error handling, retries, evaluation |
-| **7 — Production readiness** | Deployment, monitoring, operational docs |
+| **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions |
+| **5 — Production polish** | Planned — may span API and n8n repos |
+| **6 — Integration** | Planned — n8n ↔ API wiring tracked in this repo when scoped |
+| **7 — Production readiness** | Planned — deployment and operational docs |
 
 Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
