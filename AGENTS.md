@@ -26,8 +26,8 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 
 ## Current Focus
 
-- Module 3: Line-item categorization (taxonomy, prompts, validation, edge-case test matrix)
-- Module 2 foundations: PDF ingest, extraction, validation, persistence
+- **This repo (n8n):** Modules 1–3 — PDF ingest, extraction, categorization, persistence to `data/receipts/` ✅
+- **Sibling repo:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 (analytics + Q&A). Open that repo in Cursor for `/ship-issue` on API work.
 
 ## Core Principles
 
