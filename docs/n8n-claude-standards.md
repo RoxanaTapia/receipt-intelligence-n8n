@@ -96,32 +96,27 @@ Reference workflows:
 
 ## Module 4 — Q&A routing (API)
 
-Natural-language budget questions are routed in
-[receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api),
-not inside n8n. Keep the same Claude vs deterministic split:
+Natural-language budget questions are routed in [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api), not inside n8n. Keep the same Claude vs deterministic split:
 
 | Use **Claude** | Use **deterministic code** (FastAPI / Pydantic) |
 |----------------|--------------------------------------------------|
 | Intent + synonym / time-phrase extraction | Validate routed JSON against `AnalyticsQuery` |
-| Friendly narration of analytics *facts* (#8) | Aggregation, shares, averages — never invent amounts |
-| Insight prose over structured heuristics (#10) | Threshold checks and numeric summaries |
+| Friendly narration of analytics *facts* | Aggregation, shares, averages — never invent amounts |
+| Insight prose over structured heuristics | Threshold checks and numeric summaries |
 
-**Three-layer prompts** still apply (system / task / output). Routing and
-narration prompts, intent types, category synonyms, and few-shots live in the
-API guide:
+**Three-layer prompts** still apply (system / task / output). Routing and narration prompts, intent types, category synonyms, and few-shots live in the API guide:
 
-→ [question-answering.md](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md)
-  *(routing contract — API #9; endpoint #8)*
+→ [question-answering.md](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md) *(routing + narration contract)*
 
-**Grounding rule:** Claude may interpret the *question*; spend figures come only
-from the analytics layer. On empty data or validation failure, refuse — do not
-guess totals.
+**Grounding rule:** Claude may interpret the *question*; spend figures come only from the analytics layer. On empty data or validation failure, refuse — do not guess totals.
 
 ## Related docs
 
 - [PDF extraction pipeline](pdf-extraction.md)
+- [Categorization pipeline](categorization.md)
 - [Categorization schema](categorization-schema.md)
 - [Categorization prompts](categorization-prompts.md)
+- [Categorization test matrix](categorization-test-matrix.md)
 - [n8n Docker setup](n8n-setup.md)
 - [Agent workflow](../AGENTS.md) — includes `claude-prompt-engineer` for prompt drafting and review
 - [API Q&A routing](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md) — Module 4 intent → analytics

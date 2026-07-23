@@ -1,6 +1,6 @@
 ---
 description: Markdown documentation style for docs/, README, and agent docs
-globs: docs/**/*.md, README.md, AGENTS.md, .cursor/agents/**/*.md
+globs: docs/**/*.md, README.md, AGENTS.md, data/**/*.md, samples/**/*.md, .cursor/agents/**/*.md, .cursor/commands/**/*.md
 alwaysApply: false
 ---
 

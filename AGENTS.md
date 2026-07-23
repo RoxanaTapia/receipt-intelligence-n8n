@@ -1,12 +1,14 @@
-# AGENTS.md — Receipt Intelligence System
+# AGENTS.md — Receipt Intelligence n8n
 
-How we use Cursor agents, rules, and commands in this project.
+How we use Cursor agents, rules, and commands in this repository.
 
 ## Project Vision
 
 Build a clean, production-style system that processes PDF receipts, extracts and categorizes data using Claude, and answers natural language questions about spending and budget.
 
 **Stack:** n8n (core) · Claude · FastAPI (supporting backend)
+
+This repo **writes** categorized receipts to `data/receipts/`. Sibling [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) **reads** them via `RECEIPT_DATA_PATH`.
 
 ## Project references
 
@@ -15,9 +17,12 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 | Term | Path |
 |------|------|
 | Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
+| Categorization pipeline | [`docs/categorization.md`](docs/categorization.md) |
 | Categorization schema | [`docs/categorization-schema.md`](docs/categorization-schema.md) |
 | Categorization prompts | [`docs/categorization-prompts.md`](docs/categorization-prompts.md) |
 | Categorization test matrix | [`docs/categorization-test-matrix.md`](docs/categorization-test-matrix.md) |
+| Receipt data store | [`data/README.md`](data/README.md) |
+| Sample receipt JSON | [`data/receipts/example.json`](data/receipts/example.json) |
 | Workflow exports | [`workflows/receipt-pdf-ingest.json`](workflows/receipt-pdf-ingest.json) |
 | Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
 | PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
@@ -26,8 +31,10 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 
 ## Current Focus
 
-- **This repo (n8n):** Modules 1–3 — PDF ingest, extraction, categorization, persistence to `data/receipts/` ✅
-- **Sibling repo:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 (analytics + Q&A). Open that repo in Cursor for `/ship-issue` on API work.
+- **This repo:** Modules 1–3 complete — PDF ingest, extraction, categorization, persistence (`data/receipts/`)
+- **Open issues:** none — maintenance / future Modules 5–7 (see README roadmap)
+- **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
+- **Recent docs:** Module 4 handoff and Q&A routing pointers in Claude standards
 
 ## Core Principles
 
@@ -87,6 +94,7 @@ Project **Status** uses GitHub Project automations (PR linked → In Progress; m
 
 - Granular, reviewable commits (ideally 1–4 per issue)
 - Only `milestone-orchestrator` creates commits
+- **PR titles must not include issue numbers** (avoid `Add X (#42)` or `Fix Y — closes #42`). Use `Closes #NN` in the PR body so GitHub links and closes the issue.
 - Run the **docs-writer review** (`/document`) only if the issue creates or updates documentation; otherwise skip it and say so in the PR. Always run **`/verify`** before opening a PR.
 - PR description starts with a **Main contribution** paragraph
 - Human must approve before push or merge

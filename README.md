@@ -7,7 +7,7 @@ Process PDF receipts, extract and categorize spending with Claude, and answer na
 | Repo | Role |
 |------|------|
 | **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
-| [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | Module 4 — FastAPI analytics and Q&A (open in Cursor for API `/ship-issue`) |
+| [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (Module 4 — open in Cursor for API `/ship-issue`) |
 
 ## Repository structure
 
@@ -23,9 +23,14 @@ receipt-intelligence-n8n/
 │   ├── pdf-extraction.md     # PDF extraction pipeline guide
 │   ├── categorization.md     # Categorization pipeline guide
 │   ├── categorization-schema.md
-│   └── categorization-prompts.md
-├── samples/receipts/         # Anonymized PDF fixtures
-├── data/receipts/            # Categorized JSON output
+│   ├── categorization-prompts.md
+│   └── categorization-test-matrix.md
+├── samples/
+│   ├── README.md             # Anonymized PDF catalog and privacy rules
+│   └── receipts/             # Committed public-safe PDF fixtures
+├── data/
+│   ├── README.md             # Receipt JSON store contract
+│   └── receipts/             # Categorized JSON output (runtime)
 └── workflows/
     ├── hello-world.json
     └── receipt-pdf-ingest.json
@@ -59,10 +64,12 @@ receipt-intelligence-n8n/
 | Workflows | [workflows/](workflows/) | Version-controlled n8n workflow exports |
 | Standards | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
 | Extraction | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
-| Categorization | [docs/categorization.md](docs/categorization.md) | Categorization pipeline — validated categories on disk |
-| Categorization | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
-| Categorization | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
-| Categorization | [docs/categorization-test-matrix.md](docs/categorization-test-matrix.md) | Edge-case categorization verification |
+| Pipeline | [docs/categorization.md](docs/categorization.md) | Categorization pipeline — validated categories on disk |
+| Schema | [docs/categorization-schema.md](docs/categorization-schema.md) | Spending category taxonomy and output schema |
+| Prompts | [docs/categorization-prompts.md](docs/categorization-prompts.md) | Categorization prompt with few-shot examples |
+| Test matrix | [docs/categorization-test-matrix.md](docs/categorization-test-matrix.md) | Edge-case categorization verification |
+| Data store | [data/README.md](data/README.md) | Receipt JSON filenames, hash, re-runs |
+| Samples | [samples/README.md](samples/README.md) | Anonymized PDF fixtures and privacy rules |
 
 ## Agent workflow
 
@@ -79,7 +86,7 @@ High-level modules for the Receipt Intelligence System:
 | **1 — Foundations** | Agent workflow, Docker n8n, first workflow, Claude standards, README ✅ |
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
-| **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions |
+| **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
 | **5 — Production polish** | Planned — may span API and n8n repos |
 | **6 — Integration** | Planned — n8n ↔ API wiring tracked in this repo when scoped |
 | **7 — Production readiness** | Planned — deployment and operational docs |
