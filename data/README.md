@@ -1,6 +1,6 @@
 # Receipt data store
 
-Categorized receipt JSON written by the [`receipt-pdf-ingest`](../workflows/receipt-pdf-ingest.json) workflow after Claude extraction, validation, categorization, and persistence (#44).
+Categorized receipt JSON written by the [`receipt-pdf-ingest`](../workflows/receipt-pdf-ingest.json) workflow after Claude extraction, validation, categorization, and persistence.
 
 ## Directory layout
 
@@ -8,8 +8,8 @@ Categorized receipt JSON written by the [`receipt-pdf-ingest`](../workflows/rece
 data/
 ├── README.md                 # This file
 └── receipts/
-    ├── example.json          # Committed showcase (extracted receipt JSON, no categories)
-    ├── {date}_{slug}_{hash}.json   # Runtime outputs (gitignored)
+    ├── example.json          # Committed showcase — extracted fixture (no categories)
+    ├── {date}_{slug}_{hash}.json   # Runtime categorized outputs (gitignored)
     └── private/              # Real receipt JSON (gitignored)
 ```
 

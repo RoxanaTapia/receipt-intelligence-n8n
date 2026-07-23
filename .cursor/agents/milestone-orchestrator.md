@@ -30,7 +30,7 @@ During `/ship-issue`, follow this order in **one session** (you remain the orche
 5. **Human checkpoints** — pause when the issue requires them; resume when the human confirms.
 6. **`/document`** — if docs-writer triggers match, follow **Documentation accuracy** (below), then act as docs-writer. If not, note skip in PR.
 7. **Invoke verifier** — always follow `.cursor/commands/verify.md` (act as verifier) before opening a PR. Verifier maps every acceptance criterion; block if any are ❌ missing.
-8. **Open PR** — Main contribution; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); note specialists consulted; wait for human approval before push/merge.
+8. **Open PR** — title describes the change **without** issue numbers; body: **Main contribution**; `Closes #NN`; **test plan derived from issue acceptance criteria** (see below); note specialists consulted; wait for human approval before push/merge.
 9. **After merge** — when the human confirms, follow `.cursor/commands/ship-complete.md` to tick issue acceptance criteria checkboxes.
 
 **How gated steps work:** following `/document` or `/verify` means you adopt that agent's playbook in this chat, then return to orchestrator duties (commits, PR). You do not spawn a separate process unless explicitly using a subagent.
@@ -96,6 +96,7 @@ If docs-writer triggers do not match, note in the PR: "docs-writer skipped — n
 
 - **You are the only agent allowed to create commits.**
 - Other agents (like `verifier`, `docs-writer`, etc.) should **report** what they did, but **not commit**.
+- **PR title:** no `#NN` / “closes #NN” in the title — put `Closes #NN` only in the body.
 - Never push or merge without explicit human approval.
 - If something is unclear or risky, raise it early instead of guessing.
 - Follow the workflow described in `AGENTS.md`.
