@@ -9,6 +9,8 @@ Process PDF receipts, extract and categorize spending with Claude, and answer na
 | **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
 | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (Module 4 — open in Cursor for API `/ship-issue`) |
 
+**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. HTTP to the API (`API_BASE_URL`) is for analytics/Q&A later — not for uploading receipts. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
+
 ## Repository structure
 
 ```
@@ -60,7 +62,7 @@ receipt-intelligence-n8n/
 
 | Area | Resource | Description |
 |------|----------|-------------|
-| Setup | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup and verification |
+| Setup | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup, env vars, n8n ↔ API config contract |
 | Workflows | [workflows/](workflows/) | Version-controlled n8n workflow exports |
 | Standards | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
 | Extraction | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
@@ -88,7 +90,7 @@ High-level modules for the Receipt Intelligence System:
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
 | **5 — Production polish** | Planned — may span API and n8n repos |
-| **6 — Integration** | Planned — n8n ↔ API wiring tracked in this repo when scoped |
+| **6 — Integration** | In progress — config contract (`API_BASE_URL`, shared disk); HTTP wiring in follow-up issues |
 | **7 — Production readiness** | Planned — deployment and operational docs |
 
 Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
