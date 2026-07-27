@@ -72,9 +72,9 @@ Local integration uses **two channels** with different jobs:
 | Channel | Role | Today |
 |---------|------|-------|
 | **Shared disk** | n8n **writes** categorized JSON; the API **reads** the same folder | ✅ In use |
-| **HTTP** (`API_BASE_URL`) | After persist, ingest calls `/health` + `/analytics/receipts` (coverage smoke) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
+| **HTTP** (`API_BASE_URL`) | After persist: coverage smoke (`/health` + `/analytics/receipts`), then spending summary (`/analytics/summary`) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
 
-📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Richer analytics / Q&A HTTP steps are follow-up Module 5 Integration issues.
+📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Demo Q&A HTTP (`POST /questions`) is a follow-up Module 5 Integration issue.
 
 ### Shared disk (`data/receipts/` ↔ `RECEIPT_DATA_PATH`)
 
@@ -124,6 +124,23 @@ sample PDF → ingest → Write File — Persist Receipt JSON
 | Coverage | Open **`Code — Show Coverage Smoke`**: `api_status` is `ok`, `persistedInCoverage` is `true`, and `persistedFilename` appears in `loaded_files` |
 
 If the API is down, the HTTP Request node fails the run (visible red) — graceful branching is a later issue.
+
+### Post-persist analytics summary
+
+After the coverage smoke, the happy path asks the API for spending context in the same run:
+
+```text
+Code — Show Coverage Smoke
+  → GET /analytics/summary?preset=last_month
+  → Code — Show Analytics Summary
+```
+
+| Step | What to check |
+|------|---------------|
+| Summary call | **`HTTP Request — GET Analytics Summary`** uses `preset=last_month` (explicit time range) |
+| Visible output | Open **`Code — Show Analytics Summary`**: named fields include `period_label`, `total_spend`, `top_categories`, `by_category`, `summary_facts` |
+
+Empty periods still return **200** with `total_spend: 0` — that is success, not an error. Deeper failure modes (API down, empty-data UX) are tracked separately.
 
 Full local full-stack runbook: tracked in a follow-up issue (#71).
 
