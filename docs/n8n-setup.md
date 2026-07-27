@@ -61,8 +61,49 @@ Data persists in the `n8n_data` Docker volume across restarts.
 | `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
 | `N8N_BASIC_AUTH_PASSWORD` | Basic auth password (**required**) | — |
 | `ANTHROPIC_API_KEY` | Anthropic API key for Claude nodes | — |
+| `API_BASE_URL` | Sibling FastAPI base URL (analytics/Q&A HTTP; Module 6+) | `http://host.docker.internal:8000` |
 
 See `.env.example` for a copy-paste template.
+
+## n8n ↔ API integration contract
+
+Local integration uses **two channels** with different jobs:
+
+| Channel | Role | Today |
+|---------|------|-------|
+| **Shared disk** | n8n **writes** categorized JSON; the API **reads** the same folder | ✅ In use |
+| **HTTP** (`API_BASE_URL`) | n8n calls FastAPI for analytics / Q&A **after** persist | Module 6 follow-ups — not wired in the ingest workflow yet |
+
+📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff.
+
+### Shared disk (`data/receipts/` ↔ `RECEIPT_DATA_PATH`)
+
+Expected sibling layout:
+
+```text
+receipt-intelligence-system/
+├── receipt-intelligence-n8n/   # this repo — writes data/receipts/
+└── receipt-intelligence-api/   # FastAPI — reads via RECEIPT_DATA_PATH
+```
+
+| Side | Path / variable |
+|------|-----------------|
+| This repo (host) | [`data/receipts/`](../data/README.md) |
+| This repo (container Write File) | `/home/node/.n8n-files/receipts/` (bind-mounted) |
+| API | `RECEIPT_DATA_PATH` — default `../receipt-intelligence-n8n/data/receipts` in the [API `.env.example`](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/.env.example) |
+
+API setup and loader details: [analytics guide](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/analytics.md) in the sibling repo.
+
+### `API_BASE_URL` reachability
+
+| Caller | Typical value |
+|--------|----------------|
+| n8n **inside** Docker (macOS Docker Desktop) | `http://host.docker.internal:8000` (default in `.env.example`) |
+| Browser or terminal on the **host** | `http://localhost:8000` |
+
+`localhost` inside the container means the container itself — not your Mac. Use `host.docker.internal` when HTTP nodes (later issues) call the API from n8n.
+
+Full local full-stack runbook: tracked in a follow-up issue (#71) — this section is the config contract only.
 
 ## Security notes
 
