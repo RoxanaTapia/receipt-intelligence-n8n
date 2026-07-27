@@ -15,6 +15,8 @@ services:
       N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD:?Set N8N_BASIC_AUTH_PASSWORD in .env}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       API_BASE_URL: ${API_BASE_URL:-http://host.docker.internal:8000}
+      # Allow $env.API_BASE_URL in HTTP Request / Code expressions (n8n blocks env by default)
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
       NODE_FUNCTION_ALLOW_BUILTIN: crypto
     volumes:
       - n8n_data:/home/node/.n8n

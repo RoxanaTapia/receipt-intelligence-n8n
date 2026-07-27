@@ -72,9 +72,9 @@ Local integration uses **two channels** with different jobs:
 | Channel | Role | Today |
 |---------|------|-------|
 | **Shared disk** | n8n **writes** categorized JSON; the API **reads** the same folder | ✅ In use |
-| **HTTP** (`API_BASE_URL`) | n8n calls FastAPI for analytics / Q&A **after** persist | Module 6 follow-ups — not wired in the ingest workflow yet |
+| **HTTP** (`API_BASE_URL`) | After persist, ingest calls `/health` + `/analytics/receipts` (coverage smoke) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
 
-📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff.
+📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Richer analytics / Q&A HTTP steps are follow-up Module 6 issues.
 
 ### Shared disk (`data/receipts/` ↔ `RECEIPT_DATA_PATH`)
 
@@ -101,9 +101,31 @@ API setup and loader details: [analytics guide](https://github.com/RoxanaTapia/r
 | n8n **inside** Docker (macOS Docker Desktop) | `http://host.docker.internal:8000` (default in `.env.example`) |
 | Browser or terminal on the **host** | `http://localhost:8000` |
 
-`localhost` inside the container means the container itself — not your Mac. Use `host.docker.internal` when HTTP nodes (later issues) call the API from n8n.
+`localhost` inside the container means the container itself — not your Mac. Use `host.docker.internal` when HTTP Request nodes call the API from n8n.
 
-Full local full-stack runbook: tracked in a follow-up issue (#71) — this section is the config contract only.
+Compose sets `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` so expressions like `={{ $env.API_BASE_URL }}` work in those nodes. Recreate the container after changing compose (`docker compose down && docker compose up -d`).
+
+### Post-persist coverage smoke
+
+Thinnest proof the API can **see** what n8n just wrote:
+
+```text
+sample PDF → ingest → Write File — Persist Receipt JSON
+  → GET /health
+  → GET /analytics/receipts
+  → Code — Show Coverage Smoke
+```
+
+| Step | What to check |
+|------|----------------|
+| API running | Sibling FastAPI with `RECEIPT_DATA_PATH` → this repo’s `data/receipts/` |
+| Import workflow | [`workflows/receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
+| Execute | Manual Trigger with a [sample PDF](../samples/README.md) |
+| Coverage | Open **`Code — Show Coverage Smoke`**: `api_status` is `ok`, `persistedInCoverage` is `true`, and `persistedFilename` appears in `loaded_files` |
+
+If the API is down, the HTTP Request node fails the run (visible red) — graceful branching is a later issue.
+
+Full local full-stack runbook: tracked in a follow-up issue (#71).
 
 ## Security notes
 
