@@ -240,6 +240,49 @@
     },
     {
       "parameters": {
+        "method": "GET",
+        "url": "={{ $env.API_BASE_URL }}/health",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1144,
+        0
+      ],
+      "id": "205c80a1-563f-44d2-abfe-39d0b241cb33",
+      "name": "HTTP Request — GET Health"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.API_BASE_URL }}/analytics/receipts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        0
+      ],
+      "id": "9614fb16-702c-4f29-a4c8-060a92a58ba3",
+      "name": "HTTP Request — GET Analytics Receipts"
+    },
+    {
+      "parameters": {
+        "jsCode": "const persistedFilename = $('Code — Build Receipt File').first().json.persistedFilename;\nconst health = $('HTTP Request — GET Health').first().json;\nconst coverage = $input.first().json;\nconst loadedFiles = coverage.loaded_files ?? [];\n\nreturn [{\n  json: {\n    api_status: health.status,\n    data_path: coverage.data_path,\n    files_loaded: coverage.files_loaded,\n    logical_receipt_count: coverage.logical_receipt_count,\n    loaded_files: loadedFiles,\n    persistedFilename,\n    persistedInCoverage: loadedFiles.includes(persistedFilename),\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1576,
+        0
+      ],
+      "id": "524036fb-5dda-43d1-89d6-3d625b2e1f02",
+      "name": "Code — Show Coverage Smoke"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -676,6 +719,39 @@
         [
           {
             "node": "Code — Build Receipt File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write File — Persist Receipt JSON": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — GET Health",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request — GET Health": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — GET Analytics Receipts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request — GET Analytics Receipts": {
+      "main": [
+        [
+          {
+            "node": "Code — Show Coverage Smoke",
             "type": "main",
             "index": 0
           }
