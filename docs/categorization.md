@@ -34,7 +34,7 @@ Manual Trigger
 | Validate | `Code — Validate Categories` | Schema + taxonomy check; set `valid` |
 | Branch | `IF — Valid Categories` | Route on `valid === true` |
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
-| Smoke | `HTTP Request — GET Health` → `GET Analytics Receipts` → `Code — Show Coverage Smoke` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
+| Smoke | `HTTP Request — GET Health` → `HTTP Request — GET Analytics Receipts` → `Code — Show Coverage Smoke` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
 
 ## Error path
 
