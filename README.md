@@ -89,8 +89,8 @@ High-level modules for the Receipt Intelligence System:
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
-| **5 — Production polish** | Planned — may span API and n8n repos |
-| **6 — Integration** | In progress — config contract + post-persist coverage smoke (`/health`, `/analytics/receipts`); richer HTTP / runbook in follow-ups |
-| **7 — Production readiness** | Planned — deployment and operational docs |
+| **5 — Integration** | In progress — n8n ↔ API config + post-persist coverage smoke; analytics/Q&A HTTP and runbook in follow-ups |
+| **6 — Reliability** | Planned — Claude parse/categorization retries and workflow hardening |
+| **7 — Delivery** | Planned — live demo / production readiness, deployment and operational docs |
 
 Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
