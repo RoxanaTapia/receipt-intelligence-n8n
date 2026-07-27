@@ -61,7 +61,7 @@ Data persists in the `n8n_data` Docker volume across restarts.
 | `N8N_BASIC_AUTH_USER` | Basic auth username | `admin` |
 | `N8N_BASIC_AUTH_PASSWORD` | Basic auth password (**required**) | — |
 | `ANTHROPIC_API_KEY` | Anthropic API key for Claude nodes | — |
-| `API_BASE_URL` | Sibling FastAPI base URL (analytics/Q&A HTTP; Module 6+) | `http://host.docker.internal:8000` |
+| `API_BASE_URL` | Sibling FastAPI base URL (analytics/Q&A HTTP; Module 5+) | `http://host.docker.internal:8000` |
 
 See `.env.example` for a copy-paste template.
 
@@ -74,7 +74,7 @@ Local integration uses **two channels** with different jobs:
 | **Shared disk** | n8n **writes** categorized JSON; the API **reads** the same folder | ✅ In use |
 | **HTTP** (`API_BASE_URL`) | After persist, ingest calls `/health` + `/analytics/receipts` (coverage smoke) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
 
-📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Richer analytics / Q&A HTTP steps are follow-up Module 6 issues.
+📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Richer analytics / Q&A HTTP steps are follow-up Module 5 Integration issues.
 
 ### Shared disk (`data/receipts/` ↔ `RECEIPT_DATA_PATH`)
 

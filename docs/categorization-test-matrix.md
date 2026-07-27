@@ -74,7 +74,7 @@ For each line item in the tables below:
 
 If any row is ⚠️ or ❌ on **both** runs for the same wrong category, note it when handing back to the agent — that is a prompt gap candidate.
 
-If only Run 1 ≠ Run 2 (both plausible), note it under **Known limitations** — retry loops are Module 6.
+If only Run 1 ≠ Run 2 (both plausible), note it under **Known limitations** — retry loops are Module 6 (Reliability).
 
 ### Fixture shortcut (Receipt 1 only)
 
@@ -187,7 +187,7 @@ Document here after testing — do not block the PR for these:
 | Limitation | Notes |
 |------------|-------|
 | **Non-determinism** | Claude may return different valid categories on repeat runs for borderline items |
-| **No retry loop** | Parse/validation failures stop at `Set — Categorization Error` — auto-retry is **Module 6** |
+| **No retry loop** | Parse/validation failures stop at `Set — Categorization Error` — auto-retry is **Module 6 (Reliability)** |
 | **Extraction variance** | Different `merchant` strings or line splits from Module 2 change which rows appear; compare categories for matching descriptions. Observed on `01-food-homedeco.pdf` and `02-vegetables-weighted.pdf`: `LEERG. MW V. ST` extracted despite exclusion rules; date/total differed across runs on `01-food-homedeco.pdf` |
 | **Abbreviated seasonal SKUs** | Labels like `WINTER EDITION` omit product type — few-shot examples teach domain context (e.g. REWE salad mix → `food`) |
 

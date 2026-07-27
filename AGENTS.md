@@ -31,8 +31,8 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 
 ## Current Focus
 
-- **This repo:** Modules 1–3 complete — PDF ingest, extraction, categorization, persistence (`data/receipts/`)
-- **Open issues:** none — maintenance / future Modules 5–7 (see README roadmap)
+- **This repo:** Modules 1–3 complete; **Module 5 — Integration** in progress (n8n ↔ API wiring)
+- **Next:** Module 6 — Reliability (Claude retries); Module 7 — Delivery (live demo / deploy)
 - **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
 - **Recent docs:** Module 4 handoff and Q&A routing pointers in Claude standards
 
