@@ -283,6 +283,34 @@
     },
     {
       "parameters": {
+        "method": "GET",
+        "url": "={{ $env.API_BASE_URL }}/analytics/summary?preset=last_month",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1792,
+        0
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "HTTP Request — GET Analytics Summary"
+    },
+    {
+      "parameters": {
+        "jsCode": "const summary = $input.first().json;\n\nreturn [{\n  json: {\n    analytics_endpoint: 'summary',\n    analytics_preset: 'last_month',\n    period_label: summary.period_label,\n    start_date: summary.start_date,\n    end_date: summary.end_date,\n    total_spend: summary.total_spend,\n    top_categories: summary.top_categories ?? [],\n    by_category: summary.by_category ?? [],\n    summary_facts: summary.summary_facts ?? [],\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2008,
+        0
+      ],
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "name": "Code — Show Analytics Summary"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -752,6 +780,28 @@
         [
           {
             "node": "Code — Show Coverage Smoke",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Show Coverage Smoke": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — GET Analytics Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request — GET Analytics Summary": {
+      "main": [
+        [
+          {
+            "node": "Code — Show Analytics Summary",
             "type": "main",
             "index": 0
           }
