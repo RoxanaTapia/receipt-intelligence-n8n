@@ -9,7 +9,7 @@ Process PDF receipts, extract and categorize spending with Claude, and answer na
 | **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
 | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (Module 4 — open in Cursor for API `/ship-issue`) |
 
-**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage (`GET /health`, `GET /analytics/receipts`) then calls `GET /analytics/summary?preset=last_month` via `API_BASE_URL` — it does not POST receipt JSON. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
+**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage (`GET /health`, `GET /analytics/receipts`) then calls `GET /analytics/summary?preset=last_N_days&n_days=90` via `API_BASE_URL` — it does not POST receipt JSON. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
 
 ## Repository structure
 

@@ -35,7 +35,7 @@ Manual Trigger
 | Branch | `IF — Valid Categories` | Route on `valid === true` |
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
 | Smoke | `HTTP Request — GET Health` → `HTTP Request — GET Analytics Receipts` → `Code — Show Coverage Smoke` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
-| Analytics | `HTTP Request — GET Analytics Summary` → `Code — Show Analytics Summary` | Spending summary for `preset=last_month` ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
+| Analytics | `HTTP Request — GET Analytics Summary` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
 
 ## Error path
 

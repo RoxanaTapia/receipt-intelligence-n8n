@@ -131,13 +131,13 @@ After the coverage smoke, the happy path asks the API for spending context in th
 
 ```text
 Code — Show Coverage Smoke
-  → GET /analytics/summary?preset=last_month
+  → GET /analytics/summary?preset=last_N_days&n_days=90
   → Code — Show Analytics Summary
 ```
 
 | Step | What to check |
 |------|---------------|
-| Summary call | **`HTTP Request — GET Analytics Summary`** uses `preset=last_month` (explicit time range) |
+| Summary call | **`HTTP Request — GET Analytics Summary`** uses `preset=last_N_days` and `n_days=90` (explicit time range; covers May sample dates) |
 | Visible output | Open **`Code — Show Analytics Summary`**: named fields include `period_label`, `total_spend`, `top_categories`, `by_category`, `summary_facts` |
 
 Empty periods still return **200** with `total_spend: 0` — that is success, not an error. Deeper failure modes (API down, empty-data UX) are tracked separately.
