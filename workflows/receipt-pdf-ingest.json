@@ -539,7 +539,7 @@
             {
               "id": "8c4080d7-7c1e-416d-9e58-e56222fc7dd3",
               "name": "errors",
-              "value": "={{ [$json.error || 'API request failed'] }}",
+              "value": "={{ [typeof $json.error === 'string' ? $json.error : ($json.error.message || 'API request failed')] }}",
               "type": "array"
             },
             {
