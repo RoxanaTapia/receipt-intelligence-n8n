@@ -242,7 +242,9 @@
       "parameters": {
         "method": "GET",
         "url": "={{ $env.API_BASE_URL }}/health",
-        "options": {}
+        "options": {
+          "timeout": 5000
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -251,22 +253,28 @@
         0
       ],
       "id": "205c80a1-563f-44d2-abfe-39d0b241cb33",
-      "name": "HTTP Request — GET Health"
+      "name": "HTTP Request — GET Health",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
         "method": "GET",
         "url": "={{ $env.API_BASE_URL }}/analytics/receipts",
-        "options": {}
+        "options": {
+          "timeout": 5000
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1360,
+        1480,
         0
       ],
       "id": "9614fb16-702c-4f29-a4c8-060a92a58ba3",
-      "name": "HTTP Request — GET Analytics Receipts"
+      "name": "HTTP Request — GET Analytics Receipts",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -275,7 +283,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1576,
+        1816,
         0
       ],
       "id": "524036fb-5dda-43d1-89d6-3d625b2e1f02",
@@ -285,16 +293,20 @@
       "parameters": {
         "method": "GET",
         "url": "={{ $env.API_BASE_URL }}/analytics/summary?preset=last_N_days&n_days=90",
-        "options": {}
+        "options": {
+          "timeout": 5000
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1792,
+        2152,
         0
       ],
       "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "name": "HTTP Request — GET Analytics Summary"
+      "name": "HTTP Request — GET Analytics Summary",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -303,7 +315,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2008,
+        2488,
         0
       ],
       "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -316,16 +328,20 @@
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "{\n  \"question\": \"How much did I spend on food last month?\"\n}",
-        "options": {}
+        "options": {
+          "timeout": 5000
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2224,
+        2688,
         0
       ],
       "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
-      "name": "HTTP Request — POST Demo Questions"
+      "name": "HTTP Request — POST Demo Questions",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -334,11 +350,251 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2440,
+        3024,
         0
       ],
       "id": "d4e5f6a7-b8c9-0123-def0-234567890123",
       "name": "Code — Show Demo Q&A Answer"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ae8b1543-8eda-4085-bb60-b432b212fcf4",
+              "leftValue": "={{ !$json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "d9ba23bd-0af9-4c71-aa01-bd5ba9744b1f",
+      "name": "IF — API Health OK"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d822f3ca-af71-48d2-a7f7-b615ac0862d0",
+              "leftValue": "={{ !$json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        0
+      ],
+      "id": "7bfe3502-3bd8-49fc-876b-19096f2845c4",
+      "name": "IF — API Receipts OK"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e9ce584d-efb7-4fe9-82b3-f7c809cf49d4",
+              "leftValue": "={{ $json.persistedInCoverage === true && Number($json.files_loaded) > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1952,
+        0
+      ],
+      "id": "d2e0e2d0-bde4-4143-82e6-51d957554295",
+      "name": "IF — Coverage Present"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "189f7b0d-02a6-4ae1-82cf-19e8519f2cc8",
+              "leftValue": "={{ !$json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2288,
+        0
+      ],
+      "id": "b2a2275a-5d82-417e-834a-9c6a83119509",
+      "name": "IF — API Summary OK"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7644d81b-913e-47a8-8653-b9b74396b72d",
+              "leftValue": "={{ !$json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2824,
+        0
+      ],
+      "id": "2005d7a3-8f22-4f75-b6ca-9685dc7f0ed7",
+      "name": "IF — API Questions OK"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c36e770c-e0d5-4626-867c-19809dde37ad",
+              "name": "valid",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "8c4080d7-7c1e-416d-9e58-e56222fc7dd3",
+              "name": "errors",
+              "value": "={{ [$json.error || 'API request failed'] }}",
+              "type": "array"
+            },
+            {
+              "id": "87b0da14-1e39-469f-99be-bfbd0efb65c9",
+              "name": "stage",
+              "value": "api",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        352
+      ],
+      "id": "8c06ad3e-1217-4259-b2c8-509e64d9a7b9",
+      "name": "Set — API Error"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4989786b-b8c4-4384-8bd0-a55f853c59b1",
+              "name": "valid",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "ded72879-fcd8-4e68-8ec0-0c017e760008",
+              "name": "errors",
+              "value": "={{ ['Coverage empty or persisted file missing: files_loaded=' + String($json.files_loaded) + ', persistedInCoverage=' + String($json.persistedInCoverage) + ', file=' + String($json.persistedFilename)] }}",
+              "type": "array"
+            },
+            {
+              "id": "65d69cd8-6dcd-4e59-8ece-8dd108eb288d",
+              "name": "stage",
+              "value": "coverage",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1952,
+        352
+      ],
+      "id": "8a398814-dc18-4efb-b3e9-28ce87334dea",
+      "name": "Set — Empty Coverage"
     },
     {
       "parameters": {
@@ -799,7 +1055,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request — GET Analytics Receipts",
+            "node": "IF — API Health OK",
             "type": "main",
             "index": 0
           }
@@ -810,7 +1066,7 @@
       "main": [
         [
           {
-            "node": "Code — Show Coverage Smoke",
+            "node": "IF — API Receipts OK",
             "type": "main",
             "index": 0
           }
@@ -821,7 +1077,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request — GET Analytics Summary",
+            "node": "IF — Coverage Present",
             "type": "main",
             "index": 0
           }
@@ -832,7 +1088,7 @@
       "main": [
         [
           {
-            "node": "Code — Show Analytics Summary",
+            "node": "IF — API Summary OK",
             "type": "main",
             "index": 0
           }
@@ -854,7 +1110,97 @@
       "main": [
         [
           {
+            "node": "IF — API Questions OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — API Health OK": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — GET Analytics Receipts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — API Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — API Receipts OK": {
+      "main": [
+        [
+          {
+            "node": "Code — Show Coverage Smoke",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — API Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — Coverage Present": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — GET Analytics Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — Empty Coverage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — API Summary OK": {
+      "main": [
+        [
+          {
+            "node": "Code — Show Analytics Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — API Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — API Questions OK": {
+      "main": [
+        [
+          {
             "node": "Code — Show Demo Q&A Answer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — API Error",
             "type": "main",
             "index": 0
           }
