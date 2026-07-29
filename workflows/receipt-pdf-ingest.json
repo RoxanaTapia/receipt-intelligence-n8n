@@ -311,6 +311,37 @@
     },
     {
       "parameters": {
+        "method": "POST",
+        "url": "={{ $env.API_BASE_URL }}/questions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"question\": \"How much did I spend on food last month?\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2224,
+        0
+      ],
+      "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "name": "HTTP Request — POST Demo Questions"
+    },
+    {
+      "parameters": {
+        "jsCode": "const DEMO_QUESTION = 'How much did I spend on food last month?';\nconst response = $input.first().json;\nconst query = response.query ?? null;\nconst analytics = query?.analytics ?? null;\n\nreturn [{\n  json: {\n    demo: true,\n    demo_question: DEMO_QUESTION,\n    answer: response.answer ?? null,\n    intent: query?.intent ?? null,\n    categories: analytics?.categories ?? null,\n    time_range: analytics?.time_range ?? null,\n    query_warnings: query?.warnings ?? [],\n    meta: response.meta ?? null,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        0
+      ],
+      "id": "d4e5f6a7-b8c9-0123-def0-234567890123",
+      "name": "Code — Show Demo Q&A Answer"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -802,6 +833,28 @@
         [
           {
             "node": "Code — Show Analytics Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Show Analytics Summary": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request — POST Demo Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request — POST Demo Questions": {
+      "main": [
+        [
+          {
+            "node": "Code — Show Demo Q&A Answer",
             "type": "main",
             "index": 0
           }
