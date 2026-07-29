@@ -76,7 +76,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse' } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse' } }];\n  }\n  return [{ json: { parseOk: true, data } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse' } }];\n}"
+        "jsCode": "function currentExtractAttempt() {\n  try {\n    if ($('Code — Decide Extract Retry').isExecuted) {\n      const n = $('Code — Decide Extract Retry').first().json.extractAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst extractAttempt = currentExtractAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', extractAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', extractAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, extractAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', extractAttempt } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -123,7 +123,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Receipt schema (required): merchant (string), date (YYYY-MM-DD), total (number), line_items (non-empty array)\nconst data = $input.first().json.data;\nconst errors = [];\n\nfunction normalizeDate(value) {\n  if (typeof value !== 'string' || !value.trim()) {\n    errors.push('date is required');\n    return null;\n  }\n  const trimmed = value.trim();\n  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(trimmed)) {\n    return trimmed;\n  }\n  const match = trimmed.match(/^(\\d{1,2})[./](\\d{1,2})[./](\\d{4})$/);\n  if (match) {\n    const [, day, month, year] = match;\n    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;\n  }\n  errors.push(`date could not be normalized: ${trimmed}`);\n  return null;\n}\n\nfunction normalizeTotal(value) {\n  if (typeof value === 'number' && !Number.isNaN(value)) {\n    return value;\n  }\n  if (typeof value === 'string' && value.trim()) {\n    const parsed = parseFloat(value.trim().replace(',', '.'));\n    if (!Number.isNaN(parsed)) {\n      return parsed;\n    }\n  }\n  errors.push('total must be a number');\n  return null;\n}\n\nfunction normalizeLineItems(value) {\n  if (!Array.isArray(value) || value.length === 0) {\n    errors.push('line_items must be a non-empty array');\n    return [];\n  }\n  return value;\n}\n\nlet merchant = data.merchant;\nif (typeof merchant !== 'string' || !merchant.trim()) {\n  errors.push('merchant is required');\n  merchant = null;\n} else {\n  merchant = merchant.trim();\n}\n\nconst date = normalizeDate(data.date);\nconst total = normalizeTotal(data.total);\nconst lineItems = normalizeLineItems(data.line_items);\n\nif (errors.length > 0) {\n  return [{ json: { valid: false, errors, stage: 'validation' } }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    receipt: {\n      merchant,\n      date,\n      total,\n      line_items: lineItems,\n    },\n  },\n}];"
+        "jsCode": "// Receipt schema (required): merchant (string), date (YYYY-MM-DD), total (number), line_items (non-empty array)\nconst data = $input.first().json.data;\nconst errors = [];\nconst extractAttempt = $input.first().json.extractAttempt ?? 1;\n\nfunction normalizeDate(value) {\n  if (typeof value !== 'string' || !value.trim()) {\n    errors.push('date is required');\n    return null;\n  }\n  const trimmed = value.trim();\n  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(trimmed)) {\n    return trimmed;\n  }\n  const match = trimmed.match(/^(\\d{1,2})[./](\\d{1,2})[./](\\d{4})$/);\n  if (match) {\n    const [, day, month, year] = match;\n    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;\n  }\n  errors.push(`date could not be normalized: ${trimmed}`);\n  return null;\n}\n\nfunction normalizeTotal(value) {\n  if (typeof value === 'number' && !Number.isNaN(value)) {\n    return value;\n  }\n  if (typeof value === 'string' && value.trim()) {\n    const parsed = parseFloat(value.trim().replace(',', '.'));\n    if (!Number.isNaN(parsed)) {\n      return parsed;\n    }\n  }\n  errors.push('total must be a number');\n  return null;\n}\n\nfunction normalizeLineItems(value) {\n  if (!Array.isArray(value) || value.length === 0) {\n    errors.push('line_items must be a non-empty array');\n    return [];\n  }\n  return value;\n}\n\nlet merchant = data.merchant;\nif (typeof merchant !== 'string' || !merchant.trim()) {\n  errors.push('merchant is required');\n  merchant = null;\n} else {\n  merchant = merchant.trim();\n}\n\nconst date = normalizeDate(data.date);\nconst total = normalizeTotal(data.total);\nconst lineItems = normalizeLineItems(data.line_items);\n\nif (errors.length > 0) {\n  return [{ json: { valid: false, errors, stage: 'validation', extractAttempt } }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    receipt: {\n      merchant,\n      date,\n      total,\n      line_items: lineItems,\n    },\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -665,7 +665,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse' } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse' } }];\n  }\n  return [{ json: { parseOk: true, data } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse' } }];\n}"
+        "jsCode": "function currentCategorizeAttempt() {\n  try {\n    if ($('Code — Decide Categorize Retry').isExecuted) {\n      const n = $('Code — Decide Categorize Retry').first().json.categorizeAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst categorizeAttempt = currentCategorizeAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', categorizeAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', categorizeAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, categorizeAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', categorizeAttempt } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -712,7 +712,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Categorization schema: M2 receipt fields + category on each line_items[] entry\nconst ALLOWED_CATEGORIES = new Set(['food', 'snacks', 'drinks', 'household', 'other']);\n\nconst data = $input.first().json.data;\nconst errors = [];\n\nlet merchant = data.merchant;\nif (typeof merchant !== 'string' || !merchant.trim()) {\n  errors.push('merchant is required');\n  merchant = null;\n} else {\n  merchant = merchant.trim();\n}\n\nlet date = data.date;\nif (typeof date !== 'string' || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date.trim())) {\n  errors.push('date must be YYYY-MM-DD');\n  date = null;\n} else {\n  date = date.trim();\n}\n\nlet total = data.total;\nif (typeof total !== 'number' || Number.isNaN(total)) {\n  errors.push('total must be a number');\n  total = null;\n}\n\nconst lineItems = [];\nif (!Array.isArray(data.line_items) || data.line_items.length === 0) {\n  errors.push('line_items must be a non-empty array');\n} else {\n  for (let i = 0; i < data.line_items.length; i++) {\n    const item = data.line_items[i];\n    const label = `line_items[${i}]`;\n    if (typeof item !== 'object' || item === null || Array.isArray(item)) {\n      errors.push(`${label} must be an object`);\n      continue;\n    }\n    if (typeof item.description !== 'string' || !item.description.trim()) {\n      errors.push(`${label}.description is required`);\n    }\n    if (typeof item.quantity !== 'number' || Number.isNaN(item.quantity)) {\n      errors.push(`${label}.quantity must be a number`);\n    }\n    if (typeof item.price !== 'number' || Number.isNaN(item.price)) {\n      errors.push(`${label}.price must be a number`);\n    }\n    if (typeof item.category !== 'string' || !item.category.trim()) {\n      errors.push(`${label}.category is required`);\n    } else if (!ALLOWED_CATEGORIES.has(item.category.trim())) {\n      errors.push(`${label}.category must be one of: food, snacks, drinks, household, other (got \"${item.category}\")`);\n    }\n    lineItems.push(item);\n  }\n}\n\nif (errors.length > 0) {\n  return [{ json: { valid: false, errors, stage: 'validation' } }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    receipt: {\n      merchant,\n      date,\n      total,\n      line_items: lineItems,\n    },\n  },\n}];"
+        "jsCode": "// Categorization schema: M2 receipt fields + category on each line_items[] entry\nconst ALLOWED_CATEGORIES = new Set(['food', 'snacks', 'drinks', 'household', 'other']);\n\nconst data = $input.first().json.data;\nconst errors = [];\nconst categorizeAttempt = $input.first().json.categorizeAttempt ?? 1;\n\nlet merchant = data.merchant;\nif (typeof merchant !== 'string' || !merchant.trim()) {\n  errors.push('merchant is required');\n  merchant = null;\n} else {\n  merchant = merchant.trim();\n}\n\nlet date = data.date;\nif (typeof date !== 'string' || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date.trim())) {\n  errors.push('date must be YYYY-MM-DD');\n  date = null;\n} else {\n  date = date.trim();\n}\n\nlet total = data.total;\nif (typeof total !== 'number' || Number.isNaN(total)) {\n  errors.push('total must be a number');\n  total = null;\n}\n\nconst lineItems = [];\nif (!Array.isArray(data.line_items) || data.line_items.length === 0) {\n  errors.push('line_items must be a non-empty array');\n} else {\n  for (let i = 0; i < data.line_items.length; i++) {\n    const item = data.line_items[i];\n    const label = `line_items[${i}]`;\n    if (typeof item !== 'object' || item === null || Array.isArray(item)) {\n      errors.push(`${label} must be an object`);\n      continue;\n    }\n    if (typeof item.description !== 'string' || !item.description.trim()) {\n      errors.push(`${label}.description is required`);\n    }\n    if (typeof item.quantity !== 'number' || Number.isNaN(item.quantity)) {\n      errors.push(`${label}.quantity must be a number`);\n    }\n    if (typeof item.price !== 'number' || Number.isNaN(item.price)) {\n      errors.push(`${label}.price must be a number`);\n    }\n    if (typeof item.category !== 'string' || !item.category.trim()) {\n      errors.push(`${label}.category is required`);\n    } else if (!ALLOWED_CATEGORIES.has(item.category.trim())) {\n      errors.push(`${label}.category must be one of: food, snacks, drinks, household, other (got \"${item.category}\")`);\n    }\n    lineItems.push(item);\n  }\n}\n\nif (errors.length > 0) {\n  return [{ json: { valid: false, errors, stage: 'validation', categorizeAttempt } }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    receipt: {\n      merchant,\n      date,\n      total,\n      line_items: lineItems,\n    },\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -832,6 +832,100 @@
       ],
       "id": "e5a6c7d8-5555-4666-8777-888899990000",
       "name": "Set — Categorization Error"
+    },
+    {
+      "parameters": {
+        "jsCode": "const MAX_EXTRACT_ATTEMPTS = 3; // 1 initial + 2 retries — keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown extract failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.extractAttempt ?? 1;\n\nif (completed >= MAX_EXTRACT_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst text = $('Extract from File — PDF to Text').first().json.text;\nif (!text || !String(text).trim()) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing receipt text for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    text,\n    extractAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        352
+      ],
+      "id": "a7e8f9b0-1111-4aaa-8bbb-ccccddddeeee",
+      "name": "Code — Decide Extract Retry"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e1f2a3b4-c5d6-7890-abcd-ef1234567891",
+              "leftValue": "={{ $json.shouldRetry }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -208,
+        480
+      ],
+      "id": "b8f9a0c1-2222-4bbb-9ccc-ddddeeeeffff",
+      "name": "IF — Extract Retry"
+    },
+    {
+      "parameters": {
+        "jsCode": "const MAX_CATEGORIZE_ATTEMPTS = 3; // 1 initial + 2 retries — keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown categorization failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.categorizeAttempt ?? 1;\n\nif (completed >= MAX_CATEGORIZE_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst receipt = $('Set — Normalized Receipt').first().json;\nif (!receipt?.merchant || !Array.isArray(receipt.line_items)) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing normalized receipt for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    merchant: receipt.merchant,\n    date: receipt.date,\n    total: receipt.total,\n    line_items: receipt.line_items,\n    categorizeAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        192
+      ],
+      "id": "c9a0b1d2-3333-4ccc-addd-eeeeffff0000",
+      "name": "Code — Decide Categorize Retry"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f2a3b4c5-d6e7-8901-bcde-f12345678902",
+              "leftValue": "={{ $json.shouldRetry }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        192
+      ],
+      "id": "d0b1c2e3-4444-4ddd-beee-ffff00001111",
+      "name": "IF — Categorize Retry"
     }
   ],
   "pinData": {},
@@ -902,7 +996,7 @@
         ],
         [
           {
-            "node": "Set — Validation Error",
+            "node": "Code — Decide Extract Retry",
             "type": "main",
             "index": 0
           }
@@ -931,7 +1025,7 @@
         ],
         [
           {
-            "node": "Set — Validation Error",
+            "node": "Code — Decide Extract Retry",
             "type": "main",
             "index": 0
           }
@@ -993,7 +1087,7 @@
         ],
         [
           {
-            "node": "Set — Categorization Error",
+            "node": "Code — Decide Categorize Retry",
             "type": "main",
             "index": 0
           }
@@ -1022,7 +1116,7 @@
         ],
         [
           {
-            "node": "Set — Categorization Error",
+            "node": "Code — Decide Categorize Retry",
             "type": "main",
             "index": 0
           }
@@ -1201,6 +1295,64 @@
         [
           {
             "node": "Set — API Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Decide Extract Retry": {
+      "main": [
+        [
+          {
+            "node": "IF — Extract Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — Extract Retry": {
+      "main": [
+        [
+          {
+            "node": "Claude — Extract Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Decide Categorize Retry": {
+      "main": [
+        [
+          {
+            "node": "IF — Categorize Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF — Categorize Retry": {
+      "main": [
+        [
+          {
+            "node": "Claude — Categorize Line Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set — Categorization Error",
             "type": "main",
             "index": 0
           }
