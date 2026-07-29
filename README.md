@@ -94,7 +94,7 @@ High-level modules for the Receipt Intelligence System:
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
 | **5 — Integration** | n8n ↔ API wiring + [local full-stack runbook](docs/integration.md) |
-| **6 — Reliability** | Claude parse/categorization retries ✅ · Planned — post-persist API HTTP retries |
+| **6 — Reliability** | Claude parse/categorization retries ✅ · Post-persist API HTTP retries ✅ |
 | **7 — Delivery** | Planned — live demo / production readiness, deployment and operational docs |
 
 Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
