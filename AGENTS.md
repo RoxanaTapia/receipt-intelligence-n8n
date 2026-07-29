@@ -25,16 +25,17 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 | Sample receipt JSON | [`data/receipts/example.json`](data/receipts/example.json) |
 | Workflow exports | [`workflows/receipt-pdf-ingest.json`](workflows/receipt-pdf-ingest.json) |
 | Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
+| Integration runbook | [`docs/integration.md`](docs/integration.md) |
 | PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
 | Sample PDFs (anonymized) | [`samples/receipts/`](samples/receipts/) |
 | Sample originals (gitignored) | `samples/receipts/originals/` — see [`samples/README.md`](samples/README.md) |
 
 ## Current Focus
 
-- **This repo:** Modules 1–3 complete; **Module 5 — Integration** in progress (n8n ↔ API wiring)
+- **This repo:** Modules 1–3 complete; **Module 5 — Integration** complete (n8n ↔ API + [local runbook](docs/integration.md))
 - **Next:** Module 6 — Reliability (Claude retries); Module 7 — Delivery (live demo / deploy)
 - **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
-- **Recent docs:** Module 4 handoff and Q&A routing pointers in Claude standards
+- **Recent docs:** [docs/integration.md](docs/integration.md) — Module 5 full-stack demo recipe
 
 ## Core Principles
 
