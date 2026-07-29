@@ -37,6 +37,7 @@ Manual Trigger
 | Branch | `IF — Categorization Parse OK` | Route on `parseOk === true` |
 | Validate | `Code — Validate Categories` | Schema + taxonomy check; set `valid` |
 | Branch | `IF — Valid Categories` | Route on `valid === true` |
+| Retry | `Code — Decide Categorize Retry` → `IF — Categorize Retry` | On parse/validation failure: re-ask Claude up to 3 attempts, else error Set |
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
 | Smoke | `GET Health` → `IF — API Health OK` → `GET Analytics Receipts` → `IF — API Receipts OK` → `Code — Show Coverage Smoke` → `IF — Coverage Present` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
 | Analytics | `GET Analytics Summary` → `IF — API Summary OK` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
@@ -44,7 +45,7 @@ Manual Trigger
 
 ## Error path
 
-Parse or validation failures route to **`Set — Categorization Error`** (not a retry loop — retry handling is planned for Module 6):
+Claude categorize allows **at most 3 attempts** (1 initial + 2 retries) for the categorize Claude path. Parse or validation failure with attempts remaining re-invokes **`Claude — Categorize Line Items`** with the receipt rehydrated from **`Set — Normalized Receipt`**. After 3 failures, the run ends on **`Set — Categorization Error`**:
 
 | Field | Meaning |
 |-------|---------|

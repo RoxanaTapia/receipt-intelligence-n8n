@@ -30,9 +30,9 @@ After every Claude extraction node, use two deterministic Code nodes:
 | **Parse** | `parseOk` | Non-empty response; valid JSON object |
 | **Validate** | `valid` | Required fields; type normalization (dates, numbers) |
 
-Route failures to a **`Set — Validation Error`** node with `valid: false`, `errors`, and `stage` (`"parse"` or `"validation"`). Retry loops are Module 6 (Reliability) — document and route errors; do not silently drop bad output.
+On parse or validation failure, the workflow retries the same Claude node up to **3 attempts** (1 initial + 2 retries) per Claude path — extract and categorize each have their own bound; parse and validation share that counter — then routes to a **`Set — Validation Error`** (extract) or **`Set — Categorization Error`** (categorize) node with `valid: false`, `errors`, and `stage` (`"parse"` or `"validation"`). Never silently drop bad output.
 
-See [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) for the reference implementation.
+See [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) for the reference implementation (`Code — Decide Extract Retry` / `Code — Decide Categorize Retry`).
 
 ## Domain rules vs few-shot examples
 
@@ -44,7 +44,7 @@ Module 2 uses **domain rules in the prompt** (German supermarket patterns) rathe
 - Exclude subtotals, tax, payment, loyalty lines
 - **Merchant** — primary store brand only (e.g. `REWE`, not `REWE Markt`) for consistent filenames
 
-Module 3 categorization uses **few-shot examples** for ambiguous product labels — see [categorization-prompts.md](categorization-prompts.md). Retry prompts are Module 6 (Reliability).
+Module 3 categorization uses **few-shot examples** for ambiguous product labels — see [categorization-prompts.md](categorization-prompts.md). Retries re-ask with the same production prompt (no separate retry prompt yet).
 
 ## Receipt extraction prompt
 

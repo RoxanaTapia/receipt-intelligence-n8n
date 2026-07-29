@@ -38,11 +38,12 @@ Set — Normalized Receipt
 | Branch | `IF — Parse OK` | Route on `parseOk === true` |
 | Validate | `Code — Validate & Normalize Receipt` | Schema check + normalization; set `valid` |
 | Branch | `IF — Valid Receipt` | Route on `valid === true` |
+| Retry | `Code — Decide Extract Retry` → `IF — Extract Retry` | On parse/validation failure: re-ask Claude up to 3 attempts, else error Set |
 | Output | `Set — Normalized Receipt` | Validated extracted JSON; input to categorization |
 
 ## Error path
 
-Parse or validation failures route to **`Set — Validation Error`** (not a retry loop — retry handling is planned for future hardening):
+Claude extract allows **at most 3 attempts** (1 initial + 2 retries) for the extract Claude path. Parse or validation failure with attempts remaining re-invokes **`Claude — Extract Receipt`** with text rehydrated from **`Extract from File — PDF to Text`**. After 3 failures, the run ends on **`Set — Validation Error`**:
 
 | Field | Meaning |
 |-------|---------|
