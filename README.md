@@ -9,7 +9,7 @@ Process PDF receipts, extract and categorize spending with Claude, and answer na
 | **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
 | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (Module 4 — open in Cursor for API `/ship-issue`) |
 
-**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage (`GET /health`, `GET /analytics/receipts`) then calls `GET /analytics/summary?preset=last_N_days&n_days=90` via `API_BASE_URL` — it does not POST receipt JSON. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
+**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage, calls analytics summary, then posts one fixed demo question to `POST /questions` via `API_BASE_URL` — it does not POST receipt JSON. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
 
 ## Repository structure
 
@@ -89,7 +89,7 @@ High-level modules for the Receipt Intelligence System:
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
-| **5 — Integration** | In progress — post-persist coverage smoke + analytics summary; Q&A HTTP and runbook in follow-ups |
+| **5 — Integration** | In progress — post-persist coverage smoke + analytics summary + demo Q&A; full runbook in follow-ups |
 | **6 — Reliability** | Planned — Claude parse/categorization retries and workflow hardening |
 | **7 — Delivery** | Planned — live demo / production readiness, deployment and operational docs |
 

@@ -23,6 +23,10 @@ Manual Trigger
   → HTTP Request — GET Health
   → HTTP Request — GET Analytics Receipts
   → Code — Show Coverage Smoke
+  → HTTP Request — GET Analytics Summary
+  → Code — Show Analytics Summary
+  → HTTP Request — POST Demo Questions
+  → Code — Show Demo Q&A Answer
 ```
 
 | Stage | Node | Role |
@@ -36,6 +40,7 @@ Manual Trigger
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
 | Smoke | `HTTP Request — GET Health` → `HTTP Request — GET Analytics Receipts` → `Code — Show Coverage Smoke` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
 | Analytics | `HTTP Request — GET Analytics Summary` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
+| Demo Q&A | `HTTP Request — POST Demo Questions` → `Code — Show Demo Q&A Answer` | Fixed `POST /questions` demo ([setup Q&A](n8n-setup.md#post-persist-demo-qa)) |
 
 ## Error path
 

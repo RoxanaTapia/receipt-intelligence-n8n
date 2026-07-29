@@ -72,9 +72,9 @@ Local integration uses **two channels** with different jobs:
 | Channel | Role | Today |
 |---------|------|-------|
 | **Shared disk** | n8n **writes** categorized JSON; the API **reads** the same folder | ✅ In use |
-| **HTTP** (`API_BASE_URL`) | After persist: coverage smoke (`/health` + `/analytics/receipts`), then spending summary (`/analytics/summary`) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
+| **HTTP** (`API_BASE_URL`) | After persist: coverage smoke, analytics summary, then fixed demo Q&A (`POST /questions`) | ✅ Wired in [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) |
 
-📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. Demo Q&A HTTP (`POST /questions`) is a follow-up Module 5 Integration issue.
+📌 We do **not** POST receipt JSON to the API for ingest. Files on disk are the handoff. The demo Q&A step posts a **fixed** question only — not free-form chat.
 
 ### Shared disk (`data/receipts/` ↔ `RECEIPT_DATA_PATH`)
 
@@ -141,6 +141,24 @@ Code — Show Coverage Smoke
 | Visible output | Open **`Code — Show Analytics Summary`**: named fields include `period_label`, `total_spend`, `top_categories`, `by_category`, `summary_facts` |
 
 Empty periods still return **200** with `total_spend: 0` — that is success, not an error. Deeper failure modes (API down, empty-data UX) are tracked separately.
+
+### Post-persist demo Q&A
+
+After the analytics summary, the happy path asks one **fixed** demo question so a natural-language answer appears in the same run (portfolio demo — not a chat UI):
+
+```text
+Code — Show Analytics Summary
+  → POST /questions  { "question": "How much did I spend on food last month?" }
+  → Code — Show Demo Q&A Answer
+```
+
+| Step | What to check |
+|------|----------------|
+| Demo call | **`HTTP Request — POST Demo Questions`** uses that fixed body (not user input) |
+| Visible output | Open **`Code — Show Demo Q&A Answer`**: `demo` is `true`, `answer` is set (or `meta` shows a refusal), plus routing fields (`intent`, `categories`, `time_range`) |
+| API Anthropic | Sibling FastAPI needs `ANTHROPIC_API_KEY` for `POST /questions` — `/health` and `/analytics/*` can succeed without it; Q&A cannot. See the [API Q&A setup](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md#setup-and-curl) |
+
+If the key is missing, the HTTP Request node fails with a clear API error (visible red) — graceful branching is a later issue.
 
 Full local full-stack runbook: tracked in a follow-up issue (#71).
 
