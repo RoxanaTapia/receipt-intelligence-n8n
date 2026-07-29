@@ -21,7 +21,7 @@ flowchart TB
 | Topic | Module |
 |-------|--------|
 | Cloud deploy, CI/CD, secrets at scale | **7 — Delivery** |
-| Claude parse/categorization retries | **6 — Reliability** |
+| Post-persist API HTTP retries | **6 — Reliability** (#81) |
 
 ## Prerequisites
 

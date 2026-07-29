@@ -33,7 +33,7 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 ## Current Focus
 
 - **This repo:** Modules 1–3 complete; **Module 5 — Integration** complete (n8n ↔ API + [local runbook](docs/integration.md))
-- **Next:** Module 6 — Reliability (Claude retries); Module 7 — Delivery (live demo / deploy)
+- **Next:** Module 6 — Reliability (post-persist API HTTP retries); Module 7 — Delivery (live demo / deploy)
 - **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
 - **Recent docs:** [docs/integration.md](docs/integration.md) — Module 5 full-stack demo recipe
 
