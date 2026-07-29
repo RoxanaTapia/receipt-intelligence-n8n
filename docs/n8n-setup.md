@@ -67,6 +67,8 @@ See `.env.example` for a copy-paste template.
 
 ## n8n ↔ API integration contract
 
+📌 **Demo recipe (start both apps, sample PDF → API in n8n):** [integration.md](integration.md).
+
 Local integration uses **two channels** with different jobs:
 
 | Channel | Role | Today |
@@ -168,7 +170,7 @@ HTTP Request nodes use a **5s timeout** and **continue-on-fail**. Persist is nev
 
 📌 A successful write under `data/receipts/` stays on disk in all of these cases.
 
-Full local full-stack runbook: tracked in a follow-up issue (#71).
+Full local full-stack runbook: [integration.md](integration.md).
 
 ## Security notes
 

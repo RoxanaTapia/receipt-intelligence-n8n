@@ -9,7 +9,7 @@ Process PDF receipts, extract and categorize spending with Claude, and answer na
 | **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, `data/receipts/` JSON output |
 | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (Module 4 — open in Cursor for API `/ship-issue`) |
 
-**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage, calls analytics summary, then posts one fixed demo question to `POST /questions` via `API_BASE_URL` — it does not POST receipt JSON. See [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
+**Integration (local):** n8n writes receipt JSON to disk; the API reads the same folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow smokes coverage, calls analytics summary, then posts one fixed demo question to `POST /questions` via `API_BASE_URL` — it does not POST receipt JSON. **Runbook:** [docs/integration.md](docs/integration.md). Contract details: [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
 
 ## Repository structure
 
@@ -21,6 +21,7 @@ receipt-intelligence-n8n/
 ├── .env.example              # Environment variable template
 ├── docs/
 │   ├── n8n-setup.md          # Local Docker setup
+│   ├── integration.md        # Module 5 local full-stack runbook
 │   ├── n8n-claude-standards.md
 │   ├── pdf-extraction.md     # PDF extraction pipeline guide
 │   ├── categorization.md     # Categorization pipeline guide
@@ -49,20 +50,23 @@ receipt-intelligence-n8n/
 1. **Clone this repo** and open it in Cursor.
 2. **Set up local n8n** — follow [docs/n8n-setup.md](docs/n8n-setup.md) (copy `.env.example` → `.env`, then `docker compose up -d`).
 3. **Import a workflow** — open the n8n UI and import [workflows/hello-world.json](workflows/hello-world.json).
-4. **Ship work via agents** — pick an issue on the [Project board](https://github.com/users/RoxanaTapia/projects/3), then run `/ship-issue #NN` (see [AGENTS.md](AGENTS.md)).
+4. **Full-stack demo (n8n + API)** — follow [docs/integration.md](docs/integration.md).
+5. **Ship work via agents** — pick an issue on the [Project board](https://github.com/users/RoxanaTapia/projects/3), then run `/ship-issue #NN` (see [AGENTS.md](AGENTS.md)).
 
 ### Deployment
 
 | Environment | Where to look |
 |-------------|---------------|
 | **Local development** | [docs/n8n-setup.md](docs/n8n-setup.md) |
-| **Production / cloud** | Not documented yet — a future milestone will add a dedicated deployment guide |
+| **Local full-stack (n8n + API)** | [docs/integration.md](docs/integration.md) |
+| **Production / cloud** | Not documented yet — Module 7 (Delivery) |
 
 ## Documentation
 
 | Area | Resource | Description |
 |------|----------|-------------|
 | Setup | [docs/n8n-setup.md](docs/n8n-setup.md) | Docker-based n8n setup, env vars, n8n ↔ API config contract |
+| Integration | [docs/integration.md](docs/integration.md) | Module 5 local full-stack runbook (n8n + API + sample PDF) |
 | Workflows | [workflows/](workflows/) | Version-controlled n8n workflow exports |
 | Standards | [docs/n8n-claude-standards.md](docs/n8n-claude-standards.md) | Claude prompting and node naming standards |
 | Extraction | [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF → Claude → validated JSON pipeline |
@@ -89,7 +93,7 @@ High-level modules for the Receipt Intelligence System:
 | **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
 | **3 — Data & categorization** | Structured storage, categories, validation ✅ |
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI backend, spending analytics, natural-language questions ✅ |
-| **5 — Integration** | In progress — post-persist coverage smoke + analytics summary + demo Q&A; full runbook in follow-ups |
+| **5 — Integration** | n8n ↔ API wiring + [local full-stack runbook](docs/integration.md) |
 | **6 — Reliability** | Planned — Claude parse/categorization retries and workflow hardening |
 | **7 — Delivery** | Planned — live demo / production readiness, deployment and operational docs |
 
