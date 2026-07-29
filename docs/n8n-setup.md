@@ -111,9 +111,9 @@ Thinnest proof the API can **see** what n8n just wrote:
 
 ```text
 sample PDF → ingest → Write File — Persist Receipt JSON
-  → GET /health
-  → GET /analytics/receipts
-  → Code — Show Coverage Smoke
+  → GET /health → IF — API Health OK
+  → GET /analytics/receipts → IF — API Receipts OK
+  → Code — Show Coverage Smoke → IF — Coverage Present
 ```
 
 | Step | What to check |
@@ -123,15 +123,13 @@ sample PDF → ingest → Write File — Persist Receipt JSON
 | Execute | Manual Trigger with a [sample PDF](../samples/README.md) |
 | Coverage | Open **`Code — Show Coverage Smoke`**: `api_status` is `ok`, `persistedInCoverage` is `true`, and `persistedFilename` appears in `loaded_files` |
 
-If the API is down, the HTTP Request node fails the run (visible red) — graceful branching is a later issue.
-
 ### Post-persist analytics summary
 
-After the coverage smoke, the happy path asks the API for spending context in the same run:
+After coverage is present, the happy path asks the API for spending context in the same run:
 
 ```text
-Code — Show Coverage Smoke
-  → GET /analytics/summary?preset=last_N_days&n_days=90
+IF — Coverage Present
+  → GET /analytics/summary?preset=last_N_days&n_days=90 → IF — API Summary OK
   → Code — Show Analytics Summary
 ```
 
@@ -140,7 +138,7 @@ Code — Show Coverage Smoke
 | Summary call | **`HTTP Request — GET Analytics Summary`** uses `preset=last_N_days` and `n_days=90` (explicit time range; covers May sample dates) |
 | Visible output | Open **`Code — Show Analytics Summary`**: named fields include `period_label`, `total_spend`, `top_categories`, `by_category`, `summary_facts` |
 
-Empty periods still return **200** with `total_spend: 0` — that is success, not an error. Deeper failure modes (API down, empty-data UX) are tracked separately.
+Empty periods still return **200** with `total_spend: 0` — that is success, not an error (files exist; the time window just has no spend).
 
 ### Post-persist demo Q&A
 
@@ -149,7 +147,7 @@ After the analytics summary, the happy path asks one **fixed** demo question so 
 ```text
 Code — Show Analytics Summary
   → POST /questions  { "question": "How much did I spend on food last month?" }
-  → Code — Show Demo Q&A Answer
+  → IF — API Questions OK → Code — Show Demo Q&A Answer
 ```
 
 | Step | What to check |
@@ -158,7 +156,17 @@ Code — Show Analytics Summary
 | Visible output | Open **`Code — Show Demo Q&A Answer`**: `demo` is `true`, `answer` is set (or `meta` shows a refusal), plus routing fields (`intent`, `categories`, `time_range`) |
 | API Anthropic | Sibling FastAPI needs `ANTHROPIC_API_KEY` for `POST /questions` — `/health` and `/analytics/*` can succeed without it; Q&A cannot. See the [API Q&A setup](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md#setup-and-curl) |
 
-If the key is missing, the HTTP Request node fails with a clear API error (visible red) — graceful branching is a later issue.
+### Post-persist failure modes
+
+HTTP Request nodes use a **5s timeout** and **continue-on-fail**. Persist is never undone when an API call fails.
+
+| Situation | Where it lands | What you see |
+|-----------|----------------|--------------|
+| Connection refused / timeout / 5xx (any post-persist HTTP step) | **`Set — API Error`** | `valid: false`, `stage: "api"`, `errors` with the failure message |
+| API up but empty store / persisted file missing from coverage | **`Set — Empty Coverage`** | `valid: false`, `stage: "coverage"` — stops before summary/Q&A (no fake analytics success) |
+| Missing API `ANTHROPIC_API_KEY` on demo Q&A | **`Set — API Error`** | Same API error branch after `POST /questions` |
+
+📌 A successful write under `data/receipts/` stays on disk in all of these cases.
 
 Full local full-stack runbook: tracked in a follow-up issue (#71).
 

@@ -38,19 +38,28 @@ Manual Trigger
 | Validate | `Code — Validate Categories` | Schema + taxonomy check; set `valid` |
 | Branch | `IF — Valid Categories` | Route on `valid === true` |
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
-| Smoke | `HTTP Request — GET Health` → `HTTP Request — GET Analytics Receipts` → `Code — Show Coverage Smoke` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
-| Analytics | `HTTP Request — GET Analytics Summary` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
-| Demo Q&A | `HTTP Request — POST Demo Questions` → `Code — Show Demo Q&A Answer` | Fixed `POST /questions` demo ([setup Q&A](n8n-setup.md#post-persist-demo-qa)) |
+| Smoke | `GET Health` → `IF — API Health OK` → `GET Analytics Receipts` → `IF — API Receipts OK` → `Code — Show Coverage Smoke` → `IF — Coverage Present` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
+| Analytics | `GET Analytics Summary` → `IF — API Summary OK` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
+| Demo Q&A | `POST Demo Questions` → `IF — API Questions OK` → `Code — Show Demo Q&A Answer` | Fixed `POST /questions` demo ([setup Q&A](n8n-setup.md#post-persist-demo-qa)) |
 
 ## Error path
 
-Parse or validation failures route to **`Set — Categorization Error`** (not a retry loop — retry handling is planned for future hardening):
+Parse or validation failures route to **`Set — Categorization Error`** (not a retry loop — retry handling is planned for Module 6):
 
 | Field | Meaning |
 |-------|---------|
 | `valid` | Always `false` |
 | `errors` | Array of error messages |
 | `stage` | `"parse"` or `"validation"` |
+
+Post-persist API failures use the same shape on separate terminals ([setup failure modes](n8n-setup.md#post-persist-failure-modes)):
+
+| Terminal | `stage` | When |
+|----------|---------|------|
+| **`Set — API Error`** | `"api"` | Unreachable API, timeout, or 5xx on health / coverage / summary / demo Q&A |
+| **`Set — Empty Coverage`** | `"coverage"` | API responded but zero files loaded or the just-persisted file is missing |
+
+Successful disk persist is never undone by these branches.
 
 ## Output schema
 
