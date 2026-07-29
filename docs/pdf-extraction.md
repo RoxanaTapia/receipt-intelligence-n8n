@@ -43,7 +43,7 @@ Set — Normalized Receipt
 
 ## Error path
 
-Claude extract allows **at most 3 attempts** (1 initial + 2 retries) per workflow run. Parse or validation failure with attempts remaining re-invokes **`Claude — Extract Receipt`** with text rehydrated from **`Extract from File — PDF to Text`**. After 3 failures, the run ends on **`Set — Validation Error`**:
+Claude extract allows **at most 3 attempts** (1 initial + 2 retries) for the extract Claude path. Parse or validation failure with attempts remaining re-invokes **`Claude — Extract Receipt`** with text rehydrated from **`Extract from File — PDF to Text`**. After 3 failures, the run ends on **`Set — Validation Error`**:
 
 | Field | Meaning |
 |-------|---------|

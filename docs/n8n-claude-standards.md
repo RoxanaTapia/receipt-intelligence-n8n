@@ -30,7 +30,7 @@ After every Claude extraction node, use two deterministic Code nodes:
 | **Parse** | `parseOk` | Non-empty response; valid JSON object |
 | **Validate** | `valid` | Required fields; type normalization (dates, numbers) |
 
-On parse or validation failure, the workflow retries the same Claude node up to **3 attempts** (1 initial + 2 retries) per stage, then routes to a **`Set — Validation Error`** (extract) or **`Set — Categorization Error`** (categorize) node with `valid: false`, `errors`, and `stage` (`"parse"` or `"validation"`). Never silently drop bad output.
+On parse or validation failure, the workflow retries the same Claude node up to **3 attempts** (1 initial + 2 retries) per Claude path — extract and categorize each have their own bound; parse and validation share that counter — then routes to a **`Set — Validation Error`** (extract) or **`Set — Categorization Error`** (categorize) node with `valid: false`, `errors`, and `stage` (`"parse"` or `"validation"`). Never silently drop bad output.
 
 See [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) for the reference implementation (`Code — Decide Extract Retry` / `Code — Decide Categorize Retry`).
 

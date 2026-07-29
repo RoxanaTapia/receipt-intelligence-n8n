@@ -45,7 +45,7 @@ Manual Trigger
 
 ## Error path
 
-Claude categorize allows **at most 3 attempts** (1 initial + 2 retries) per workflow run. Parse or validation failure with attempts remaining re-invokes **`Claude — Categorize Line Items`** with the receipt rehydrated from **`Set — Normalized Receipt`**. After 3 failures, the run ends on **`Set — Categorization Error`**:
+Claude categorize allows **at most 3 attempts** (1 initial + 2 retries) for the categorize Claude path. Parse or validation failure with attempts remaining re-invokes **`Claude — Categorize Line Items`** with the receipt rehydrated from **`Set — Normalized Receipt`**. After 3 failures, the run ends on **`Set — Categorization Error`**:
 
 | Field | Meaning |
 |-------|---------|
