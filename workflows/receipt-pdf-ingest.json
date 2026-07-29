@@ -255,6 +255,9 @@
       "id": "205c80a1-563f-44d2-abfe-39d0b241cb33",
       "name": "HTTP Request — GET Health",
       "continueOnFail": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
       "onError": "continueRegularOutput"
     },
     {
@@ -274,6 +277,9 @@
       "id": "9614fb16-702c-4f29-a4c8-060a92a58ba3",
       "name": "HTTP Request — GET Analytics Receipts",
       "continueOnFail": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
       "onError": "continueRegularOutput"
     },
     {
@@ -306,6 +312,9 @@
       "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "name": "HTTP Request — GET Analytics Summary",
       "continueOnFail": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
       "onError": "continueRegularOutput"
     },
     {
@@ -341,6 +350,9 @@
       "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
       "name": "HTTP Request — POST Demo Questions",
       "continueOnFail": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000,
       "onError": "continueRegularOutput"
     },
     {
