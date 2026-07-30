@@ -160,15 +160,15 @@ Code — Show Analytics Summary
 
 ### Post-persist failure modes
 
-HTTP Request nodes use a **5s timeout** and **continue-on-fail**. Persist is never undone when an API call fails.
+HTTP Request nodes use a **5s timeout**, **continue-on-fail**, and **bounded retries** (`retryOnFail`: up to **3** attempts with **1s** between tries — 1 initial + 2 retries). After retries are exhausted, failures still land on the terminals below. Persist is never undone when an API call fails.
 
 | Situation | Where it lands | What you see |
 |-----------|----------------|--------------|
-| Connection refused / timeout / 5xx (any post-persist HTTP step) | **`Set — API Error`** | `valid: false`, `stage: "api"`, `errors` with the failure message |
-| API up but empty store / persisted file missing from coverage | **`Set — Empty Coverage`** | `valid: false`, `stage: "coverage"` — stops before summary/Q&A (no fake analytics success) |
+| Connection refused / timeout / 5xx after retries exhausted (any post-persist HTTP step) | **`Set — API Error`** | `valid: false`, `stage: "api"`, `errors` with the failure message |
+| API up but empty store / persisted file missing from coverage | **`Set — Empty Coverage`** | `valid: false`, `stage: "coverage"` — stops before summary/Q&A (no fake analytics success; **not** retried as a transport blip) |
 | Missing API `ANTHROPIC_API_KEY` on demo Q&A | **`Set — API Error`** | Same API error branch after `POST /questions` |
 
-📌 A successful write under `data/receipts/` stays on disk in all of these cases.
+📌 A successful write under `data/receipts/` stays on disk in all of these cases — including while HTTP retries run and after a final API error.
 
 Full local full-stack runbook: [integration.md](integration.md).
 

@@ -21,7 +21,6 @@ flowchart TB
 | Topic | Module |
 |-------|--------|
 | Cloud deploy, CI/CD, secrets at scale | **7 — Delivery** |
-| Post-persist API HTTP retries | **6 — Reliability** (#81) |
 
 ## Prerequisites
 
@@ -121,7 +120,7 @@ Write File — Persist Receipt JSON
 | Analytics | **`Code — Show Analytics Summary`**: `period_label`, `total_spend`, `top_categories`, … |
 | Demo Q&A | **`Code — Show Demo Q&A Answer`**: `demo` is `true`, `answer` set (or `meta` refusal) |
 
-Node-level walkthrough: [coverage](n8n-setup.md#post-persist-coverage-smoke) · [analytics](n8n-setup.md#post-persist-analytics-summary) · [demo Q&A](n8n-setup.md#post-persist-demo-qa) · [failure modes](n8n-setup.md#post-persist-failure-modes).
+Node-level walkthrough: [coverage](n8n-setup.md#post-persist-coverage-smoke) · [analytics](n8n-setup.md#post-persist-analytics-summary) · [demo Q&A](n8n-setup.md#post-persist-demo-qa) · [failure modes](n8n-setup.md#post-persist-failure-modes) (includes bounded HTTP retries).
 
 ## 5. Verification curls (host)
 

@@ -57,10 +57,10 @@ Post-persist API failures use the same shape on separate terminals ([setup failu
 
 | Terminal | `stage` | When |
 |----------|---------|------|
-| **`Set — API Error`** | `"api"` | Unreachable API, timeout, or 5xx on health / coverage / summary / demo Q&A |
+| **`Set — API Error`** | `"api"` | Unreachable API, timeout, or 5xx on health / coverage / summary / demo Q&A after bounded HTTP retries |
 | **`Set — Empty Coverage`** | `"coverage"` | API responded but zero files loaded or the just-persisted file is missing |
 
-Successful disk persist is never undone by these branches.
+Successful disk persist is never undone by these branches. Retry policy: [setup failure modes](n8n-setup.md#post-persist-failure-modes).
 
 ## Output schema
 
