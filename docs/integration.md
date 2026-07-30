@@ -20,7 +20,7 @@ flowchart TB
 
 | Topic | Module |
 |-------|--------|
-| Cloud deploy, CI/CD, secrets at scale | **7 — Delivery** |
+| Cloud deploy, CI/CD, secrets at scale | **7 — Delivery** ([receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo)) |
 
 ## Prerequisites
 
