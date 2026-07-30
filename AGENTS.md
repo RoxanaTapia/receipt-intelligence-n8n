@@ -34,9 +34,9 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 
 ## Current Focus
 
-- **This repo:** Modules 1–3 complete; **Module 5 — Integration** complete; **Module 6 — Reliability** complete (Claude + post-persist HTTP retries)
-- **Next:** Module 7 — Delivery (live demo / deploy)
-- **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
+- **This repo:** Modules 1–3, 5 (Integration), and 6 (Reliability) complete — product ingest path is done
+- **Next (live demo):** [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) Module 7 — Delivery (Compose → Caddy → demo UX). Start at [demo #1](https://github.com/RoxanaTapia/receipt-intelligence-demo/issues/1); API support: [Dockerfile #25](https://github.com/RoxanaTapia/receipt-intelligence-api/issues/25)
+- **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete
 - **Recent docs:** [docs/README.md](docs/README.md) — docs index and reading order
 
 ## Core Principles

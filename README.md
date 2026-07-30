@@ -30,7 +30,7 @@ n8n writes categorized JSON to disk; the API reads that folder via `RECEIPT_DATA
 |-------------|--------|
 | Local n8n | [docs/n8n-setup.md](docs/n8n-setup.md) |
 | Local full-stack (n8n + API) | [docs/integration.md](docs/integration.md) |
-| Production / cloud | Planned — Module 7 (Delivery) |
+| Production / cloud | [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) — Module 7 Delivery |
 
 **Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Engine + Compose v2). Full-stack demo also needs Python 3.11+ for the API.
 
@@ -92,7 +92,7 @@ receipt-intelligence-n8n/
 | **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI analytics and Q&A ✅ |
 | **5 — Integration** | n8n ↔ API wiring + [local full-stack runbook](docs/integration.md) ✅ |
 | **6 — Reliability** | Claude parse/categorization retries ✅ · Post-persist API HTTP retries ✅ |
-| **7 — Delivery** | Planned — live demo / production readiness, deployment and operational docs |
+| **7 — Delivery** | Live demo / deploy — owned by [`receipt-intelligence-demo`](https://github.com/RoxanaTapia/receipt-intelligence-demo) (API [Dockerfile #25](https://github.com/RoxanaTapia/receipt-intelligence-api/issues/25) supports Compose) |
 
 Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
 
