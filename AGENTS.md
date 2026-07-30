@@ -16,6 +16,7 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 
 | Term | Path |
 |------|------|
+| Docs index | [`docs/README.md`](docs/README.md) |
 | Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
 | Categorization pipeline | [`docs/categorization.md`](docs/categorization.md) |
 | Categorization schema | [`docs/categorization-schema.md`](docs/categorization-schema.md) |
@@ -23,6 +24,7 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 | Categorization test matrix | [`docs/categorization-test-matrix.md`](docs/categorization-test-matrix.md) |
 | Receipt data store | [`data/README.md`](data/README.md) |
 | Sample receipt JSON | [`data/receipts/example.json`](data/receipts/example.json) |
+| Hello-world workflow | [`workflows/hello-world.json`](workflows/hello-world.json) |
 | Workflow exports | [`workflows/receipt-pdf-ingest.json`](workflows/receipt-pdf-ingest.json) |
 | Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
 | Integration runbook | [`docs/integration.md`](docs/integration.md) |
@@ -35,7 +37,7 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 - **This repo:** Modules 1–3 complete; **Module 5 — Integration** complete; **Module 6 — Reliability** complete (Claude + post-persist HTTP retries)
 - **Next:** Module 7 — Delivery (live demo / deploy)
 - **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete; open that repo for API `/ship-issue`
-- **Recent docs:** [docs/n8n-setup.md](docs/n8n-setup.md#post-persist-failure-modes) — post-persist HTTP retry policy
+- **Recent docs:** [docs/README.md](docs/README.md) — docs index and reading order
 
 ## Core Principles
 
