@@ -203,7 +203,7 @@ After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Sa
 
 ### Run the PDF ingest workflow
 
-[`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) runs the full Module 2 pipeline: PDF → Claude extraction → validation → JSON on disk. See [pdf-extraction.md](pdf-extraction.md) for the node walkthrough.
+[`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) runs the full ingest path: PDF → Claude extraction → categorization → validated JSON on disk → post-persist API smoke (coverage, analytics summary, demo Q&A). Node walkthroughs: [pdf-extraction.md](pdf-extraction.md) → [categorization.md](categorization.md). Full-stack demo: [integration.md](integration.md).
 
 1. Set `ANTHROPIC_API_KEY` in `.env` and restart n8n if you have not already.
 2. Import the workflow (see **Import a workflow** above).
@@ -229,3 +229,15 @@ To try another sample, copy it the same way and update the path in **Read Binary
 | Container exits immediately | Run `docker compose logs n8n` and check for env or port conflicts |
 | Fresh start (wipe workflows) | `docker compose down -v` (**deletes** the `n8n_data` volume) |
 | Read Binary File: "Access to the file is not allowed" | n8n only allows paths under `/home/node/.n8n-files`. Copy the PDF there with `docker cp` (see **Run the PDF ingest workflow**) |
+
+## Related docs
+
+| Doc | Role |
+|-----|------|
+| [Docs index](README.md) | Reading order |
+| [integration.md](integration.md) | Full-stack demo recipe |
+| [pdf-extraction.md](pdf-extraction.md) | Extraction pipeline |
+| [categorization.md](categorization.md) | Categorization and persist |
+| [data/README.md](../data/README.md) | Receipt JSON store |
+| [samples/README.md](../samples/README.md) | Sample PDFs |
+| [n8n-claude-standards.md](n8n-claude-standards.md) | Claude vs deterministic nodes |

@@ -1,6 +1,6 @@
 # Categorization test matrix
 
-Edge-case verification for Module 3 line-item categorization (#43).
+Edge-case verification for Module 3 line-item categorization.
 
 **Upstream:** production prompt in [categorization-prompts.md](categorization-prompts.md); taxonomy in [categorization-schema.md](categorization-schema.md).
 
@@ -197,5 +197,7 @@ Document here after testing — do not block the PR for these:
 
 - [Categorization schema](categorization-schema.md) — taxonomy and edge-case rules
 - [Categorization prompts](categorization-prompts.md) — production prompt (update here first if matrix reveals gaps)
+- [Categorization pipeline](categorization.md) — categorize → persist
 - [n8n setup](n8n-setup.md) — Docker and workflow execution
 - [Sample receipts](../samples/README.md) — PDF fixtures and privacy rules
+- [Docs index](README.md) — reading order

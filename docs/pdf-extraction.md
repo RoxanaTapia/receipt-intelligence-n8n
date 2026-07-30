@@ -21,14 +21,6 @@ Manual Trigger
 
 PDF extraction ends at **`Set — Normalized Receipt`**. The full ingest workflow continues into categorization and persistence — see [categorization.md](categorization.md).
 
-**Historical persist path** (before categorization was added):
-
-```
-Set — Normalized Receipt
-  → Code — Build Receipt File
-  → Write File — Persist Receipt JSON
-```
-
 | Stage | Node | Role |
 |-------|------|------|
 | Input | `Read Binary File — Sample Receipt` | Load PDF from `/home/node/.n8n-files/` |
@@ -70,7 +62,7 @@ Required fields after validation:
 | Field | In filename hash? | Notes |
 |-------|-------------------|-------|
 | `merchant`, `date`, `total`, `line_items` | Yes | Required; validated before persist |
-| `extracted_at` | No | ISO-8601 UTC; set at write time (#36) |
+| `extracted_at` | No | ISO-8601 UTC; set at write time |
 
 Filename pattern, re-runs, and merchant variance: [`data/README.md`](../data/README.md).
 
@@ -91,7 +83,12 @@ Runtime JSON from the full pipeline (categorized) appears on the host at `data/r
 
 ## Related docs
 
-- [n8n Docker setup](n8n-setup.md)
-- [Claude standards](n8n-claude-standards.md)
-- [Categorization pipeline](categorization.md) — downstream categorization step
-- [Agent workflow](../AGENTS.md)
+| Doc | Role |
+|-----|------|
+| [Docs index](README.md) | Reading order |
+| [n8n-setup.md](n8n-setup.md) | Docker setup and ingest how-to |
+| [categorization.md](categorization.md) | Downstream categorization and persist |
+| [data/README.md](../data/README.md) | Receipt JSON store |
+| [integration.md](integration.md) | Full-stack demo after persist |
+| [samples/README.md](../samples/README.md) | Sample PDFs |
+| [n8n-claude-standards.md](n8n-claude-standards.md) | Claude vs deterministic nodes |

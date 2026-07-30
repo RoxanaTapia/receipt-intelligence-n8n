@@ -20,14 +20,10 @@ Manual Trigger
   → Set — Categorized Receipt
   → Code — Build Receipt File
   → Write File — Persist Receipt JSON
-  → HTTP Request — GET Health
-  → HTTP Request — GET Analytics Receipts
-  → Code — Show Coverage Smoke
-  → HTTP Request — GET Analytics Summary
-  → Code — Show Analytics Summary
-  → HTTP Request — POST Demo Questions
-  → Code — Show Demo Q&A Answer
+  → … (post-persist API — see [setup contract](n8n-setup.md#n8n--api-integration-contract) · [integration.md](integration.md))
 ```
+
+Categorization ends at **persist**. After a successful write, the same workflow continues into post-persist HTTP (coverage → analytics summary → demo Q&A) — details in [setup](n8n-setup.md#post-persist-coverage-smoke) and the [integration runbook](integration.md).
 
 | Stage | Node | Role |
 |-------|------|------|
@@ -39,9 +35,6 @@ Manual Trigger
 | Branch | `IF — Valid Categories` | Route on `valid === true` |
 | Retry | `Code — Decide Categorize Retry` → `IF — Categorize Retry` | On parse/validation failure: re-ask Claude up to 3 attempts, else error Set |
 | Persist | `Set — Categorized Receipt` → `Code — Build Receipt File` → `Write File — Persist Receipt JSON` | Canonical JSON + hash + timestamps → disk |
-| Smoke | `GET Health` → `IF — API Health OK` → `GET Analytics Receipts` → `IF — API Receipts OK` → `Code — Show Coverage Smoke` → `IF — Coverage Present` | Confirm API coverage sees the new file ([setup smoke](n8n-setup.md#post-persist-coverage-smoke)) |
-| Analytics | `GET Analytics Summary` → `IF — API Summary OK` → `Code — Show Analytics Summary` | Spending summary for `preset=last_N_days` (`n_days=90`) ([setup analytics](n8n-setup.md#post-persist-analytics-summary)) |
-| Demo Q&A | `POST Demo Questions` → `IF — API Questions OK` → `Code — Show Demo Q&A Answer` | Fixed `POST /questions` demo ([setup Q&A](n8n-setup.md#post-persist-demo-qa)) |
 
 ## Error path
 
@@ -114,7 +107,13 @@ Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the cont
 
 ## Related docs
 
-- [PDF extraction pipeline](pdf-extraction.md) — upstream extraction step
-- [n8n Docker setup](n8n-setup.md)
-- [Claude standards](n8n-claude-standards.md)
-- [Agent workflow](../AGENTS.md)
+| Doc | Role |
+|-----|------|
+| [Docs index](README.md) | Reading order |
+| [pdf-extraction.md](pdf-extraction.md) | Upstream extraction |
+| [n8n-setup.md](n8n-setup.md) | Docker setup; post-persist contract |
+| [integration.md](integration.md) | Full-stack demo after persist |
+| [data/README.md](../data/README.md) | Receipt JSON store |
+| [samples/README.md](../samples/README.md) | Sample PDFs |
+| [categorization-schema.md](categorization-schema.md) | Taxonomy and output schema |
+| [n8n-claude-standards.md](n8n-claude-standards.md) | Claude vs deterministic nodes |
