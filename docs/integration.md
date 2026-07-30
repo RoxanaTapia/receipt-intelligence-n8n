@@ -24,25 +24,14 @@ flowchart TB
 
 ## Prerequisites
 
-- Sibling clones (see layout below)
+- Sibling clones under one parent folder (layout in [setup — shared disk](n8n-setup.md#n8n--api-integration-contract))
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) for n8n
 - Python 3.11+ for the API
 - `ANTHROPIC_API_KEY` in **both** apps: n8n (Claude extract/categorize) and the API (`POST /questions`)
 
-## 1. Sibling clone layout
+## 1. Start n8n + API
 
-```text
-receipt-intelligence-system/
-├── receipt-intelligence-n8n/   # this repo — writes data/receipts/
-└── receipt-intelligence-api/   # FastAPI — reads via RECEIPT_DATA_PATH
-```
-
-| Side | Path / variable |
-|------|-----------------|
-| This repo (host) | [`data/receipts/`](../data/README.md) |
-| API | `RECEIPT_DATA_PATH` — default `../receipt-intelligence-n8n/data/receipts` in the [API `.env.example`](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/.env.example) |
-
-## 2. Start n8n + API
+Confirm `RECEIPT_DATA_PATH` on the API points at this repo’s [`data/receipts/`](../data/README.md) — defaults are in the [API `.env.example`](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/.env.example).
 
 ### n8n (Docker)
 
@@ -69,29 +58,15 @@ uvicorn app.main:app --reload
 
 OpenAPI UI: [http://localhost:8000/docs](http://localhost:8000/docs). More: [API README](https://github.com/RoxanaTapia/receipt-intelligence-api#local-run).
 
-## 3. `API_BASE_URL` / Docker networking
+## 2. `API_BASE_URL` for n8n in Docker
 
-| Caller | Typical value |
-|--------|----------------|
-| n8n **inside** Docker (macOS Docker Desktop) | `http://host.docker.internal:8000` (default in `.env.example`) |
-| Browser or terminal on the **host** | `http://localhost:8000` |
+n8n inside Docker must reach the API on the host — use `API_BASE_URL=http://host.docker.internal:8000` (default in `.env.example`). Host curls use `http://localhost:8000`.
 
-⚠️ `localhost` inside the container is the container itself — not your Mac. Keep `API_BASE_URL=http://host.docker.internal:8000` for HTTP Request nodes.
+Details: [setup — reachability](n8n-setup.md#api_base_url-reachability).
 
-Compose sets `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` so `={{ $env.API_BASE_URL }}` works. After changing compose: `docker compose down && docker compose up -d`.
+## 3. Import, run, and read the API response in n8n
 
-Details: [n8n-setup — reachability](n8n-setup.md#api_base_url-reachability).
-
-## 4. Import, run, and read the API response in n8n
-
-Two channels — disk is the handoff; HTTP is post-persist proof and demo:
-
-| Channel | Role |
-|---------|------|
-| **Shared disk** | n8n **writes** categorized JSON; API **reads** the same folder |
-| **HTTP** (`API_BASE_URL`) | Coverage smoke → analytics summary → fixed demo Q&A |
-
-📌 We do **not** POST receipt JSON to the API for ingest.
+Disk is the ingest handoff; HTTP after persist is coverage smoke → analytics summary → fixed demo Q&A. We do **not** POST receipt JSON to the API for ingest — see [setup — contract](n8n-setup.md#n8n--api-integration-contract).
 
 ### Import and run
 
@@ -122,7 +97,7 @@ Write File — Persist Receipt JSON
 
 Node-level walkthrough: [coverage](n8n-setup.md#post-persist-coverage-smoke) · [analytics](n8n-setup.md#post-persist-analytics-summary) · [demo Q&A](n8n-setup.md#post-persist-demo-qa) · [failure modes](n8n-setup.md#post-persist-failure-modes) (includes bounded HTTP retries).
 
-## 5. Verification curls (host)
+## 4. Verification curls (host)
 
 Run these on the **host** against `localhost:8000` while the API is up. Full guides: [analytics](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/analytics.md) · [Q&A](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md#setup-and-curl).
 
@@ -146,7 +121,11 @@ curl -s http://localhost:8000/questions \
 
 | Doc | Role |
 |-----|------|
+| [Docs index](README.md) | Reading order |
 | [n8n-setup.md](n8n-setup.md) | Docker n8n, env vars, integration **contract** |
+| [pdf-extraction.md](pdf-extraction.md) | PDF → extract pipeline |
+| [categorization.md](categorization.md) | Categorize → persist |
+| [samples/README.md](../samples/README.md) | Sample PDFs for the demo |
 | [data/README.md](../data/README.md) | Receipt JSON store |
 | [API analytics](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/analytics.md) | Analytics setup and curls |
 | [API Q&A](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md) | `POST /questions` setup and curls |
