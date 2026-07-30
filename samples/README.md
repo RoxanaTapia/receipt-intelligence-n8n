@@ -1,6 +1,6 @@
 # Sample receipts
 
-Anonymized PDF fixtures for Module 2 receipt ingestion workflows, demos, and tests.
+Anonymized PDF fixtures for local ingest workflows, demos, and tests.
 
 ## Directory layout
 
@@ -84,9 +84,7 @@ NN-<short-description>_original.pdf
 
 Copy into n8n the same way as committed samples (`docker cp samples/receipts/originals/03-small_original.pdf …`).
 
-## How samples enter the pipeline (Module 2)
-
-Module 2 workflows read PDFs from this directory during local development:
+## Using samples in the ingest pipeline
 
 1. Start n8n — see [docs/n8n-setup.md](../docs/n8n-setup.md)
 2. Copy a sample into the n8n container (required for Docker — n8n only reads `/home/node/.n8n-files`):
@@ -95,10 +93,11 @@ Module 2 workflows read PDFs from this directory during local development:
    docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
    ```
 
-3. Import and run [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — full steps in [docs/n8n-setup.md](../docs/n8n-setup.md#run-the-pdf-ingest-workflow)
-4. Downstream steps structure with Claude (#26), validate (#27), and persist (#28)
+3. Import and run [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — [docs/n8n-setup.md](../docs/n8n-setup.md#run-the-pdf-ingest-workflow)
+4. Confirm categorized JSON under `data/receipts/` — [categorization.md](../docs/categorization.md) · [data/README.md](../data/README.md)
+5. Optional full-stack demo (API coverage / analytics / Q&A) — [integration.md](../docs/integration.md)
 
-Production intake (email, upload API, etc.) is out of scope for Module 2; these fixtures simulate that input for reproducible demos.
+Production intake (email, upload API, etc.) is out of scope; these fixtures simulate that input for reproducible demos.
 
 ## Adding a new sample
 
@@ -106,3 +105,14 @@ Production intake (email, upload API, etc.) is out of scope for Module 2; these 
 2. Name it with the next available `NN-` prefix
 3. Add a row to the catalog table above
 4. Open a PR — verifier checks paths and privacy rules
+
+## Related docs
+
+| Doc | Role |
+|-----|------|
+| [Docs index](../docs/README.md) | Reading order |
+| [n8n-setup.md](../docs/n8n-setup.md) | Docker setup and ingest how-to |
+| [pdf-extraction.md](../docs/pdf-extraction.md) | Extraction pipeline |
+| [categorization.md](../docs/categorization.md) | Categorization and persist |
+| [data/README.md](../data/README.md) | Receipt JSON store |
+| [integration.md](../docs/integration.md) | Full-stack demo |

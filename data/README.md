@@ -141,9 +141,11 @@ Required fields match validation in the ingest workflow: `merchant`, `date`, `to
 
 ## Related docs
 
+- [Docs index](../docs/README.md) — reading order
 - [Categorization pipeline](../docs/categorization.md) — categorization and persistence
 - [Categorization schema](../docs/categorization-schema.md) — taxonomy and output contract
 - [Sample PDFs](../samples/README.md) — input fixtures for the pipeline
 - [n8n setup](../docs/n8n-setup.md) — Docker, import workflow, copy PDFs into the container
 - [n8n ↔ API contract](../docs/n8n-setup.md#n8n--api-integration-contract) — shared disk vs HTTP; API `RECEIPT_DATA_PATH`
-- [Local full-stack runbook](../docs/integration.md) — Module 5: start both apps, sample PDF → API response in n8n
+- [Local full-stack runbook](../docs/integration.md) — start both apps, sample PDF → API response in n8n
+- [PDF extraction](../docs/pdf-extraction.md) — upstream extraction

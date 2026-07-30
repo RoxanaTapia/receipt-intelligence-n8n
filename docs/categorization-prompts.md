@@ -113,6 +113,8 @@ Return the full receipt JSON with category on each line item. Preserve merchant,
 ## Related docs
 
 - [Categorization schema](categorization-schema.md) — taxonomy and JSON contract
-- [Categorization test matrix](categorization-test-matrix.md) — edge-case verification (#43)
+- [Categorization test matrix](categorization-test-matrix.md) — edge-case verification
 - [n8n + Claude standards](n8n-claude-standards.md) — three-layer pattern and node naming
-- [PDF extraction pipeline](pdf-extraction.md) — Module 2 input
+- [PDF extraction pipeline](pdf-extraction.md) — upstream extraction
+- [Categorization pipeline](categorization.md) — categorize → persist
+- [Docs index](README.md) — reading order
