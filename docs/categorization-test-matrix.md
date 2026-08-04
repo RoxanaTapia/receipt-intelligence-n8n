@@ -44,17 +44,9 @@ Open [http://localhost:5678](http://localhost:5678) and log in.
 
 For each PDF receipt:
 
-1. Copy the PDF into the n8n container (replace container name if yours differs — check with `docker compose ps`):
-
-   ```bash
-   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
-   ```
-
-2. In the workflow, open **Read Binary File — Sample Receipt** and set **File(s) Selector** to match the copied path (e.g. `/home/node/.n8n-files/03-small.pdf`).
-
-3. Click **Execute workflow**.
-
-4. When execution finishes, open the last successful node on the categorization path — **`Set — Categorized Receipt`** — and copy each `line_items[]` entry (`description` + `category`).
+1. Confirm Compose mounts `samples/receipts/` at `/home/node/.n8n-files/samples` (see [n8n-setup.md](n8n-setup.md#run-the-pdf-ingest-workflow)).
+2. Run via **Manual Trigger** (default `03-small`) or webhook `{ "sample": "<id>" }` — [Demo sample webhook](n8n-setup.md#demo-sample-webhook).
+3. When execution finishes, open the last successful node on the categorization path — **`Set — Categorized Receipt`** — and copy each `line_items[]` entry (`description` + `category`).
 
    Alternatively, read the hash-named JSON under `data/receipts/` on your host (see [data/README.md](../data/README.md)). Categorized output includes `category` on every line item.
 

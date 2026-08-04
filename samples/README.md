@@ -82,22 +82,24 @@ NN-<short-description>_original.pdf
 
 **Why keep originals locally:** re-run real-world OCR/layout scenarios, refresh anonymized fixtures, and compare extraction drift against authentic receipts — without committing PII to git.
 
-Copy into n8n the same way as committed samples (`docker cp samples/receipts/originals/03-small_original.pdf …`).
+Originals are gitignored and **not** on the Compose samples mount. Copy one into the container only if you need a local operator experiment:
+
+```bash
+docker cp samples/receipts/originals/03-small_original.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/samples/03-small-original.pdf
+```
+
+Prefer committed anonymized samples for the demo webhook allowlist.
 
 ## Using samples in the ingest pipeline
 
-1. Start n8n — see [docs/n8n-setup.md](../docs/n8n-setup.md)
-2. Copy a sample into the n8n container (required for Docker — n8n only reads `/home/node/.n8n-files`):
+1. Start n8n — see [docs/n8n-setup.md](../docs/n8n-setup.md). Compose bind-mounts this folder at `/home/node/.n8n-files/samples` (read-only) — no `docker cp` for committed samples.
+2. Import [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json).
+3. **Operator:** **Execute workflow** (Manual Trigger) — default sample `03-small`.
+4. **Demo / webhook:** activate the workflow and `POST` `{ "sample": "03-small" }` — [Demo sample webhook](../docs/n8n-setup.md#demo-sample-webhook).
+5. Confirm categorized JSON under `data/receipts/` — [categorization.md](../docs/categorization.md) · [data/README.md](../data/README.md)
+6. Optional full-stack demo (API coverage / analytics / Q&A) — [integration.md](../docs/integration.md)
 
-   ```bash
-   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
-   ```
-
-3. Import and run [`receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) — [docs/n8n-setup.md](../docs/n8n-setup.md#run-the-pdf-ingest-workflow)
-4. Confirm categorized JSON under `data/receipts/` — [categorization.md](../docs/categorization.md) · [data/README.md](../data/README.md)
-5. Optional full-stack demo (API coverage / analytics / Q&A) — [integration.md](../docs/integration.md)
-
-Production intake (email, upload API, etc.) is out of scope; these fixtures simulate that input for reproducible demos.
+Allowlisted sample ids match the filename stem (`03-small`, `01-food-homedeco`, …). Unknown ids are rejected by the webhook. Production intake (email, arbitrary upload API, etc.) is out of scope; these fixtures simulate input for reproducible demos.
 
 ## Adding a new sample
 

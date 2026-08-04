@@ -102,7 +102,7 @@ Runtime JSON appears on the host at `data/receipts/` (bind-mounted from the cont
 ## Run locally
 
 1. Start n8n — [n8n-setup.md](n8n-setup.md)
-2. Copy a sample PDF and run the workflow — [Run the PDF ingest workflow](n8n-setup.md#run-the-pdf-ingest-workflow)
+2. Run the workflow (Manual Trigger or demo webhook) — [Run the PDF ingest workflow](n8n-setup.md#run-the-pdf-ingest-workflow)
 3. Confirm categorized output in `data/receipts/` — every `line_items[]` entry has `category`; file has `categorized_at`
 
 ## Related docs

@@ -70,7 +70,7 @@ Filename pattern, re-runs, and merchant variance: [`data/README.md`](../data/REA
 
 | Topic | Doc |
 |-------|-----|
-| Sample PDFs, privacy, `docker cp` | [`samples/README.md`](../samples/README.md) |
+| Sample PDFs, privacy, bind-mount / webhook | [`samples/README.md`](../samples/README.md) |
 | File naming, content hash, `extracted_at`, re-run behavior | [`data/README.md`](../data/README.md) |
 
 Runtime JSON from the full pipeline (categorized) appears on the host at `data/receipts/` — see [categorization.md](categorization.md).
@@ -78,7 +78,7 @@ Runtime JSON from the full pipeline (categorized) appears on the host at `data/r
 ## Run locally
 
 1. Start n8n — [n8n-setup.md](n8n-setup.md)
-2. Copy a sample PDF and run the workflow — [Run the PDF ingest workflow](n8n-setup.md#run-the-pdf-ingest-workflow)
+2. Run the workflow (Manual Trigger or demo webhook) — [Run the PDF ingest workflow](n8n-setup.md#run-the-pdf-ingest-workflow)
 3. Confirm output in `data/receipts/` on your machine
 
 ## Related docs

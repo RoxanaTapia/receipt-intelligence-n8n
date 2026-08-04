@@ -207,18 +207,63 @@ After editing a workflow in the UI: **⋯** → **Download** (or **Export**). Sa
 
 1. Set `ANTHROPIC_API_KEY` in `.env` and restart n8n if you have not already.
 2. Import the workflow (see **Import a workflow** above).
-3. Copy a sample PDF into n8n’s allowed files directory (Docker only reads under `/home/node/.n8n-files`):
-
-   ```bash
-   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
-   ```
-
-   Run from the repo root. Replace the container name if yours differs (`docker compose ps`).
-
-4. Open the workflow → **Execute workflow**.
+3. Confirm sample PDFs are mounted read-only at `/home/node/.n8n-files/samples` (Compose maps `./samples/receipts`). No `docker cp` for the demo sample.
+4. **Operator (Manual Trigger):** open the workflow → **Execute workflow**. Resolves the default allowlisted sample (`03-small`).
 5. Confirm a hash-named JSON file appears in `data/receipts/` on your host (see [data/README.md](../data/README.md)).
 
-To try another sample, copy it the same way and update the path in **Read Binary File — Sample Receipt**, or re-export the workflow with a new path.
+To try another allowlisted sample via webhook, pass `{ "sample": "<id>" }` (see **Demo sample webhook** below). Operators can also change the default by editing **Code — Resolve Sample Path**.
+
+### Demo sample webhook
+
+📌 **Visitor vs operator:** the portfolio demo UX calls this webhook over **Compose service DNS** after the visitor uploads a known sample. Operators keep using **Manual Trigger** in the n8n UI. n8n is the engine, not the product UI.
+
+| Item | Value |
+|------|--------|
+| Caller | Demo UX / another Compose service → `http://n8n:5678/webhook/receipt-demo-ingest` (not the browser → a public webhook) |
+| Host smoke (optional) | `http://localhost:5678/webhook/receipt-demo-ingest` |
+| Method | `POST` |
+| Body | `{ "sample": "03-small" }` or empty / omit `sample` → default `03-small` |
+| Binary | n8n **reads** the bind-mounted allowlisted PDF after validating the id (UX does not need to forward bytes to n8n) |
+| Allowlist | `03-small`, `01-food-homedeco`, `02-vegetables-weighted`, `04-article-discount` → `/home/node/.n8n-files/samples/<id>.pdf` |
+| Workflow | Must be **Active** for production webhook URLs (`/webhook/...`). Inactive workflows only serve `/webhook-test/...` from the editor |
+| Auth / network | Intended for **internal** Compose traffic. Do not expose this path as an open internet upload API — the demo edge gate owns visitor access |
+
+**Success** — HTTP response is sent **after** **Write File — Persist Receipt JSON**, then post-persist coverage / summary / Q&A may continue without blocking the client:
+
+```json
+{
+  "ok": true,
+  "persistedFilename": "2025-05-12_rewe-musterstadt_a1b2c3d4.json",
+  "merchant": "REWE Musterstadt",
+  "date": "2025-05-12",
+  "total": 12.34
+}
+```
+
+**Unknown sample** — clear client error (HTTP 400):
+
+```json
+{
+  "ok": false,
+  "error": "unknown_sample",
+  "message": "Unknown sample id 'nope'. Allowed: 03-small, …",
+  "sample": "nope"
+}
+```
+
+**Pipeline failure** (extract / categorize after retries) — HTTP 422 with `stage` and `errors`. Disk handoff is unchanged: we still do **not** POST receipt JSON to the API for ingest.
+
+```bash
+# From another Compose service (demo UX):
+curl -sS -X POST http://n8n:5678/webhook/receipt-demo-ingest \
+  -H 'Content-Type: application/json' \
+  -d '{"sample":"03-small"}'
+
+# Unknown id (expect ok: false):
+curl -sS -X POST http://n8n:5678/webhook/receipt-demo-ingest \
+  -H 'Content-Type: application/json' \
+  -d '{"sample":"not-a-sample"}'
+```
 
 ## Troubleshooting
 
@@ -228,7 +273,9 @@ To try another sample, copy it the same way and update the path in **Read Binary
 | `N8N_BASIC_AUTH_PASSWORD` error on start | Create `.env` from `.env.example` and set a password |
 | Container exits immediately | Run `docker compose logs n8n` and check for env or port conflicts |
 | Fresh start (wipe workflows) | `docker compose down -v` (**deletes** the `n8n_data` volume) |
-| Read Binary File: "Access to the file is not allowed" | n8n only allows paths under `/home/node/.n8n-files`. Copy the PDF there with `docker cp` (see **Run the PDF ingest workflow**) |
+| Read Binary File: "Access to the file is not allowed" | n8n only allows paths under `/home/node/.n8n-files`. Confirm Compose mounts `samples/receipts` → `/home/node/.n8n-files/samples` and recreate the container |
+| Webhook returns 404 | Workflow must be **Active** for `/webhook/...` (editor test URL is `/webhook-test/...`) |
+| Webhook hangs with no body | Confirm **Webhook — Demo Sample Ingest** uses **Respond to Webhook** (`responseMode: responseNode`) and failure branches also respond |
 
 ## Related docs
 
