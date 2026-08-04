@@ -253,6 +253,15 @@ To try another allowlisted sample via webhook, pass `{ "sample": "<id>" }` (see 
 
 **Pipeline failure** (extract / categorize after retries) — HTTP 422 with `stage` and `errors`. Disk handoff is unchanged: we still do **not** POST receipt JSON to the API for ingest.
 
+```json
+{
+  "ok": false,
+  "error": "pipeline_failed",
+  "stage": "parse",
+  "errors": ["Claude did not return valid JSON after 3 attempts"]
+}
+```
+
 ```bash
 # From another Compose service (demo UX):
 curl -sS -X POST http://n8n:5678/webhook/receipt-demo-ingest \

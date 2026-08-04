@@ -12,11 +12,10 @@ samples/
     ├── 02-vegetables-weighted.pdf
     ├── 03-small.pdf
     ├── 04-article-discount.pdf
-    ├── originals/      # Gitignored — pre-anonymization sources (local only)
-    └── private/        # Gitignored — other real receipts (local only)
+    └── originals/      # Gitignored — pre-anonymization sources (local only)
 ```
 
-Committed samples are **anonymized** copies. Their **original** source PDFs live in `receipts/originals/` on your machine only (never committed). Other ad-hoc real receipts go in `receipts/private/`.
+Committed samples are **anonymized** copies. Their **original** source PDFs live in `receipts/originals/` on your machine only (never committed). You can create `receipts/private/` locally for other ad-hoc real receipts — it is gitignored and not committed.
 
 ## Sample catalog
 
