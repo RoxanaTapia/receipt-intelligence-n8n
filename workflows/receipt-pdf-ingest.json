@@ -1,20 +1,20 @@
 {
-  "name": "Receipt — Ingest PDF",
+  "name": "Receipt \u2014 Ingest PDF",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1728,
-        192
+        -2200,
+        96
       ],
       "id": "7924fc1c-dcdc-44c1-ba94-5319558969d8",
       "name": "Manual Trigger"
     },
     {
       "parameters": {
-        "fileSelector": "/home/node/.n8n-files/03-small.pdf",
+        "fileSelector": "={{ $json.filePath }}",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
@@ -24,7 +24,7 @@
         192
       ],
       "id": "6a2384fe-5eea-4603-a12d-d588f7c4063c",
-      "name": "Read Binary File — Sample Receipt"
+      "name": "Read Binary File \u2014 Sample Receipt"
     },
     {
       "parameters": {
@@ -38,7 +38,7 @@
         192
       ],
       "id": "36876b80-49f5-48d3-a019-308f6e90619d",
-      "name": "Extract from File — PDF to Text"
+      "name": "Extract from File \u2014 PDF to Text"
     },
     {
       "parameters": {
@@ -51,7 +51,7 @@
         "messages": {
           "values": [
             {
-              "content": "=## System\nYou are a receipt data extractor for the Receipt Intelligence System.\nReturn one JSON object only — no markdown fences, no explanation.\nAll numbers must be JSON numbers (not strings). Use EUR.\nEvery line_item must include description, quantity, and price.\n\n## Task\nFrom the receipt text below, extract:\n- merchant: primary store brand (string) — short consistent form (e.g. REWE, not REWE Markt or full banner text)\n- date: transaction date as YYYY-MM-DD\n- total: final amount paid (number)\n- line_items: purchased products only\n\nRules for line_items:\n- description: product name ONLY — never include prices, quantities, or \"N Stk x price\" text\n- quantity: count or weight as number (use 1 when a single unit is sold)\n- price: line total for that product row (number)\n\nGerman supermarket rules:\n- A line like \"2 Stk x 0,89\" or \"3 Stk x 1,99\" is a quantity breakdown for the product on the line ABOVE it — do NOT create a separate line_item for it. Instead, set that product's quantity and price from the combined rows.\n- Never use generic names like \"Artikel\" — always use the actual product name from the receipt.\n- PFAND (deposit) is a real line_item with description \"PFAND\".\n- Lines like \"kg x price/kg\" are one item: description = product name, quantity = weight in kg, price = line total.\n- Exclude: subtotals, tax, payment method, change, loyalty/bonus lines, store address.\n\n## Receipt text\n{{ $json.text }}\n\n## Output format\nReturn exactly this shape and nothing else:\n{\n  \"merchant\": \"Muster Supermarkt\",\n  \"date\": \"2024-03-15\",\n  \"total\": 12.34,\n  \"line_items\": [\n    { \"description\": \"Tomaten\", \"quantity\": 0.5, \"price\": 1.99 }\n  ]\n}"
+              "content": "=## System\nYou are a receipt data extractor for the Receipt Intelligence System.\nReturn one JSON object only \u2014 no markdown fences, no explanation.\nAll numbers must be JSON numbers (not strings). Use EUR.\nEvery line_item must include description, quantity, and price.\n\n## Task\nFrom the receipt text below, extract:\n- merchant: primary store brand (string) \u2014 short consistent form (e.g. REWE, not REWE Markt or full banner text)\n- date: transaction date as YYYY-MM-DD\n- total: final amount paid (number)\n- line_items: purchased products only\n\nRules for line_items:\n- description: product name ONLY \u2014 never include prices, quantities, or \"N Stk x price\" text\n- quantity: count or weight as number (use 1 when a single unit is sold)\n- price: line total for that product row (number)\n\nGerman supermarket rules:\n- A line like \"2 Stk x 0,89\" or \"3 Stk x 1,99\" is a quantity breakdown for the product on the line ABOVE it \u2014 do NOT create a separate line_item for it. Instead, set that product's quantity and price from the combined rows.\n- Never use generic names like \"Artikel\" \u2014 always use the actual product name from the receipt.\n- PFAND (deposit) is a real line_item with description \"PFAND\".\n- Lines like \"kg x price/kg\" are one item: description = product name, quantity = weight in kg, price = line total.\n- Exclude: subtotals, tax, payment method, change, loyalty/bonus lines, store address.\n\n## Receipt text\n{{ $json.text }}\n\n## Output format\nReturn exactly this shape and nothing else:\n{\n  \"merchant\": \"Muster Supermarkt\",\n  \"date\": \"2024-03-15\",\n  \"total\": 12.34,\n  \"line_items\": [\n    { \"description\": \"Tomaten\", \"quantity\": 0.5, \"price\": 1.99 }\n  ]\n}"
             }
           ]
         },
@@ -66,17 +66,17 @@
         192
       ],
       "id": "aaf76150-db46-4817-bd99-3d8d40bb3aa8",
-      "name": "Claude — Extract Receipt",
+      "name": "Claude \u2014 Extract Receipt",
       "credentials": {
         "anthropicApi": {
           "id": "1ly0gyOA8jc5WLtJ",
-          "name": "Anthropic — Receipt Intelligence"
+          "name": "Anthropic \u2014 Receipt Intelligence"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "function currentExtractAttempt() {\n  try {\n    if ($('Code — Decide Extract Retry').isExecuted) {\n      const n = $('Code — Decide Extract Retry').first().json.extractAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst extractAttempt = currentExtractAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', extractAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', extractAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, extractAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', extractAttempt } }];\n}"
+        "jsCode": "function currentExtractAttempt() {\n  try {\n    if ($('Code \u2014 Decide Extract Retry').isExecuted) {\n      const n = $('Code \u2014 Decide Extract Retry').first().json.extractAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst extractAttempt = currentExtractAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', extractAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', extractAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, extractAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', extractAttempt } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -85,7 +85,7 @@
         192
       ],
       "id": "18f978c7-7fdc-47dd-aafb-ff60d79cbfb6",
-      "name": "Code — Parse Receipt JSON"
+      "name": "Code \u2014 Parse Receipt JSON"
     },
     {
       "parameters": {
@@ -119,7 +119,7 @@
         192
       ],
       "id": "ae10002b-0b77-4f33-8bf0-6fa3477ea4fb",
-      "name": "IF — Parse OK"
+      "name": "IF \u2014 Parse OK"
     },
     {
       "parameters": {
@@ -132,7 +132,7 @@
         96
       ],
       "id": "0d5d200b-2d92-4306-b6c4-858591956512",
-      "name": "Code — Validate & Normalize Receipt"
+      "name": "Code \u2014 Validate & Normalize Receipt"
     },
     {
       "parameters": {
@@ -166,7 +166,7 @@
         96
       ],
       "id": "d77c5f0f-faef-42eb-ab10-da8071c068a7",
-      "name": "IF — Valid Receipt"
+      "name": "IF \u2014 Valid Receipt"
     },
     {
       "parameters": {
@@ -207,7 +207,7 @@
         0
       ],
       "id": "4dfece6d-3cbb-47a6-9b0b-f9739e5d3681",
-      "name": "Set — Normalized Receipt"
+      "name": "Set \u2014 Normalized Receipt"
     },
     {
       "parameters": {
@@ -220,7 +220,7 @@
         0
       ],
       "id": "38821d1b-447b-4735-b3a7-5cacef123ebe",
-      "name": "Code — Build Receipt File"
+      "name": "Code \u2014 Build Receipt File"
     },
     {
       "parameters": {
@@ -236,7 +236,7 @@
         0
       ],
       "id": "affc32cd-c3ed-4eb8-a3db-d5dd04242c48",
-      "name": "Write File — Persist Receipt JSON"
+      "name": "Write File \u2014 Persist Receipt JSON"
     },
     {
       "parameters": {
@@ -249,11 +249,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1144,
+        1744,
         0
       ],
       "id": "205c80a1-563f-44d2-abfe-39d0b241cb33",
-      "name": "HTTP Request — GET Health",
+      "name": "HTTP Request \u2014 GET Health",
       "continueOnFail": true,
       "retryOnFail": true,
       "maxTries": 3,
@@ -271,11 +271,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1480,
+        2080,
         0
       ],
       "id": "9614fb16-702c-4f29-a4c8-060a92a58ba3",
-      "name": "HTTP Request — GET Analytics Receipts",
+      "name": "HTTP Request \u2014 GET Analytics Receipts",
       "continueOnFail": true,
       "retryOnFail": true,
       "maxTries": 3,
@@ -284,16 +284,16 @@
     },
     {
       "parameters": {
-        "jsCode": "const persistedFilename = $('Code — Build Receipt File').first().json.persistedFilename;\nconst health = $('HTTP Request — GET Health').first().json;\nconst coverage = $input.first().json;\nconst loadedFiles = coverage.loaded_files ?? [];\n\nreturn [{\n  json: {\n    api_status: health.status,\n    data_path: coverage.data_path,\n    files_loaded: coverage.files_loaded,\n    logical_receipt_count: coverage.logical_receipt_count,\n    loaded_files: loadedFiles,\n    persistedFilename,\n    persistedInCoverage: loadedFiles.includes(persistedFilename),\n  },\n}];"
+        "jsCode": "const persistedFilename = $('Code \u2014 Build Receipt File').first().json.persistedFilename;\nconst health = $('HTTP Request \u2014 GET Health').first().json;\nconst coverage = $input.first().json;\nconst loadedFiles = coverage.loaded_files ?? [];\n\nreturn [{\n  json: {\n    api_status: health.status,\n    data_path: coverage.data_path,\n    files_loaded: coverage.files_loaded,\n    logical_receipt_count: coverage.logical_receipt_count,\n    loaded_files: loadedFiles,\n    persistedFilename,\n    persistedInCoverage: loadedFiles.includes(persistedFilename),\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1816,
+        2416,
         0
       ],
       "id": "524036fb-5dda-43d1-89d6-3d625b2e1f02",
-      "name": "Code — Show Coverage Smoke"
+      "name": "Code \u2014 Show Coverage Smoke"
     },
     {
       "parameters": {
@@ -306,11 +306,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2152,
+        2752,
         0
       ],
       "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "name": "HTTP Request — GET Analytics Summary",
+      "name": "HTTP Request \u2014 GET Analytics Summary",
       "continueOnFail": true,
       "retryOnFail": true,
       "maxTries": 3,
@@ -324,11 +324,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2488,
+        3088,
         0
       ],
       "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-      "name": "Code — Show Analytics Summary"
+      "name": "Code \u2014 Show Analytics Summary"
     },
     {
       "parameters": {
@@ -344,11 +344,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2688,
+        3288,
         0
       ],
       "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
-      "name": "HTTP Request — POST Demo Questions",
+      "name": "HTTP Request \u2014 POST Demo Questions",
       "continueOnFail": true,
       "retryOnFail": true,
       "maxTries": 3,
@@ -362,11 +362,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3024,
+        3624,
         0
       ],
       "id": "d4e5f6a7-b8c9-0123-def0-234567890123",
-      "name": "Code — Show Demo Q&A Answer"
+      "name": "Code \u2014 Show Demo Q&A Answer"
     },
     {
       "parameters": {
@@ -396,11 +396,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1280,
+        1880,
         0
       ],
       "id": "d9ba23bd-0af9-4c71-aa01-bd5ba9744b1f",
-      "name": "IF — API Health OK"
+      "name": "IF \u2014 API Health OK"
     },
     {
       "parameters": {
@@ -430,11 +430,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1616,
+        2216,
         0
       ],
       "id": "7bfe3502-3bd8-49fc-876b-19096f2845c4",
-      "name": "IF — API Receipts OK"
+      "name": "IF \u2014 API Receipts OK"
     },
     {
       "parameters": {
@@ -464,11 +464,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1952,
+        2552,
         0
       ],
       "id": "d2e0e2d0-bde4-4143-82e6-51d957554295",
-      "name": "IF — Coverage Present"
+      "name": "IF \u2014 Coverage Present"
     },
     {
       "parameters": {
@@ -498,11 +498,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2288,
+        2888,
         0
       ],
       "id": "b2a2275a-5d82-417e-834a-9c6a83119509",
-      "name": "IF — API Summary OK"
+      "name": "IF \u2014 API Summary OK"
     },
     {
       "parameters": {
@@ -532,11 +532,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2824,
+        3424,
         0
       ],
       "id": "2005d7a3-8f22-4f75-b6ca-9685dc7f0ed7",
-      "name": "IF — API Questions OK"
+      "name": "IF \u2014 API Questions OK"
     },
     {
       "parameters": {
@@ -567,11 +567,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1616,
+        2216,
         352
       ],
       "id": "8c06ad3e-1217-4259-b2c8-509e64d9a7b9",
-      "name": "Set — API Error"
+      "name": "Set \u2014 API Error"
     },
     {
       "parameters": {
@@ -602,11 +602,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1952,
+        2552,
         352
       ],
       "id": "8a398814-dc18-4efb-b3e9-28ce87334dea",
-      "name": "Set — Empty Coverage"
+      "name": "Set \u2014 Empty Coverage"
     },
     {
       "parameters": {
@@ -641,7 +641,7 @@
         352
       ],
       "id": "8b6e2360-a741-4caa-a897-d92fe10046a0",
-      "name": "Set — Validation Error"
+      "name": "Set \u2014 Validation Error"
     },
     {
       "parameters": {
@@ -654,7 +654,7 @@
         "messages": {
           "values": [
             {
-              "content": "=## System\nYou are a receipt line-item categorizer for the Receipt Intelligence System.\nReturn one JSON object only — no markdown fences, no explanation.\n\n## Task\nAdd a `category` field to each line_items[] entry in the receipt below.\nDo not change description, quantity, or price.\n\nAllowed categories (exactly one per item, lowercase):\n- food — groceries for meals or ingredients (fresh, refrigerated, shelf-stable)\n- snacks — small packaged treats eaten between meals\n- drinks — beverages for consumption\n- household — non-food household and personal-care items\n- other — PFAND, unclear items, non-product lines\n\n## Few-shot examples (ambiguous German labels)\nApply the same reasoning to items in the receipt below:\n- APFELSAFT → drinks (beverage, not a cooking ingredient)\n- SW PUTE EI → food (abbreviated meat/dairy/egg — prefer food for meat, poultry, dairy, eggs)\n- PFAND → other (deposit line, not food or drink)\n- CHIPS PAPRIKA → snacks (packaged treat between meals)\n- SPÜLMITTEL → household (cleaning product)\n- WINTER EDITION → food (REWE seasonal salad mix / Mischsalat — fresh produce, not beverage or snack)\n\n## Receipt JSON\n{{ JSON.stringify({ merchant: $json.merchant, date: $json.date, total: $json.total, line_items: $json.line_items }) }}\n\n## Output format\nReturn the full receipt JSON with category on each line item. Preserve merchant, date, and total unchanged.\n{\n  \"merchant\": \"REWE\",\n  \"date\": \"2026-05-19\",\n  \"total\": 5.66,\n  \"line_items\": [\n    { \"description\": \"APFELSAFT\", \"quantity\": 2, \"price\": 1.78, \"category\": \"drinks\" },\n    { \"description\": \"SW PUTE EI\", \"quantity\": 1, \"price\": 2.49, \"category\": \"food\" },\n    { \"description\": \"PFAND\", \"quantity\": 1, \"price\": 0.25, \"category\": \"other\" }\n  ]\n}"
+              "content": "=## System\nYou are a receipt line-item categorizer for the Receipt Intelligence System.\nReturn one JSON object only \u2014 no markdown fences, no explanation.\n\n## Task\nAdd a `category` field to each line_items[] entry in the receipt below.\nDo not change description, quantity, or price.\n\nAllowed categories (exactly one per item, lowercase):\n- food \u2014 groceries for meals or ingredients (fresh, refrigerated, shelf-stable)\n- snacks \u2014 small packaged treats eaten between meals\n- drinks \u2014 beverages for consumption\n- household \u2014 non-food household and personal-care items\n- other \u2014 PFAND, unclear items, non-product lines\n\n## Few-shot examples (ambiguous German labels)\nApply the same reasoning to items in the receipt below:\n- APFELSAFT \u2192 drinks (beverage, not a cooking ingredient)\n- SW PUTE EI \u2192 food (abbreviated meat/dairy/egg \u2014 prefer food for meat, poultry, dairy, eggs)\n- PFAND \u2192 other (deposit line, not food or drink)\n- CHIPS PAPRIKA \u2192 snacks (packaged treat between meals)\n- SP\u00dcLMITTEL \u2192 household (cleaning product)\n- WINTER EDITION \u2192 food (REWE seasonal salad mix / Mischsalat \u2014 fresh produce, not beverage or snack)\n\n## Receipt JSON\n{{ JSON.stringify({ merchant: $json.merchant, date: $json.date, total: $json.total, line_items: $json.line_items }) }}\n\n## Output format\nReturn the full receipt JSON with category on each line item. Preserve merchant, date, and total unchanged.\n{\n  \"merchant\": \"REWE\",\n  \"date\": \"2026-05-19\",\n  \"total\": 5.66,\n  \"line_items\": [\n    { \"description\": \"APFELSAFT\", \"quantity\": 2, \"price\": 1.78, \"category\": \"drinks\" },\n    { \"description\": \"SW PUTE EI\", \"quantity\": 1, \"price\": 2.49, \"category\": \"food\" },\n    { \"description\": \"PFAND\", \"quantity\": 1, \"price\": 0.25, \"category\": \"other\" }\n  ]\n}"
             }
           ]
         },
@@ -667,17 +667,17 @@
         0
       ],
       "id": "b48e6e7b-3137-43b1-adf1-84978c1262ed",
-      "name": "Claude — Categorize Line Items",
+      "name": "Claude \u2014 Categorize Line Items",
       "credentials": {
         "anthropicApi": {
           "id": "1ly0gyOA8jc5WLtJ",
-          "name": "Anthropic — Receipt Intelligence"
+          "name": "Anthropic \u2014 Receipt Intelligence"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "function currentCategorizeAttempt() {\n  try {\n    if ($('Code — Decide Categorize Retry').isExecuted) {\n      const n = $('Code — Decide Categorize Retry').first().json.categorizeAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst categorizeAttempt = currentCategorizeAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', categorizeAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', categorizeAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, categorizeAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', categorizeAttempt } }];\n}"
+        "jsCode": "function currentCategorizeAttempt() {\n  try {\n    if ($('Code \u2014 Decide Categorize Retry').isExecuted) {\n      const n = $('Code \u2014 Decide Categorize Retry').first().json.categorizeAttempt;\n      if (typeof n === 'number' && n >= 1) return n;\n    }\n  } catch (_) { /* Decide never ran this execution */ }\n  return 1;\n}\n\nconst categorizeAttempt = currentCategorizeAttempt();\nconst raw = $input.first().json.content?.[0]?.text ?? $input.first().json.text ?? '';\n\nif (!raw.trim()) {\n  return [{ json: { parseOk: false, errors: ['Empty response from Claude'], stage: 'parse', categorizeAttempt } }];\n}\n\ntry {\n  const data = JSON.parse(raw.trim());\n  if (typeof data !== 'object' || data === null || Array.isArray(data)) {\n    return [{ json: { parseOk: false, errors: ['Parsed JSON must be an object'], stage: 'parse', categorizeAttempt } }];\n  }\n  return [{ json: { parseOk: true, data, categorizeAttempt } }];\n} catch (error) {\n  return [{ json: { parseOk: false, errors: [`Invalid JSON: ${error.message}`], stage: 'parse', categorizeAttempt } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -686,7 +686,7 @@
         0
       ],
       "id": "a1c2e3f4-1111-4222-8333-444455556666",
-      "name": "Code — Parse Categorization JSON"
+      "name": "Code \u2014 Parse Categorization JSON"
     },
     {
       "parameters": {
@@ -720,7 +720,7 @@
         0
       ],
       "id": "b2d3f4a5-2222-4333-8444-555566667777",
-      "name": "IF — Categorization Parse OK"
+      "name": "IF \u2014 Categorization Parse OK"
     },
     {
       "parameters": {
@@ -733,7 +733,7 @@
         -96
       ],
       "id": "c3e4a5b6-3333-4444-8555-666677778888",
-      "name": "Code — Validate Categories"
+      "name": "Code \u2014 Validate Categories"
     },
     {
       "parameters": {
@@ -767,7 +767,7 @@
         -96
       ],
       "id": "d4f5b6c7-4444-4555-8666-777788889999",
-      "name": "IF — Valid Categories"
+      "name": "IF \u2014 Valid Categories"
     },
     {
       "parameters": {
@@ -808,7 +808,7 @@
         -96
       ],
       "id": "f6b7d8e9-6666-4777-8888-999900001111",
-      "name": "Set — Categorized Receipt"
+      "name": "Set \u2014 Categorized Receipt"
     },
     {
       "parameters": {
@@ -843,11 +843,11 @@
         192
       ],
       "id": "e5a6c7d8-5555-4666-8777-888899990000",
-      "name": "Set — Categorization Error"
+      "name": "Set \u2014 Categorization Error"
     },
     {
       "parameters": {
-        "jsCode": "const MAX_EXTRACT_ATTEMPTS = 3; // 1 initial + 2 retries — keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown extract failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.extractAttempt ?? 1;\n\nif (completed >= MAX_EXTRACT_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst text = $('Extract from File — PDF to Text').first().json.text;\nif (!text || !String(text).trim()) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing receipt text for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    text,\n    extractAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
+        "jsCode": "const MAX_EXTRACT_ATTEMPTS = 3; // 1 initial + 2 retries \u2014 keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown extract failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.extractAttempt ?? 1;\n\nif (completed >= MAX_EXTRACT_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst text = $('Extract from File \u2014 PDF to Text').first().json.text;\nif (!text || !String(text).trim()) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing receipt text for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    text,\n    extractAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -856,7 +856,7 @@
         352
       ],
       "id": "a7e8f9b0-1111-4aaa-8bbb-ccccddddeeee",
-      "name": "Code — Decide Extract Retry"
+      "name": "Code \u2014 Decide Extract Retry"
     },
     {
       "parameters": {
@@ -890,11 +890,11 @@
         480
       ],
       "id": "b8f9a0c1-2222-4bbb-9ccc-ddddeeeeffff",
-      "name": "IF — Extract Retry"
+      "name": "IF \u2014 Extract Retry"
     },
     {
       "parameters": {
-        "jsCode": "const MAX_CATEGORIZE_ATTEMPTS = 3; // 1 initial + 2 retries — keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown categorization failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.categorizeAttempt ?? 1;\n\nif (completed >= MAX_CATEGORIZE_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst receipt = $('Set — Normalized Receipt').first().json;\nif (!receipt?.merchant || !Array.isArray(receipt.line_items)) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing normalized receipt for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    merchant: receipt.merchant,\n    date: receipt.date,\n    total: receipt.total,\n    line_items: receipt.line_items,\n    categorizeAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
+        "jsCode": "const MAX_CATEGORIZE_ATTEMPTS = 3; // 1 initial + 2 retries \u2014 keep in sync with docs\n\nconst incoming = $input.first().json;\nconst errors = incoming.errors ?? ['Unknown categorization failure'];\nconst stage = incoming.stage ?? 'validation';\nconst completed = incoming.categorizeAttempt ?? 1;\n\nif (completed >= MAX_CATEGORIZE_ATTEMPTS) {\n  return [{ json: { shouldRetry: false, valid: false, errors, stage } }];\n}\n\nconst receipt = $('Set \u2014 Normalized Receipt').first().json;\nif (!receipt?.merchant || !Array.isArray(receipt.line_items)) {\n  return [{\n    json: {\n      shouldRetry: false,\n      valid: false,\n      errors: [...errors, 'Missing normalized receipt for retry'],\n      stage,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    shouldRetry: true,\n    merchant: receipt.merchant,\n    date: receipt.date,\n    total: receipt.total,\n    line_items: receipt.line_items,\n    categorizeAttempt: completed + 1,\n    lastErrors: errors,\n    lastStage: stage,\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -903,7 +903,7 @@
         192
       ],
       "id": "c9a0b1d2-3333-4ccc-addd-eeeeffff0000",
-      "name": "Code — Decide Categorize Retry"
+      "name": "Code \u2014 Decide Categorize Retry"
     },
     {
       "parameters": {
@@ -937,7 +937,214 @@
         192
       ],
       "id": "d0b1c2e3-4444-4ddd-beee-ffff00001111",
-      "name": "IF — Categorize Retry"
+      "name": "IF \u2014 Categorize Retry"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "receipt-demo-ingest",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2200,
+        288
+      ],
+      "id": "e0b0d365-228e-4bf0-b217-da5602675c88",
+      "name": "Webhook \u2014 Demo Sample Ingest",
+      "webhookId": "9350f7f5-50d2-4dd2-a80b-9c3c88e3e18a"
+    },
+    {
+      "parameters": {
+        "jsCode": "const SAMPLE_ROOT = '/home/node/.n8n-files/samples';\nconst ALLOWLIST = {\n  '03-small': `${SAMPLE_ROOT}/03-small.pdf`,\n  '01-food-homedeco': `${SAMPLE_ROOT}/01-food-homedeco.pdf`,\n  '02-vegetables-weighted': `${SAMPLE_ROOT}/02-vegetables-weighted.pdf`,\n  '04-article-discount': `${SAMPLE_ROOT}/04-article-discount.pdf`,\n};\nconst DEFAULT_SAMPLE = '03-small';\n\nconst item = $input.first().json;\n// Webhook executions always include headers; Manual Trigger does not.\nconst entrySource = item.headers !== undefined ? 'webhook' : 'manual';\n\nlet sample = DEFAULT_SAMPLE;\nif (entrySource === 'webhook') {\n  const body = item.body && typeof item.body === 'object' ? item.body : {};\n  const raw = body.sample ?? item.sample;\n  if (raw !== undefined && raw !== null && String(raw).trim() !== '') {\n    sample = String(raw).trim();\n  }\n}\n\nconst filePath = ALLOWLIST[sample];\nif (!filePath) {\n  const allowed = Object.keys(ALLOWLIST).join(', ');\n  return [{\n    json: {\n      sampleAllowed: false,\n      ok: false,\n      error: 'unknown_sample',\n      message: `Unknown sample id '${sample}'. Allowed: ${allowed}`,\n      sample,\n      entrySource,\n      httpStatus: 400,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    sampleAllowed: true,\n    ok: true,\n    sample,\n    filePath,\n    entrySource,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1968,
+        192
+      ],
+      "id": "4737f497-bb38-487d-9d6e-200297b28d70",
+      "name": "Code \u2014 Resolve Sample Path"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "49a8559d-ed93-4bd3-ad7d-9b7be7b15913",
+              "leftValue": "={{ $json.sampleAllowed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1744,
+        192
+      ],
+      "id": "2d1d2a44-3ddc-4869-b318-6b2970a0ebaa",
+      "name": "IF \u2014 Sample Allowed"
+    },
+    {
+      "parameters": {
+        "jsCode": "const built = $('Code \u2014 Build Receipt File').first().json;\nconst entrySource = $('Code \u2014 Resolve Sample Path').first().json.entrySource;\n\nreturn [{\n  json: {\n    ok: true,\n    persistedFilename: built.persistedFilename,\n    merchant: built.merchant,\n    date: built.date,\n    total: built.total,\n    entrySource,\n    httpStatus: 200,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "5eb3035d-3c0f-470b-9b8f-a5e3753cfb0e",
+      "name": "Code \u2014 Webhook Success Payload"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cccabe54-f94e-4d13-b3ed-c00b06b8967b",
+              "leftValue": "={{ $json.entrySource }}",
+              "rightValue": "webhook",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "d335da77-0332-4645-b9f6-4a5771a2e5b4",
+      "name": "IF \u2014 From Webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: $json.ok, persistedFilename: $json.persistedFilename, merchant: $json.merchant, date: $json.date, total: $json.total } }}",
+        "options": {
+          "responseCode": "={{ $json.httpStatus || 200 }}"
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1504,
+        -96
+      ],
+      "id": "113f0236-8c3d-4341-ac40-3ba6e07ab567",
+      "name": "Respond to Webhook \u2014 Success"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: $json.ok, error: $json.error, message: $json.message, sample: $json.sample } }}",
+        "options": {
+          "responseCode": "={{ $json.httpStatus || 400 }}"
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1520,
+        400
+      ],
+      "id": "2593787e-a242-46b3-b304-c129c874e767",
+      "name": "Respond to Webhook \u2014 Unknown Sample"
+    },
+    {
+      "parameters": {
+        "jsCode": "const entrySource = $('Code \u2014 Resolve Sample Path').first().json.entrySource;\nconst err = $input.first().json;\n\nreturn [{\n  json: {\n    ok: false,\n    error: 'pipeline_failed',\n    stage: err.stage ?? 'unknown',\n    errors: err.errors ?? [],\n    entrySource,\n    httpStatus: 422,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        480
+      ],
+      "id": "ba544548-da04-44c1-9178-eae20500bb16",
+      "name": "Code \u2014 Webhook Error Payload"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cbc88378-9cdc-4025-a773-2994626f4a4a",
+              "leftValue": "={{ $json.entrySource }}",
+              "rightValue": "webhook",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        480
+      ],
+      "id": "6f66dd41-4e08-4e3e-b062-e11702fd5219",
+      "name": "IF \u2014 From Webhook (Error)"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: $json.ok, error: $json.error, stage: $json.stage, errors: $json.errors } }}",
+        "options": {
+          "responseCode": "={{ $json.httpStatus || 422 }}"
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        480
+      ],
+      "id": "99365921-f894-4f84-9967-96f81f0499e1",
+      "name": "Respond to Webhook \u2014 Error"
     }
   ],
   "pinData": {},
@@ -946,429 +1153,554 @@
       "main": [
         [
           {
-            "node": "Read Binary File — Sample Receipt",
+            "node": "Code \u2014 Resolve Sample Path",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Read Binary File — Sample Receipt": {
+    "Read Binary File \u2014 Sample Receipt": {
       "main": [
         [
           {
-            "node": "Extract from File — PDF to Text",
+            "node": "Extract from File \u2014 PDF to Text",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extract from File — PDF to Text": {
+    "Extract from File \u2014 PDF to Text": {
       "main": [
         [
           {
-            "node": "Claude — Extract Receipt",
+            "node": "Claude \u2014 Extract Receipt",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Claude — Extract Receipt": {
+    "Claude \u2014 Extract Receipt": {
       "main": [
         [
           {
-            "node": "Code — Parse Receipt JSON",
+            "node": "Code \u2014 Parse Receipt JSON",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Parse Receipt JSON": {
+    "Code \u2014 Parse Receipt JSON": {
       "main": [
         [
           {
-            "node": "IF — Parse OK",
+            "node": "IF \u2014 Parse OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Parse OK": {
+    "IF \u2014 Parse OK": {
       "main": [
         [
           {
-            "node": "Code — Validate & Normalize Receipt",
+            "node": "Code \u2014 Validate & Normalize Receipt",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Code — Decide Extract Retry",
+            "node": "Code \u2014 Decide Extract Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Validate & Normalize Receipt": {
+    "Code \u2014 Validate & Normalize Receipt": {
       "main": [
         [
           {
-            "node": "IF — Valid Receipt",
+            "node": "IF \u2014 Valid Receipt",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Valid Receipt": {
+    "IF \u2014 Valid Receipt": {
       "main": [
         [
           {
-            "node": "Set — Normalized Receipt",
+            "node": "Set \u2014 Normalized Receipt",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Code — Decide Extract Retry",
+            "node": "Code \u2014 Decide Extract Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Set — Normalized Receipt": {
+    "Set \u2014 Normalized Receipt": {
       "main": [
         [
           {
-            "node": "Claude — Categorize Line Items",
+            "node": "Claude \u2014 Categorize Line Items",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Build Receipt File": {
+    "Code \u2014 Build Receipt File": {
       "main": [
         [
           {
-            "node": "Write File — Persist Receipt JSON",
+            "node": "Write File \u2014 Persist Receipt JSON",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Claude — Categorize Line Items": {
+    "Claude \u2014 Categorize Line Items": {
       "main": [
         [
           {
-            "node": "Code — Parse Categorization JSON",
+            "node": "Code \u2014 Parse Categorization JSON",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Parse Categorization JSON": {
+    "Code \u2014 Parse Categorization JSON": {
       "main": [
         [
           {
-            "node": "IF — Categorization Parse OK",
+            "node": "IF \u2014 Categorization Parse OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Categorization Parse OK": {
+    "IF \u2014 Categorization Parse OK": {
       "main": [
         [
           {
-            "node": "Code — Validate Categories",
+            "node": "Code \u2014 Validate Categories",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Code — Decide Categorize Retry",
+            "node": "Code \u2014 Decide Categorize Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Validate Categories": {
+    "Code \u2014 Validate Categories": {
       "main": [
         [
           {
-            "node": "IF — Valid Categories",
+            "node": "IF \u2014 Valid Categories",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Valid Categories": {
+    "IF \u2014 Valid Categories": {
       "main": [
         [
           {
-            "node": "Set — Categorized Receipt",
+            "node": "Set \u2014 Categorized Receipt",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Code — Decide Categorize Retry",
+            "node": "Code \u2014 Decide Categorize Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Set — Categorized Receipt": {
+    "Set \u2014 Categorized Receipt": {
       "main": [
         [
           {
-            "node": "Code — Build Receipt File",
+            "node": "Code \u2014 Build Receipt File",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Write File — Persist Receipt JSON": {
+    "Write File \u2014 Persist Receipt JSON": {
       "main": [
         [
           {
-            "node": "HTTP Request — GET Health",
+            "node": "Code \u2014 Webhook Success Payload",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request — GET Health": {
+    "HTTP Request \u2014 GET Health": {
       "main": [
         [
           {
-            "node": "IF — API Health OK",
+            "node": "IF \u2014 API Health OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request — GET Analytics Receipts": {
+    "HTTP Request \u2014 GET Analytics Receipts": {
       "main": [
         [
           {
-            "node": "IF — API Receipts OK",
+            "node": "IF \u2014 API Receipts OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Show Coverage Smoke": {
+    "Code \u2014 Show Coverage Smoke": {
       "main": [
         [
           {
-            "node": "IF — Coverage Present",
+            "node": "IF \u2014 Coverage Present",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request — GET Analytics Summary": {
+    "HTTP Request \u2014 GET Analytics Summary": {
       "main": [
         [
           {
-            "node": "IF — API Summary OK",
+            "node": "IF \u2014 API Summary OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Show Analytics Summary": {
+    "Code \u2014 Show Analytics Summary": {
       "main": [
         [
           {
-            "node": "HTTP Request — POST Demo Questions",
+            "node": "HTTP Request \u2014 POST Demo Questions",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request — POST Demo Questions": {
+    "HTTP Request \u2014 POST Demo Questions": {
       "main": [
         [
           {
-            "node": "IF — API Questions OK",
+            "node": "IF \u2014 API Questions OK",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — API Health OK": {
+    "IF \u2014 API Health OK": {
       "main": [
         [
           {
-            "node": "HTTP Request — GET Analytics Receipts",
+            "node": "HTTP Request \u2014 GET Analytics Receipts",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — API Error",
+            "node": "Set \u2014 API Error",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — API Receipts OK": {
+    "IF \u2014 API Receipts OK": {
       "main": [
         [
           {
-            "node": "Code — Show Coverage Smoke",
+            "node": "Code \u2014 Show Coverage Smoke",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — API Error",
+            "node": "Set \u2014 API Error",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Coverage Present": {
+    "IF \u2014 Coverage Present": {
       "main": [
         [
           {
-            "node": "HTTP Request — GET Analytics Summary",
+            "node": "HTTP Request \u2014 GET Analytics Summary",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — Empty Coverage",
+            "node": "Set \u2014 Empty Coverage",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — API Summary OK": {
+    "IF \u2014 API Summary OK": {
       "main": [
         [
           {
-            "node": "Code — Show Analytics Summary",
+            "node": "Code \u2014 Show Analytics Summary",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — API Error",
+            "node": "Set \u2014 API Error",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — API Questions OK": {
+    "IF \u2014 API Questions OK": {
       "main": [
         [
           {
-            "node": "Code — Show Demo Q&A Answer",
+            "node": "Code \u2014 Show Demo Q&A Answer",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — API Error",
+            "node": "Set \u2014 API Error",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Decide Extract Retry": {
+    "Code \u2014 Decide Extract Retry": {
       "main": [
         [
           {
-            "node": "IF — Extract Retry",
+            "node": "IF \u2014 Extract Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Extract Retry": {
+    "IF \u2014 Extract Retry": {
       "main": [
         [
           {
-            "node": "Claude — Extract Receipt",
+            "node": "Claude \u2014 Extract Receipt",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — Validation Error",
+            "node": "Set \u2014 Validation Error",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code — Decide Categorize Retry": {
+    "Code \u2014 Decide Categorize Retry": {
       "main": [
         [
           {
-            "node": "IF — Categorize Retry",
+            "node": "IF \u2014 Categorize Retry",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF — Categorize Retry": {
+    "IF \u2014 Categorize Retry": {
       "main": [
         [
           {
-            "node": "Claude — Categorize Line Items",
+            "node": "Claude \u2014 Categorize Line Items",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Set — Categorization Error",
+            "node": "Set \u2014 Categorization Error",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Webhook \u2014 Demo Sample Ingest": {
+      "main": [
+        [
+          {
+            "node": "Code \u2014 Resolve Sample Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Resolve Sample Path": {
+      "main": [
+        [
+          {
+            "node": "IF \u2014 Sample Allowed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2014 Sample Allowed": {
+      "main": [
+        [
+          {
+            "node": "Read Binary File \u2014 Sample Receipt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook \u2014 Unknown Sample",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Webhook Success Payload": {
+      "main": [
+        [
+          {
+            "node": "IF \u2014 From Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2014 From Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook \u2014 Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request \u2014 GET Health",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook \u2014 Success": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request \u2014 GET Health",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set \u2014 Validation Error": {
+      "main": [
+        [
+          {
+            "node": "Code \u2014 Webhook Error Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set \u2014 Categorization Error": {
+      "main": [
+        [
+          {
+            "node": "Code \u2014 Webhook Error Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Webhook Error Payload": {
+      "main": [
+        [
+          {
+            "node": "IF \u2014 From Webhook (Error)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2014 From Webhook (Error)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook \u2014 Error",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },

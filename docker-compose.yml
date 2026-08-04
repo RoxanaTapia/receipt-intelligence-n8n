@@ -21,6 +21,8 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
       - ./data/receipts:/home/node/.n8n-files/receipts
+      # Allowlisted demo PDFs for Manual Trigger + webhook ingest (read-only)
+      - ./samples/receipts:/home/node/.n8n-files/samples:ro
 
 volumes:
   n8n_data:

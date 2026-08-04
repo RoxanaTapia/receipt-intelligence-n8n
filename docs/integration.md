@@ -71,14 +71,10 @@ Disk is the ingest handoff; HTTP after persist is coverage smoke → analytics s
 ### Import and run
 
 1. Import [`workflows/receipt-pdf-ingest.json`](../workflows/receipt-pdf-ingest.json) (see [Import a workflow](n8n-setup.md#import-a-workflow)).
-2. Copy a [sample PDF](../samples/README.md) into the container:
-
-   ```bash
-   docker cp samples/receipts/03-small.pdf receipt-intelligence-n8n-n8n-1:/home/node/.n8n-files/03-small.pdf
-   ```
-
-3. **Execute workflow** in the n8n UI.
-4. Confirm a hash-named JSON file under `data/receipts/` on the host ([data/README.md](../data/README.md)).
+2. Confirm Compose bind-mounts `samples/receipts/` → `/home/node/.n8n-files/samples` (see [docker-compose.yml](../docker-compose.yml)). Recreate if you upgraded from a pre-mount setup: `docker compose up -d`.
+3. **Operator path:** open the workflow → **Execute workflow** (Manual Trigger). Default sample is `03-small`.
+4. **Demo path:** activate the workflow, then `POST` the [demo sample webhook](n8n-setup.md#demo-sample-webhook) (Compose DNS `http://n8n:5678/...`).
+5. Confirm a hash-named JSON file under `data/receipts/` on the host ([data/README.md](../data/README.md)).
 
 ### What to open after a happy path
 
