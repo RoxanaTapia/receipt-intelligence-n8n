@@ -25,6 +25,7 @@ Committed samples are **anonymized** copies. Their **original** source PDFs live
 | [01-food-homedeco.pdf](receipts/01-food-homedeco.pdf) | 2 | Mixed basket: groceries plus non-food (e.g. kitchen utensils) |
 | [02-vegetables-weighted.pdf](receipts/02-vegetables-weighted.pdf) | 2 | Produce sold by weight (`kg x price/kg`) |
 | [04-article-discount.pdf](receipts/04-article-discount.pdf) | 2 | In-store markdowns (e.g. `Frischerbatt`) |
+| [05-demo-basket.pdf](receipts/05-demo-basket.pdf) | 1 | **Portfolio demo** — fictional café basket (Musterstadt); distinct totals vs seed fixtures |
 
 All samples share common German supermarket patterns useful for extraction testing:
 
@@ -78,6 +79,7 @@ NN-<short-description>_original.pdf
 | `02-vegetables-weighted_original.pdf` | `02-vegetables-weighted.pdf` |
 | `03-small_original.pdf` | `03-small.pdf` |
 | `04-article-discount_original.pdf` | `04-article-discount.pdf` |
+| *(synthetic — no original)* | `05-demo-basket.pdf` |
 
 **Why keep originals locally:** re-run real-world OCR/layout scenarios, refresh anonymized fixtures, and compare extraction drift against authentic receipts — without committing PII to git.
 
