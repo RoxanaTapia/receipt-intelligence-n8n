@@ -222,9 +222,9 @@ To try another allowlisted sample via webhook, pass `{ "sample": "<id>" }` (see 
 | Caller | Demo UX / another Compose service → `http://n8n:5678/webhook/receipt-demo-ingest` (not the browser → a public webhook) |
 | Host smoke (optional) | `http://localhost:5678/webhook/receipt-demo-ingest` |
 | Method | `POST` |
-| Body | `{ "sample": "03-small" }` or empty / omit `sample` → default `03-small`. Portfolio UX uses `{ "sample": "05-demo-basket" }`. |
+| Body | `{ "sample": "03-small" }` or empty / omit `sample` → default `03-small`. Portfolio UX uses `{ "sample": "sample-supermarket-receipt" }`. `{ "sample": "05-demo-basket" }` remains allowed so current deploys keep working. |
 | Binary | n8n **reads** the bind-mounted allowlisted PDF after validating the id (UX does not need to forward bytes to n8n) |
-| Allowlist | `03-small`, `01-food-homedeco`, `02-vegetables-weighted`, `04-article-discount`, `05-demo-basket` → `/home/node/.n8n-files/samples/<id>.pdf` |
+| Allowlist | `03-small`, `01-food-homedeco`, `02-vegetables-weighted`, `04-article-discount`, `05-demo-basket`, `sample-supermarket-receipt` → `/home/node/.n8n-files/samples/<id>.pdf` |
 | Workflow | Must be **Active** for production webhook URLs (`/webhook/...`). Inactive workflows only serve `/webhook-test/...` from the editor |
 | Auth / network | Intended for **internal** Compose traffic. Do not expose this path as an open internet upload API — the demo edge gate owns visitor access |
 
