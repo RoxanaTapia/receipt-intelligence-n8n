@@ -28,8 +28,10 @@ For analytics and natural-language Q&A details, use the sibling [receipt-intelli
 | [../data/README.md](../data/README.md) | Receipt JSON store contract |
 | [../samples/README.md](../samples/README.md) | Anonymized PDF fixtures and privacy rules |
 | [../workflows/](../workflows/) | Version-controlled workflow exports |
+| [contributing.md](contributing.md) | Contributors and operators — shipping workflow, module roadmap, project board |
 
 ## Related
 
 - Root overview: [../README.md](../README.md)
-- Contributor / agent workflow: [../AGENTS.md](../AGENTS.md)
+- Contributors and operators: [contributing.md](contributing.md)
+- Agent roster and commit policy: [../AGENTS.md](../AGENTS.md)

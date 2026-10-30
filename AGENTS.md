@@ -17,6 +17,7 @@ Agents use generic language; this table maps terms to **this repo**. Other proje
 | Term | Path |
 |------|------|
 | Docs index | [`docs/README.md`](docs/README.md) |
+| Contributor / operator notes | [`docs/contributing.md`](docs/contributing.md) |
 | Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
 | Categorization pipeline | [`docs/categorization.md`](docs/categorization.md) |
 | Categorization schema | [`docs/categorization-schema.md`](docs/categorization-schema.md) |

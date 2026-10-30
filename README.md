@@ -1,8 +1,8 @@
 # Receipt Intelligence System
 
-Turn PDF receipts into structured spending data, then answer natural-language budget questions.
+You start with a PDF receipt. The workflows in this repo read it, use Claude to pull out the merchant, date, total, and line items, and put a spending category on each line. You get one JSON file per receipt under `data/receipts/`.
 
-**Stack:** n8n orchestrates PDF ingest, Claude extraction and categorization, and persistence. A sibling [FastAPI](https://github.com/RoxanaTapia/receipt-intelligence-api) service reads the same JSON store for analytics and Q&A.
+When you ask what you spent, the sibling [API](https://github.com/RoxanaTapia/receipt-intelligence-api) reads that folder and answers. The [demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) is where you run the workflows and the API together.
 
 ```text
 PDF receipt → extract → categorize → data/receipts/*.json
@@ -10,29 +10,31 @@ PDF receipt → extract → categorize → data/receipts/*.json
                          analytics + natural-language Q&A
 ```
 
-## Related repositories
+n8n runs the workflows. It writes the categorized JSON to disk. The API reads the same folder through `RECEIPT_DATA_PATH`.
 
-| Repo | Role |
-|------|------|
-| **This repo** (`receipt-intelligence-n8n`) | n8n workflows, categorization, writes `data/receipts/` |
-| [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) | FastAPI analytics and Q&A (reads the shared receipt folder) |
+After a file is saved, the ingest workflow checks coverage in one specific way:
 
-n8n writes categorized JSON to disk; the API reads that folder via `RECEIPT_DATA_PATH`. After persist, the ingest workflow checks coverage, loads an analytics summary, and posts one fixed demo question — it does not POST receipt JSON for ingest. **Demo recipe:** [docs/integration.md](docs/integration.md). **Contract:** [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract).
+- **What is checked.** The API's list of receipt files loaded from that folder. The check passes only when the list is not empty and includes the file just written. Line items, categories, and totals are already settled before this step.
+- **When it passes.** The workflow loads an analytics summary and posts one fixed demo question.
+- **When it fails.** An empty list, or a list that omits the new file, stops the workflow before that summary and question. The JSON file stays on disk.
+- **How the API gets the receipt.** As that file on disk. The workflow does not upload the JSON to the API.
+
+**Demo recipe:** [docs/integration.md](docs/integration.md). **Contract:** [docs/n8n-setup.md](docs/n8n-setup.md#n8n--api-integration-contract). **Coverage check:** [docs/n8n-setup.md](docs/n8n-setup.md#post-persist-coverage-smoke).
 
 ## Getting started
 
-1. Clone this repo (and the sibling API repo for the full-stack demo).
-2. Set up local n8n — [docs/n8n-setup.md](docs/n8n-setup.md) (copy `.env.example` → `.env`, then `docker compose up -d`).
-3. Import [workflows/hello-world.json](workflows/hello-world.json) to confirm the editor works.
-4. Run the full-stack demo — [docs/integration.md](docs/integration.md).
+1. Clone this repo. Clone the API repo as well if you want the full demo.
+2. Start local n8n — [docs/n8n-setup.md](docs/n8n-setup.md) (copy `.env.example` to `.env`, then `docker compose up -d`).
+3. Import [workflows/hello-world.json](workflows/hello-world.json) and run it once so you know the editor works.
+4. Run the full demo — [docs/integration.md](docs/integration.md).
 
 | Environment | Guide |
 |-------------|--------|
 | Local n8n | [docs/n8n-setup.md](docs/n8n-setup.md) |
-| Local full-stack (n8n + API) | [docs/integration.md](docs/integration.md) |
-| Production / cloud | [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) — Module 7 Delivery |
+| Local n8n + API | [docs/integration.md](docs/integration.md) |
+| Hosted demo | [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) |
 
-**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Engine + Compose v2). Full-stack demo also needs Python 3.11+ for the API.
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Engine + Compose v2). The full demo also needs Python 3.11+ for the API.
 
 ## Documentation
 
@@ -57,12 +59,13 @@ Start with the [docs index](docs/README.md) for reading order.
 
 ```
 receipt-intelligence-n8n/
-├── AGENTS.md                 # Contributor / Cursor agent workflow
-├── .cursor/                  # Agent definitions, commands, and rules
+├── AGENTS.md                 # Contributor guide
+├── .cursor/                  # Editor configuration
 ├── docker-compose.yml        # Self-hosted n8n
 ├── .env.example              # Environment variable template
 ├── docs/
 │   ├── README.md             # Docs index and reading order
+│   ├── contributing.md       # Notes for contributors and operators
 │   ├── n8n-setup.md          # Local Docker setup + API contract
 │   ├── integration.md        # Full-stack demo runbook
 │   ├── n8n-claude-standards.md
@@ -82,22 +85,6 @@ receipt-intelligence-n8n/
     └── receipt-pdf-ingest.json
 ```
 
-## Roadmap
+## Contributors
 
-| Module | Focus |
-|--------|-------|
-| **1 — Foundations** | Agent workflow, Docker n8n, first workflow, Claude standards, README ✅ |
-| **2 — Receipt ingestion** | PDF intake and Claude extraction in n8n ✅ |
-| **3 — Data & categorization** | Structured storage, categories, validation ✅ |
-| **4 — Analytics & Q&A** | [`receipt-intelligence-api`](https://github.com/RoxanaTapia/receipt-intelligence-api) — FastAPI analytics and Q&A ✅ |
-| **5 — Integration** | n8n ↔ API wiring + [local full-stack runbook](docs/integration.md) ✅ |
-| **6 — Reliability** | Claude parse/categorization retries ✅ · Post-persist API HTTP retries ✅ |
-| **7 — Delivery** | Live demo / deploy — owned by [`receipt-intelligence-demo`](https://github.com/RoxanaTapia/receipt-intelligence-demo) (API [Dockerfile #25](https://github.com/RoxanaTapia/receipt-intelligence-api/issues/25) supports Compose) |
-
-Track progress on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3).
-
-## Contributor notes
-
-This repo ships work through Cursor agents — one issue, one branch, one PR. See [AGENTS.md](AGENTS.md) for the agent roster, slash commands (`/ship-issue`, `/verify`, `/document`, `/lecture-on-issue`), and commit policy.
-
-Optional tooling for contributors: [GitHub CLI](https://cli.github.com/) (`gh`), [Cursor](https://cursor.com/).
+If you change this repo or run it locally, start at [docs/contributing.md](docs/contributing.md).
