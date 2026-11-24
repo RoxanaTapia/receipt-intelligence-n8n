@@ -1,0 +1,321 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/Contents 8 0 R /MediaBox [ 0 0 612 792 ] /Parent 7 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+5 0 obj
+<<
+/Lang (en-US) /PageMode /UseNone /Pages 7 0 R /Type /Catalog
+>>
+endobj
+6 0 obj
+<<
+/Author (Fictional sample) /CreationDate (D:20000101000000+00'00') /Creator (samples/po/generate_purchase_orders.py) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (unspecified) /Title (Fictional sample purchase order) /Trapped /False
+>>
+endobj
+7 0 obj
+<<
+/Count 1 /Kids [ 4 0 R ] /Type /Pages
+>>
+endobj
+8 0 obj
+<<
+/Length 6117
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.141176 .188235 .266667 rg
+n 0 768 612 24 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 233.4825 776 Tm (SAMPLE, fictional purchase order) Tj T* ET
+0 0 0 rg
+BT /F2 18 Tf 21.6 TL ET
+BT 1 0 0 1 40 744 Tm (Purchase order) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+43 644 m
+295 644 l
+296.6584 644 298 645.3416 298 647 c
+298 713 l
+298 714.6584 296.6584 716 295 716 c
+43 716 l
+41.3416 716 40 714.6584 40 713 c
+40 647 l
+40 645.3416 41.3416 644 43 644 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 48 700 Tm (VENDOR) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 48 684 Tm (Brightkiln Studio) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 670 Tm (420 Kiln Road, Redclay, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 656 Tm (studio@example.com) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+317 644 m
+569 644 l
+570.6584 644 572 645.3416 572 647 c
+572 713 l
+572 714.6584 570.6584 716 569 716 c
+317 716 l
+315.3416 716 314 714.6584 314 713 c
+314 647 l
+314 645.3416 315.3416 644 317 644 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 322 696 Tm (PO number) Tj T* ET
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 392 696 Tm (PO-2026-077) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 322 678 Tm (Order date) Tj T* ET
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 392 678 Tm (April 18, 2026) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 322 660 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 392 660 Tm (EUR) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+43 560 m
+295 560 l
+296.6584 560 298 561.3416 298 563 c
+298 629 l
+298 630.6584 296.6584 632 295 632 c
+43 632 l
+41.3416 632 40 630.6584 40 629 c
+40 563 l
+40 561.3416 41.3416 560 43 560 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 48 616 Tm (BILL TO) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 48 600 Tm (Paperwhistle Atelier) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 586 Tm (88 Willow Court, West Larkspur, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 572 Tm (accounts@example.com) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+317 560 m
+569 560 l
+570.6584 560 572 561.3416 572 563 c
+572 629 l
+572 630.6584 570.6584 632 569 632 c
+317 632 l
+315.3416 632 314 630.6584 314 629 c
+314 563 l
+314 561.3416 315.3416 560 317 560 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322 616 Tm (SHIP TO) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 322 600 Tm (Paperwhistle Atelier Warehouse) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 322 586 Tm (15 Loading Dock Way, West Larkspur, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 322 572 Tm (receiving@example.com) Tj T* ET
+.901961 .929412 .956863 rg
+n 40 528 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 492 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 456 532 18 re f*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 44 534 Tm (SKU) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 122 534 Tm (Description) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 370.664 534 Tm (Qty) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 439.104 534 Tm (Unit price) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 532.44 534 Tm (Line total) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 516 Tm (BK-014) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 516 Tm (Stoneware mug, slate glaze) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 516 Tm (24) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 516 Tm (8.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 516 Tm (204.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 498 Tm (BK-027) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 498 Tm (Dinner plate, 10 inch) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 498 Tm (24) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 498 Tm (11.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 498 Tm (264.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 480 Tm (BK-033) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 480 Tm (Large serving bowl) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 480 Tm (12) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 480 Tm (16.75) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 480 Tm (201.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 462 Tm (BK-041) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 462 Tm (Sand linen napkin) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 462 Tm (40) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 462 Tm (3.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 462 Tm (128.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 444 Tm (BK-052) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 444 Tm (Teaspoon, brushed steel) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 444 Tm (36) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 444 Tm (2.45) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 444 Tm (88.20) Tj T* ET
+.835294 .870588 .905882 RG
+.4 w
+n 40 438 532 108 re S
+n 40 528 m 572 528 l S
+n 118 438 m 118 546 l S
+n 338 438 m 338 546 l S
+n 388 438 m 388 546 l S
+n 480 438 m 480 546 l S
+n 40 510 m 572 510 l S
+n 40 492 m 572 492 l S
+n 40 474 m 572 474 l S
+n 40 456 m 572 456 l S
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 480.788 422 Tm (Order total) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 535.304 422 Tm (885.20) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 502.386 406 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 550.89 406 Tm (EUR) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 531.08 34 Tm (Page 1 of 1) Tj T* ET
+ 
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000514 00000 n 
+0000000596 00000 n 
+0000000916 00000 n 
+0000000975 00000 n 
+trailer
+<<
+/ID 
+[<f9b61a2d8bdca8f38cdabefe29da09c9><f9b61a2d8bdca8f38cdabefe29da09c9>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 6 0 R
+/Root 5 0 R
+/Size 9
+>>
+startxref
+7143
+%%EOF

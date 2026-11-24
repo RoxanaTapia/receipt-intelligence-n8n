@@ -1,0 +1,263 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/Contents 8 0 R /MediaBox [ 0 0 612 792 ] /Parent 7 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+5 0 obj
+<<
+/Lang (en-US) /PageMode /UseNone /Pages 7 0 R /Type /Catalog
+>>
+endobj
+6 0 obj
+<<
+/Author (Fictional sample) /CreationDate (D:20000101000000+00'00') /Creator (samples/po/generate_purchase_orders.py) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (unspecified) /Title (Fictional sample purchase order) /Trapped /False
+>>
+endobj
+7 0 obj
+<<
+/Count 1 /Kids [ 4 0 R ] /Type /Pages
+>>
+endobj
+8 0 obj
+<<
+/Length 4821
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.141176 .188235 .266667 rg
+n 0 768 612 24 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 233.4825 776 Tm (SAMPLE, fictional purchase order) Tj T* ET
+0 0 0 rg
+BT /F2 18 Tf 21.6 TL ET
+BT 1 0 0 1 40 744 Tm (Purchase order) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 716 Tm (PO number) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 716 Tm (PO-1847) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 698 Tm (Order date) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 698 Tm (February 3, 2026) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 680 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 680 Tm (USD) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+43 584 m
+569 584 l
+570.6584 584 572 585.3416 572 587 c
+572 653 l
+572 654.6584 570.6584 656 569 656 c
+43 656 l
+41.3416 656 40 654.6584 40 653 c
+40 587 l
+40 585.3416 41.3416 584 43 584 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 48 640 Tm (VENDOR) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 48 624 Tm (Harbor and Pine Supply) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 610 Tm (18 Cedar Lane, Mapleford, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 596 Tm (sales@example.com) Tj T* ET
+.964706 .972549 .980392 rg
+.835294 .870588 .905882 RG
+.6 w
+n
+43 500 m
+569 500 l
+570.6584 500 572 501.3416 572 503 c
+572 569 l
+572 570.6584 570.6584 572 569 572 c
+43 572 l
+41.3416 572 40 570.6584 40 569 c
+40 503 l
+40 501.3416 41.3416 500 43 500 c
+h
+B*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 48 556 Tm (BUYER) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 48 540 Tm (Linden Reading Room) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 526 Tm (4 North Dock Street, Cedarholm, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 48 512 Tm (buying@example.com) Tj T* ET
+.901961 .929412 .956863 rg
+n 40 470 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 434 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 398 532 18 re f*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 44 476 Tm (SKU) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 122 476 Tm (Description) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 370.664 476 Tm (Qty) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 439.104 476 Tm (Unit price) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 532.44 476 Tm (Line total) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 458 Tm (HP-2201) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 458 Tm (Uncoated copy paper, ream) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 458 Tm (10) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 458 Tm (6.40) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 458 Tm (64.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 440 Tm (HP-1180) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 440 Tm (Ballpoint pens, box of 12) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 440 Tm (6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 440 Tm (4.25) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 440 Tm (25.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 422 Tm (HP-3304) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 422 Tm (Manila folders, pack of 25) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 422 Tm (8) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 422 Tm (7.15) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 422 Tm (57.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 404 Tm (HP-0902) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 404 Tm (Binder clips, assorted) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 404 Tm (3) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 404 Tm (5.90) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 404 Tm (17.70) Tj T* ET
+.835294 .870588 .905882 RG
+.4 w
+n 40 398 532 90 re S
+n 40 470 m 572 470 l S
+n 118 398 m 118 488 l S
+n 338 398 m 338 488 l S
+n 388 398 m 388 488 l S
+n 480 398 m 480 488 l S
+n 40 452 m 572 452 l S
+n 40 434 m 572 434 l S
+n 40 416 m 572 416 l S
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 480.788 382 Tm (Order total) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 535.304 382 Tm (164.40) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 502.386 366 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 550.89 366 Tm (USD) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 531.08 34 Tm (Page 1 of 1) Tj T* ET
+ 
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000514 00000 n 
+0000000596 00000 n 
+0000000916 00000 n 
+0000000975 00000 n 
+trailer
+<<
+/ID 
+[<f9b61a2d8bdca8f38cdabefe29da09c9><f9b61a2d8bdca8f38cdabefe29da09c9>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 6 0 R
+/Root 5 0 R
+/Size 9
+>>
+startxref
+5847
+%%EOF
