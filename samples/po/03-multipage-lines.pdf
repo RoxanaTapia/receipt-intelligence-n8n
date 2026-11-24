@@ -1,0 +1,805 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/Contents 10 0 R /MediaBox [ 0 0 612 792 ] /Parent 9 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+5 0 obj
+<<
+/Contents 11 0 R /MediaBox [ 0 0 612 792 ] /Parent 9 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+6 0 obj
+<<
+/Contents 12 0 R /MediaBox [ 0 0 612 792 ] /Parent 9 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+7 0 obj
+<<
+/Lang (en-US) /PageMode /UseNone /Pages 9 0 R /Type /Catalog
+>>
+endobj
+8 0 obj
+<<
+/Author (Fictional sample) /CreationDate (D:20000101000000+00'00') /Creator (samples/po/generate_purchase_orders.py) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (unspecified) /Title (Fictional sample purchase order) /Trapped /False
+>>
+endobj
+9 0 obj
+<<
+/Count 3 /Kids [ 4 0 R 5 0 R 6 0 R ] /Type /Pages
+>>
+endobj
+10 0 obj
+<<
+/Length 7501
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.141176 .188235 .266667 rg
+n 0 768 612 24 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 233.4825 776 Tm (SAMPLE, fictional purchase order) Tj T* ET
+0 0 0 rg
+BT /F2 18 Tf 21.6 TL ET
+BT 1 0 0 1 40 744 Tm (Purchase order) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 716 Tm (PO number) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 716 Tm (PO-55910) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 698 Tm (Order date) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 698 Tm (January 22, 2026) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 680 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 140 680 Tm (GBP) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 40 656 Tm (VENDOR) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 40 642 Tm (North Wren Instruments) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 628 Tm (90 Station Yard, Brindleford, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 615 Tm (orders@example.com) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 40 599 Tm (BILL TO) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 40 585 Tm (Larkspur Schools Facilities) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 571 Tm (2 Orchard Road, North Wren, Exampleland) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 558 Tm (facilities@example.com) Tj T* ET
+.901961 .929412 .956863 rg
+n 40 520 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 484 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 448 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 412 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 376 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 340 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 304 532 18 re f*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 44 526 Tm (SKU) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 122 526 Tm (Description) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 370.664 526 Tm (Qty) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 439.104 526 Tm (Unit price) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 532.44 526 Tm (Line total) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 508 Tm (NR-1001) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 508 Tm (Digital caliper, 150 mm) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 508 Tm (5) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 508 Tm (24.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 508 Tm (120.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 490 Tm (NR-1002) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 490 Tm (Steel ruler, 300 mm) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 490 Tm (12) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 490 Tm (3.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 490 Tm (42.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 472 Tm (NR-1003) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 472 Tm (Grid notebook, A4) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 472 Tm (20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 472 Tm (4.80) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 472 Tm (96.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 454 Tm (NR-1004) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 454 Tm (Safety goggles) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 454 Tm (15) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 454 Tm (6.25) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 454 Tm (93.75) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 436 Tm (NR-1005) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 436 Tm (Nitrile gloves, box of 100) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 436 Tm (10) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 436 Tm (8.90) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 436 Tm (89.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 418 Tm (NR-1006) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 418 Tm (Isopropyl wipes, pack of 50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 418 Tm (18) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 418 Tm (2.40) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 418 Tm (43.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 400 Tm (NR-1007) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 400 Tm (Cable ties, pack of 200) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 400 Tm (7) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 400 Tm (5.15) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 400 Tm (36.05) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 382 Tm (NR-1008) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 382 Tm (White label tape) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 382 Tm (9) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 382 Tm (11.30) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 382 Tm (101.70) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 364 Tm (NR-1009) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 364 Tm (LED bench lamp) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 364 Tm (4) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 364 Tm (32.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 364 Tm (130.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 346 Tm (NR-1010) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 346 Tm (Storage bin, 12 liter) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 346 Tm (16) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 346 Tm (4.75) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 346 Tm (76.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 328 Tm (NR-1011) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 328 Tm (Letter clipboard) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 328 Tm (14) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 328 Tm (2.85) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 328 Tm (39.90) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 310 Tm (NR-1012) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 310 Tm (Packing tape, 6 rolls) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 310 Tm (8) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 310 Tm (9.60) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 310 Tm (76.80) Tj T* ET
+.835294 .870588 .905882 RG
+.4 w
+n 40 304 532 234 re S
+n 40 520 m 572 520 l S
+n 118 304 m 118 538 l S
+n 338 304 m 338 538 l S
+n 388 304 m 388 538 l S
+n 480 304 m 480 538 l S
+n 40 502 m 572 502 l S
+n 40 484 m 572 484 l S
+n 40 466 m 572 466 l S
+n 40 448 m 572 448 l S
+n 40 430 m 572 430 l S
+n 40 412 m 572 412 l S
+n 40 394 m 572 394 l S
+n 40 376 m 572 376 l S
+n 40 358 m 572 358 l S
+n 40 340 m 572 340 l S
+n 40 322 m 572 322 l S
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 40 34 Tm (Lines continue on the next page.) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 531.08 34 Tm (Page 1 of 3) Tj T* ET
+ 
+endstream
+endobj
+11 0 obj
+<<
+/Length 6431
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.141176 .188235 .266667 rg
+n 0 768 612 24 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 233.4825 776 Tm (SAMPLE, fictional purchase order) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 40 744 Tm (Purchase order) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 116.36 744 Tm (PO-55910) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 174.498 744 Tm (continued) Tj T* ET
+.901961 .929412 .956863 rg
+n 40 704 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 668 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 632 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 596 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 560 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 524 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 488 532 18 re f*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 44 710 Tm (SKU) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 122 710 Tm (Description) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 370.664 710 Tm (Qty) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 439.104 710 Tm (Unit price) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 532.44 710 Tm (Line total) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 692 Tm (NR-1013) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 692 Tm (Black permanent marker) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 692 Tm (30) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 692 Tm (1.25) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 692 Tm (37.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 674 Tm (NR-1014) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 674 Tm (First aid refill kit) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 674 Tm (3) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 674 Tm (18.40) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 674 Tm (55.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 656 Tm (NR-1015) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 656 Tm (Extension cord, 5 meter) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 656 Tm (6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 656 Tm (13.75) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 656 Tm (82.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 638 Tm (NR-1016) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 638 Tm (Large desk mat) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 638 Tm (5) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 638 Tm (21.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 540.478 638 Tm (105.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 620 Tm (NR-1017) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 620 Tm (Two-step stool) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 620 Tm (2) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 620 Tm (45.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 620 Tm (90.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 602 Tm (NR-1018) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 602 Tm (Silent wall clock) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 602 Tm (6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 602 Tm (14.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 602 Tm (87.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 584 Tm (NR-1019) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 584 Tm (Waste bin, 20 liter) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 584 Tm (8) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 584 Tm (9.95) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 584 Tm (79.60) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 566 Tm (NR-1020) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 566 Tm (Hand soap, carton of 4) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 566 Tm (4) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 566 Tm (12.80) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 566 Tm (51.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 548 Tm (NR-1021) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 548 Tm (Paper towel, carton) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 548 Tm (6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 548 Tm (15.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 548 Tm (91.20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 530 Tm (NR-1022) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 530 Tm (Broom with dustpan) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 530 Tm (4) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 530 Tm (11.45) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 530 Tm (45.80) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 512 Tm (NR-1023) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 512 Tm (Doorstop wedge) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 512 Tm (12) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 512 Tm (2.15) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 512 Tm (25.80) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 494 Tm (NR-1024) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 494 Tm (Shelf label holder) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 494 Tm (20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 494 Tm (1.85) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 494 Tm (37.00) Tj T* ET
+.835294 .870588 .905882 RG
+.4 w
+n 40 488 532 234 re S
+n 40 704 m 572 704 l S
+n 118 488 m 118 722 l S
+n 338 488 m 338 722 l S
+n 388 488 m 388 722 l S
+n 480 488 m 480 722 l S
+n 40 686 m 572 686 l S
+n 40 668 m 572 668 l S
+n 40 650 m 572 650 l S
+n 40 632 m 572 632 l S
+n 40 614 m 572 614 l S
+n 40 596 m 572 596 l S
+n 40 578 m 572 578 l S
+n 40 560 m 572 560 l S
+n 40 542 m 572 542 l S
+n 40 524 m 572 524 l S
+n 40 506 m 572 506 l S
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 40 34 Tm (Lines continue on the next page.) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 531.08 34 Tm (Page 2 of 3) Tj T* ET
+ 
+endstream
+endobj
+12 0 obj
+<<
+/Length 4108
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.141176 .188235 .266667 rg
+n 0 768 612 24 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 233.4825 776 Tm (SAMPLE, fictional purchase order) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 40 744 Tm (Purchase order) Tj T* ET
+0 0 0 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 116.36 744 Tm (PO-55910) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 174.498 744 Tm (continued) Tj T* ET
+.901961 .929412 .956863 rg
+n 40 704 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 668 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 632 532 18 re f*
+.960784 .972549 .984314 rg
+n 40 596 532 18 re f*
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 44 710 Tm (SKU) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 122 710 Tm (Description) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 370.664 710 Tm (Qty) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 439.104 710 Tm (Unit price) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 532.44 710 Tm (Line total) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 692 Tm (NR-1025) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 692 Tm (Key cabinet, 20 hooks) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 692 Tm (1) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 453.482 692 Tm (36.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 692 Tm (36.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 674 Tm (NR-1026) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 674 Tm (Wet floor sign) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 674 Tm (5) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 674 Tm (8.70) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 674 Tm (43.50) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 656 Tm (NR-1027) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 656 Tm (Batteries, AA pack of 20) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 656 Tm (9) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 656 Tm (7.60) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 656 Tm (68.40) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 638 Tm (NR-1028) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 638 Tm (Utility knife) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 638 Tm (6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 638 Tm (4.35) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 638 Tm (26.10) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 620 Tm (NR-1029) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 620 Tm (Clear storage box) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 373.992 620 Tm (10) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 620 Tm (3.90) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 620 Tm (39.00) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 44 602 Tm (NR-1030) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 122 602 Tm (Wall hook, pack of 6) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 378.996 602 Tm (8) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 458.486 602 Tm (5.55) Tj T* ET
+0 0 0 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 545.482 602 Tm (44.40) Tj T* ET
+.835294 .870588 .905882 RG
+.4 w
+n 40 596 532 126 re S
+n 40 704 m 572 704 l S
+n 118 596 m 118 722 l S
+n 338 596 m 338 722 l S
+n 388 596 m 388 722 l S
+n 480 596 m 480 722 l S
+n 40 686 m 572 686 l S
+n 40 668 m 572 668 l S
+n 40 650 m 572 650 l S
+n 40 632 m 572 632 l S
+n 40 614 m 572 614 l S
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 474.116 580 Tm (Order total) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 528.632 580 Tm (1989.60) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 501.826 564 Tm (Currency) Tj T* ET
+0 0 0 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 550.33 564 Tm (GBP) Tj T* ET
+.321569 .376471 .427451 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 531.08 34 Tm (Page 3 of 3) Tj T* ET
+ 
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000515 00000 n 
+0000000709 00000 n 
+0000000903 00000 n 
+0000000985 00000 n 
+0000001305 00000 n 
+0000001376 00000 n 
+0000008929 00000 n 
+0000015412 00000 n 
+trailer
+<<
+/ID 
+[<f9b61a2d8bdca8f38cdabefe29da09c9><f9b61a2d8bdca8f38cdabefe29da09c9>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 8 0 R
+/Root 7 0 R
+/Size 13
+>>
+startxref
+19572
+%%EOF

@@ -7,12 +7,19 @@ Anonymized PDF fixtures for local ingest workflows, demos, and tests.
 ```
 samples/
 ├── README.md           # This file — naming, privacy, usage
-└── receipts/           # Committed public-safe PDFs
-    ├── 01-food-homedeco.pdf
-    ├── 02-vegetables-weighted.pdf
-    ├── 03-small.pdf
-    ├── 04-article-discount.pdf
-    └── originals/      # Gitignored — pre-anonymization sources (local only)
+├── receipts/           # Committed public-safe PDFs
+│   ├── 01-food-homedeco.pdf
+│   ├── 02-vegetables-weighted.pdf
+│   ├── 03-small.pdf
+│   ├── 04-article-discount.pdf
+│   ├── 05-demo-basket.pdf
+│   └── originals/      # Gitignored — pre-anonymization sources (local only)
+└── po/                 # Fictional purchase orders (see po/README.md)
+    ├── README.md
+    ├── generate_purchase_orders.py
+    ├── 01-simple-table.pdf
+    ├── 02-bill-ship-columns.pdf
+    └── 03-multipage-lines.pdf
 ```
 
 Committed samples are **anonymized** copies. Their **original** source PDFs live in `receipts/originals/` on your machine only (never committed). You can create `receipts/private/` locally for other ad-hoc real receipts — it is gitignored and not committed.
@@ -64,6 +71,14 @@ Before adding a new sample, confirm:
 - [ ] Content is safe to show in a public portfolio repo
 
 Real receipts stay in `samples/receipts/private/` on your machine — never commit that folder.
+
+## Purchase orders
+
+Fictional purchase orders live in [po/](po/README.md). They are a separate fixture set for later scoring, not receipt samples. Compose does not mount this folder, and the ingest allowlist does not include these files.
+
+They follow the privacy rules above. Names, addresses, and amounts are made up. Mail uses example.com. The pages are marked as samples.
+
+[po/README.md](po/README.md) is the answer key: each file, its layout, its page count, and the expected value of every field with the page it is on.
 
 ## Original sources (gitignored)
 
