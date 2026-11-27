@@ -76,7 +76,9 @@ class Sheet:
     def draw_banner(self) -> None:
         self.pdf.setFillColor(BANNER_BG)
         self.pdf.rect(0, self.height - 24, self.width, 24, fill=1, stroke=0)
-        draw(self.pdf, self.width / 2, self.height - 16, BANNER, "Helvetica-Bold", 9, white, "center")
+        draw(
+            self.pdf, self.width / 2, self.height - 16, BANNER, "Helvetica-Bold", 9, white, "center"
+        )
 
     def draw_footer(self, continued: bool) -> None:
         if continued:
@@ -262,7 +264,16 @@ def draw_order_total(sheet: Sheet, order: dict) -> None:
     if sheet.page in order["currency"]["pages"]:
         currency = order["currency"]["value"]
         currency_w = stringWidth(currency, "Helvetica-Bold", 10)
-        draw(sheet.pdf, right - currency_w - 12, sheet.y - 16, "Currency", "Helvetica", 9, MUTED, "right")
+        draw(
+            sheet.pdf,
+            right - currency_w - 12,
+            sheet.y - 16,
+            "Currency",
+            "Helvetica",
+            9,
+            MUTED,
+            "right",
+        )
         draw(sheet.pdf, right, sheet.y - 16, currency, "Helvetica-Bold", 10, black, "right")
     sheet.y -= 32
 
@@ -576,7 +587,10 @@ def build_orders() -> list[dict]:
         {
             "file": "01-simple-table.pdf",
             "layout": "simple-table",
-            "summary": "One-page table. Vendor and buyer are stacked above the lines. The total is on that page.",
+            "summary": (
+                "One-page table. Vendor and buyer are stacked above the lines. "
+                "The total is on that page."
+            ),
             "pages": 1,
             "po_number": {"value": "PO-1847", "pages": [1]},
             "order_date": {"value": "February 3, 2026", "pages": [1]},
@@ -601,7 +615,10 @@ def build_orders() -> list[dict]:
         {
             "file": "02-bill-ship-columns.pdf",
             "layout": "bill-ship-columns",
-            "summary": "Two-column header. Bill to and ship to sit side by side. The total is on that page.",
+            "summary": (
+                "Two-column header. Bill to and ship to sit side by side. "
+                "The total is on that page."
+            ),
             "pages": 1,
             "po_number": {"value": "PO-2026-077", "pages": [1]},
             "order_date": {"value": "April 18, 2026", "pages": [1]},
@@ -633,7 +650,9 @@ def build_orders() -> list[dict]:
         {
             "file": "03-multipage-lines.pdf",
             "layout": "multipage",
-            "summary": "Three pages. Lines continue past page 1. The total is on the last page only.",
+            "summary": (
+                "Three pages. Lines continue past page 1. The total is on the last page only."
+            ),
             "pages": 3,
             "po_number": {"value": "PO-55910", "pages": [1, 2, 3]},
             "order_date": {"value": "January 22, 2026", "pages": [1]},
@@ -689,7 +708,10 @@ def render_readme(orders: list[dict]) -> str:
         "This note is the answer key.",
         "Each value is listed with the page it is printed on.",
         "A line total is quantity times unit price. The order total is the sum of the line totals.",
-        "The banner, the page count, and the line that says lines continue are page chrome, not order fields.",
+        (
+            "The banner, the page count, and the line that says lines continue "
+            "are page chrome, not order fields."
+        ),
         "",
         "Regenerate the PDFs and this note from the repo root:",
         "",
@@ -706,7 +728,9 @@ def render_readme(orders: list[dict]) -> str:
         "| --- | --- | --- |",
     ]
     for order in orders:
-        lines.append(table_row(f"[{order['file']}]({order['file']})", order["summary"], order["pages"]))
+        lines.append(
+            table_row(f"[{order['file']}]({order['file']})", order["summary"], order["pages"])
+        )
 
     for order in orders:
         lines.extend(
@@ -720,8 +744,16 @@ def render_readme(orders: list[dict]) -> str:
                 "",
                 "| Field | Value | Pages |",
                 "| --- | --- | --- |",
-                table_row("PO number", order["po_number"]["value"], pages_label(order["po_number"]["pages"])),
-                table_row("Order date", order["order_date"]["value"], pages_label(order["order_date"]["pages"])),
+                table_row(
+                    "PO number",
+                    order["po_number"]["value"],
+                    pages_label(order["po_number"]["pages"]),
+                ),
+                table_row(
+                    "Order date",
+                    order["order_date"]["value"],
+                    pages_label(order["order_date"]["pages"]),
+                ),
             ]
         )
         lines.extend(party_rows("Vendor", order["vendor"]))
@@ -729,7 +761,9 @@ def render_readme(orders: list[dict]) -> str:
         if "ship_to" in order:
             lines.extend(party_rows("Ship-to", order["ship_to"]))
         lines.append(
-            table_row("Currency", order["currency"]["value"], pages_label(order["currency"]["pages"]))
+            table_row(
+                "Currency", order["currency"]["value"], pages_label(order["currency"]["pages"])
+            )
         )
         lines.append(
             table_row(
