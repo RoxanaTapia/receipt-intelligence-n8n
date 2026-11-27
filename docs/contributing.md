@@ -4,17 +4,9 @@ Notes for people who ship changes to this repo or run it locally. What the workf
 
 ## Shipping a change
 
-One issue, one branch, one PR. The roster, slash commands, and commit policy are in [AGENTS.md](../AGENTS.md).
+One issue, one branch, one pull request. Roxana reviews and merges. The steps, titles, and tests are in [AGENTS.md](../AGENTS.md).
 
-| Command | Purpose |
-|---------|---------|
-| `/ship-issue` | Ship one GitHub issue end-to-end |
-| `/verify` | Map acceptance criteria before opening a PR |
-| `/document` | Review docs when the issue creates or updates them |
-| `/lecture-on-issue` | Learn an issue before building |
-| `/ship-complete` | After merge, tick acceptance criteria on the issue |
-
-Track work on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3). Linking a PR moves the issue to In Progress. Merging it moves the issue to Done.
+Track work on the [GitHub Project board](https://github.com/users/RoxanaTapia/projects/3). Linking a pull request moves the issue to In Progress. Merging it moves the issue to Done.
 
 Optional tooling: [GitHub CLI](https://cli.github.com/) (`gh`), [Cursor](https://cursor.com/).
 

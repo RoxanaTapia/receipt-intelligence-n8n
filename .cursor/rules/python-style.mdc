@@ -1,0 +1,14 @@
+---
+description: Python style for scripts and tests
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python style
+
+- Prefer the simplest code that does the job.
+- Small functions, clear names, and type hints on public functions.
+- Use `pathlib.Path` and f-strings.
+- Keep docstrings short. Say why when the why is not obvious.
+- Ruff checks this repo. Line length is 100. The selected rules are E, F, and I. Settings live in [pyproject.toml](../../pyproject.toml).
+- Formatting does not change behaviour.
