@@ -34,4 +34,4 @@ For analytics and natural-language Q&A details, use the sibling [receipt-intelli
 
 - Root overview: [../README.md](../README.md)
 - Contributors and operators: [contributing.md](contributing.md)
-- Agent roster and commit policy: [../AGENTS.md](../AGENTS.md)
+- How a change happens: [../AGENTS.md](../AGENTS.md)

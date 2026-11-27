@@ -1,0 +1,12 @@
+---
+description: Automated tests run on every change
+alwaysApply: true
+---
+
+# Tests
+
+- Run the commands under Tests in [AGENTS.md](../../AGENTS.md) before a pull request.
+- GitHub Actions runs those commands on every pull request and on every push to main.
+- When a test fails, fix the project. Do not weaken the test to make it pass.
+- Every workflow JSON file must parse.
+- A workflow JSON file must not contain an embedded credential. An n8n credential reference is an id and a name only.

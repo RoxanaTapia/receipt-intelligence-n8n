@@ -118,5 +118,5 @@ Natural-language budget questions are routed in [receipt-intelligence-api](https
 - [Categorization prompts](categorization-prompts.md)
 - [Categorization test matrix](categorization-test-matrix.md)
 - [n8n Docker setup](n8n-setup.md)
-- [Agent workflow](../AGENTS.md) — includes `claude-prompt-engineer` for prompt drafting and review
+- [How a change happens](../AGENTS.md)
 - [API Q&A routing](https://github.com/RoxanaTapia/receipt-intelligence-api/blob/main/docs/question-answering.md) — Module 4 intent → analytics

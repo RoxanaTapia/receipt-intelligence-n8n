@@ -1,0 +1,15 @@
+---
+description: How a change is made in this repo
+alwaysApply: true
+---
+
+# Working in this repo
+
+- Read [AGENTS.md](../../AGENTS.md) before you edit.
+- One issue, one branch, one pull request. Roxana reviews and merges.
+- The issue title starts with one emoji code. The pull request title is a plain sentence.
+- Use the templates in `.github/`.
+- Stay inside the current issue.
+- Do not change how a workflow behaves unless the issue asks for that.
+- Do not put secrets in any file or log. A workflow may name an n8n credential. It may not hold the key.
+- Plain words. No em dashes.

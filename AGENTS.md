@@ -1,108 +1,66 @@
-# AGENTS.md — Receipt Intelligence n8n
+# Project guide
 
-How we use Cursor agents, rules, and commands in this repository.
+## What we're building
 
-## Project Vision
+These are the n8n workflows behind the Receipt Intelligence demo at [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo). A workflow reads a PDF receipt, asks Claude for the merchant, date, total, and line items, puts a spending category on each line, and writes one JSON file under `data/receipts/`. The sibling [API](https://github.com/RoxanaTapia/receipt-intelligence-api) reads that folder. Start with [README.md](README.md).
 
-Build a clean, production-style system that processes PDF receipts, extracts and categorizes data using Claude, and answers natural language questions about spending and budget.
+## How a change happens
 
-**Stack:** n8n (core) · Claude · FastAPI (supporting backend)
+1. **One issue.** The issue is the request. Use [.github/ISSUE_TEMPLATE.md](.github/ISSUE_TEMPLATE.md). The title starts with one emoji code, such as 🛠️ or 📄.
+2. **One branch.** Use a plain descriptive name so this work stays separate from other work.
+3. **One pull request.** The title is a plain sentence. The body follows [.github/pull_request_template.md](.github/pull_request_template.md) and includes `Closes #` with the issue number.
+4. **Automated tests.** They run on every pull request and on every push to main.
+5. **Roxana reviews and merges.**
 
-This repo **writes** categorized receipts to `data/receipts/`. Sibling [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) **reads** them via `RECEIPT_DATA_PATH`.
+## Where things are
 
-## Project references
+| Path | What it is |
+|---|---|
+| [README.md](README.md) | What the workflows do |
+| [docs/README.md](docs/README.md) | Reading order for the guides |
+| [docs/n8n-setup.md](docs/n8n-setup.md) | Local n8n and the API contract |
+| [docs/integration.md](docs/integration.md) | Run n8n and the API together |
+| [docs/pdf-extraction.md](docs/pdf-extraction.md) | PDF to validated receipt JSON |
+| [docs/categorization.md](docs/categorization.md) | Categories on each line |
+| [docs/contributing.md](docs/contributing.md) | Notes for people who ship or run this locally |
+| [workflows/](workflows/) | Exported workflows: hello-world and receipt-pdf-ingest |
+| [data/README.md](data/README.md) | Receipt JSON written to disk |
+| [samples/README.md](samples/README.md) | Sample receipt PDFs |
+| [samples/po/](samples/po/) | Sample purchase-order PDFs and their answer key |
+| [docker-compose.yml](docker-compose.yml) | Local n8n |
+| [.env.example](.env.example) | Env names. Real secrets stay in `.env`, which is not committed |
+| [tests/](tests/) | Automated tests |
+| [.github/workflows/tests.yml](.github/workflows/tests.yml) | The same tests on GitHub |
+| [.cursor/rules/](.cursor/rules/) | Rules for agents |
+| [pyproject.toml](pyproject.toml) | Ruff settings |
+| [LICENSE](LICENSE) | MIT license |
 
-Agents use generic language; this table maps terms to **this repo**. Other projects: update here only — keep `.cursor/agents/` unchanged.
+## Tests
 
-| Term | Path |
-|------|------|
-| Docs index | [`docs/README.md`](docs/README.md) |
-| Contributor / operator notes | [`docs/contributing.md`](docs/contributing.md) |
-| Prompt / Claude standards | [`docs/n8n-claude-standards.md`](docs/n8n-claude-standards.md) |
-| Categorization pipeline | [`docs/categorization.md`](docs/categorization.md) |
-| Categorization schema | [`docs/categorization-schema.md`](docs/categorization-schema.md) |
-| Categorization prompts | [`docs/categorization-prompts.md`](docs/categorization-prompts.md) |
-| Categorization test matrix | [`docs/categorization-test-matrix.md`](docs/categorization-test-matrix.md) |
-| Receipt data store | [`data/README.md`](data/README.md) |
-| Sample receipt JSON | [`data/receipts/example.json`](data/receipts/example.json) |
-| Hello-world workflow | [`workflows/hello-world.json`](workflows/hello-world.json) |
-| Workflow exports | [`workflows/receipt-pdf-ingest.json`](workflows/receipt-pdf-ingest.json) |
-| Setup guide | [`docs/n8n-setup.md`](docs/n8n-setup.md) |
-| Integration runbook | [`docs/integration.md`](docs/integration.md) |
-| PDF pipeline guide | [`docs/pdf-extraction.md`](docs/pdf-extraction.md) |
-| Sample PDFs (anonymized) | [`samples/receipts/`](samples/receipts/) |
-| Sample originals (gitignored) | `samples/receipts/originals/` — see [`samples/README.md`](samples/README.md) |
+From the repo root:
 
-## Current Focus
+```bash
+python -m unittest discover -s tests -v
+python -m pip install ruff
+ruff check .
+ruff format --check .
+```
 
-- **This repo:** Modules 1–3, 5 (Integration), and 6 (Reliability) complete — product ingest path is done
-- **Next (live demo):** [receipt-intelligence-demo](https://github.com/RoxanaTapia/receipt-intelligence-demo) Module 7 — Delivery (Compose → Caddy → demo UX). Start at [demo #1](https://github.com/RoxanaTapia/receipt-intelligence-demo/issues/1); API support: [Dockerfile #25](https://github.com/RoxanaTapia/receipt-intelligence-api/issues/25)
-- **Sibling:** [receipt-intelligence-api](https://github.com/RoxanaTapia/receipt-intelligence-api) — Module 4 analytics + Q&A complete
-- **Recent docs:** [docs/README.md](docs/README.md) — docs index and reading order
+The unit tests check the purchase-order samples. They also check that every file in `workflows/` parses and holds no embedded credential. GitHub Actions runs these commands on every pull request and on every push to main.
 
-## Core Principles
+## For the agents
 
-- Keep things simple, readable, and maintainable
-- Small, focused functions and changes
-- One issue → one branch → one PR
-- Prioritize clarity and long-term quality
+Do:
 
-## Agent Roster
+- Read this guide and `.cursor/rules/` before you edit.
+- Stay inside the current issue.
+- Run the tests above before opening the pull request.
+- Keep secrets out of files, logs, and workflow JSON.
 
-| Role | Responsibility | Notes |
-|------|----------------|-------|
-| `milestone-orchestrator` | Coordinates shipping, branches, commits | Only agent allowed to commit; decides when to call specialists |
-| `docs-writer` | Documentation draft and review | `/document`; ownership/handoff in agent, style in `documentation.mdc` |
-| `verifier` | Quality checks and acceptance criteria before PR | `/verify`; blocks PR if criteria ❌ missing |
-| `software-engineering-professor` | Teaches issues and concepts | `/lecture-on-issue`; does not ship |
-| `n8n-engineer` | n8n workflows and integration | Workflow structure and nodes; see **Project references** |
-| `claude-prompt-engineer` | Claude prompts in n8n | Prompt standards doc in **Project references** |
+Don't:
 
-## Workflow
-
-1. Pick a GitHub issue on the Project board.
-2. *(Optional)* `/lecture-on-issue #NN` — learn before building.
-3. `/ship-issue #NN` — orchestrator implements with specialist support.
-4. Inside shipping: run **`/document`** only if the issue creates or updates documentation (orchestrator decides per triggers in `milestone-orchestrator.md`); otherwise skip and note in the PR → always run **`/verify`** (maps acceptance criteria) → PR with test plan from the same criteria.
-5. Human reviews PR test plan and approves before push or merge.
-6. After merge: **`/ship-complete #NN`** — tick acceptance criteria checkboxes on the issue.
-
-Project **Status** uses GitHub Project automations (PR linked → In Progress; merged → Done).
-
-## Slash Commands
-
-| Command | Purpose |
-|---------|---------|
-| `/ship-issue` | Ship one GitHub issue end-to-end |
-| `/document` | Run docs-writer review (ownership, handoff, style) |
-| `/verify` | Quality verification and acceptance criteria coverage before PR |
-| `/ship-complete` | After merge — tick issue acceptance criteria checkboxes |
-| `/lecture-on-issue` | Teach an issue (learner mode) |
-
-## Rules
-
-| Rule | Scope |
-|------|-------|
-| `.cursor/rules/documentation.mdc` | Markdown doc style |
-| `.cursor/rules/elegant-minimal-python.mdc` | Python code style |
-
-**When to call specialists:** `.cursor/agents/milestone-orchestrator.md` (shipping pipeline and triggers)
-
-**Documentation process** (ownership, handoff): `.cursor/agents/docs-writer.md`
-
-**Inline vs repo docs:** Docstrings and code comments are part of normal implement work (`elegant-minimal-python.mdc`). Repo markdown goes through docs-writer (`/document`) when the orchestrator's triggers match.
-
-**Documentation accuracy:** When doc issues describe workflows or AI behavior, the orchestrator consults specialists before `/document` — see `milestone-orchestrator.md`.
-
-## Commit & PR Policy
-
-- Granular, reviewable commits (ideally 1–4 per issue)
-- Only `milestone-orchestrator` creates commits
-- **PR titles must not include issue numbers** (avoid `Add X (#42)` or `Fix Y — closes #42`). Use `Closes #NN` in the PR body so GitHub links and closes the issue.
-- Run the **docs-writer review** (`/document`) only if the issue creates or updates documentation; otherwise skip it and say so in the PR. Always run **`/verify`** before opening a PR.
-- PR description starts with a **Main contribution** paragraph
-- Human must approve before push or merge
-
-## Notes for Cursor
-
-Read this file at the start of a new agent chat. For documentation work, read `docs-writer.md` and `documentation.mdc`.
+- Change how a workflow behaves unless the issue asks for that.
+- Put an API key, password, or token in a file.
+- Add agent roles, shipping routines, or deploy steps to this guide.
+- Weaken a test so it passes.
+- Merge. Roxana merges.
